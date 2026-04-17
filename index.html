@@ -2,26 +2,26 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>NOVA AI | Ultra Sorgu Paneli</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>NOVA AI | Mobil Sorgu Paneli</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            font-family: 'Segoe UI', 'Poppins', system-ui, sans-serif;
+            font-family: -apple-system, 'Segoe UI', 'Poppins', system-ui, sans-serif;
             background: radial-gradient(circle at 20% 30%, #0a0a2a, #010105);
             min-height: 100vh;
             color: #fff;
             overflow-x: hidden;
             position: relative;
-            font-size: 13px;
         }
 
-        /* Küçük ve şık arka plan */
+        /* Arka Plan - Mobil için optimize */
         .cosmic-bg {
             position: fixed;
             top: 0;
@@ -29,7 +29,6 @@
             width: 100%;
             height: 100%;
             z-index: -2;
-            overflow: hidden;
         }
 
         .star {
@@ -40,51 +39,36 @@
         }
 
         @keyframes twinkle {
-            0%, 100% { opacity: 0.2; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.2); }
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 0.8; }
         }
 
-        .nebula {
-            position: absolute;
-            width: 300px;
-            height: 300px;
-            border-radius: 50%;
-            filter: blur(60px);
-            animation: float 20s infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0); }
-            25% { transform: translate(50px, 30px); }
-            50% { transform: translate(30px, -50px); }
-            75% { transform: translate(-50px, 30px); }
-        }
-
-        /* Ana Container - Küçük boyutlar */
+        /* Ana Container - Mobil Tam Genişlik */
         .app-container {
-            max-width: 1200px;
-            margin: 0 auto;
+            width: 100%;
+            max-width: 100%;
+            margin: 0;
             padding: 12px;
             position: relative;
             z-index: 2;
         }
 
-        /* Hero Header - Küçük ve sade, SORGU YOK */
+        /* Header - Küçük ve Şık */
         .hero-header {
             background: rgba(10, 20, 40, 0.5);
             backdrop-filter: blur(15px);
-            border-radius: 40px;
-            padding: 25px 20px;
+            border-radius: 28px;
+            padding: 20px 16px;
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
             border: 1px solid rgba(0, 255, 255, 0.3);
             position: relative;
         }
 
         .hamburger-menu {
             position: absolute;
-            top: 15px;
-            left: 20px;
+            top: 12px;
+            left: 12px;
             width: 40px;
             height: 40px;
             cursor: pointer;
@@ -95,14 +79,9 @@
             justify-content: center;
             align-items: center;
             gap: 4px;
-            transition: 0.3s;
+            transition: 0.2s;
             border: 1px solid cyan;
             z-index: 10;
-        }
-
-        .hamburger-menu:hover {
-            background: rgba(0, 255, 255, 0.4);
-            transform: scale(1.05);
         }
 
         .hamburger-menu span {
@@ -113,7 +92,7 @@
         }
 
         .hero-title {
-            font-size: 1.8rem;
+            font-size: 1.4rem;
             background: linear-gradient(135deg, #fff, cyan, magenta);
             -webkit-background-clip: text;
             background-clip: text;
@@ -121,31 +100,31 @@
         }
 
         .hero-subtitle {
-            margin-top: 8px;
-            font-size: 0.8rem;
+            font-size: 0.7rem;
+            margin-top: 6px;
             opacity: 0.8;
         }
 
         .menu-hint {
+            font-size: 0.65rem;
             margin-top: 8px;
-            font-size: 0.7rem;
             color: cyan;
         }
 
-        /* Side Menu - Küçük ve şık */
+        /* Side Menu - Mobil için optimize */
         .side-menu {
             position: fixed;
             top: 0;
-            left: -320px;
+            left: -280px;
             width: 280px;
             height: 100vh;
             background: rgba(5, 10, 25, 0.98);
             backdrop-filter: blur(20px);
             z-index: 2000;
             transition: left 0.3s ease;
-            box-shadow: 5px 0 40px rgba(0, 255, 255, 0.2);
+            box-shadow: 5px 0 30px rgba(0, 255, 255, 0.2);
             border-right: 1px solid cyan;
-            padding: 15px;
+            padding: 20px 12px;
             overflow-y: auto;
         }
 
@@ -157,7 +136,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             padding-bottom: 10px;
             border-bottom: 1px solid cyan;
         }
@@ -171,15 +150,10 @@
             font-size: 24px;
             cursor: pointer;
             color: cyan;
-            transition: 0.3s;
-        }
-
-        .close-menu:hover {
-            transform: rotate(90deg);
         }
 
         .menu-category {
-            margin: 12px 0 6px 0;
+            margin: 15px 0 8px 0;
             color: cyan;
             font-size: 0.7rem;
             letter-spacing: 1px;
@@ -187,111 +161,94 @@
 
         .menu-item {
             background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
-            padding: 8px 12px;
-            margin: 5px 0;
+            border-radius: 12px;
+            padding: 10px 14px;
+            margin: 6px 0;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: 0.2s;
             border-left: 2px solid cyan;
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
         }
 
-        .menu-item:hover {
+        .menu-item:active {
             background: rgba(0, 255, 255, 0.2);
-            transform: translateX(5px);
+            transform: translateX(4px);
         }
 
-        /* Sorgu Paneli - Küçük */
+        /* Sorgu Paneli - Mobil uyumlu */
         .query-panel {
             background: rgba(10, 20, 40, 0.6);
             backdrop-filter: blur(15px);
-            border-radius: 20px;
+            border-radius: 24px;
             padding: 20px;
-            margin-top: 15px;
+            margin-top: 12px;
             border: 1px solid rgba(0, 255, 255, 0.3);
-            animation: fadeInUp 0.3s;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(15px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
         }
 
         .query-title {
             font-size: 1.2rem;
-            margin-bottom: 12px;
+            margin-bottom: 15px;
             color: cyan;
         }
 
         .input-group {
             display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
+            flex-direction: column;
+            gap: 12px;
             margin: 15px 0;
         }
 
         .input-field {
-            flex: 1;
-            min-width: 150px;
+            width: 100%;
         }
 
         .input-field label {
             display: block;
-            font-size: 0.65rem;
-            margin-bottom: 4px;
+            font-size: 0.7rem;
+            margin-bottom: 5px;
             color: #8cc9ff;
         }
 
         .input-field input {
             width: 100%;
-            padding: 8px 12px;
+            padding: 10px 14px;
             background: rgba(0, 0, 0, 0.6);
             border: 1px solid rgba(0, 255, 255, 0.3);
             border-radius: 20px;
             color: white;
-            font-size: 0.8rem;
-            transition: 0.2s;
+            font-size: 0.85rem;
         }
 
         .input-field input:focus {
             border-color: cyan;
             outline: none;
-            box-shadow: 0 0 8px cyan;
         }
 
         button {
             background: linear-gradient(135deg, cyan, magenta);
             border: none;
-            padding: 8px 20px;
+            padding: 10px 20px;
             border-radius: 25px;
             font-weight: bold;
             color: white;
             cursor: pointer;
-            transition: 0.2s;
             font-size: 0.8rem;
-            margin: 3px;
+            margin: 4px;
         }
 
-        button:hover {
-            transform: scale(1.02);
-            box-shadow: 0 0 12px cyan;
+        button:active {
+            transform: scale(0.97);
         }
 
         .result-area {
             background: rgba(0, 0, 0, 0.8);
-            border-radius: 15px;
-            padding: 12px;
-            margin-top: 12px;
-            max-height: 400px;
+            border-radius: 16px;
+            padding: 14px;
+            margin-top: 15px;
+            max-height: 350px;
             overflow: auto;
             font-family: 'Courier New', monospace;
             font-size: 10px;
@@ -300,38 +257,57 @@
             word-break: break-word;
         }
 
-        /* AI Asistan - Ultra Gelişmiş, Açılır Kapanır, Küçük */
+        /* Robot Butonu - Küçük ve Şık */
+        .robot-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 55px;
+            height: 55px;
+            background: linear-gradient(135deg, cyan, magenta);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 150;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+            transition: 0.2s;
+            border: 2px solid white;
+        }
+
+        .robot-btn:active {
+            transform: scale(0.95);
+        }
+
+        .robot-btn span {
+            font-size: 32px;
+        }
+
+        /* AI Asistan - Açılır Kapanır Mobil Pencere */
         .ai-assistant {
             position: fixed;
-            bottom: 15px;
-            right: 15px;
-            width: 350px;
+            bottom: 85px;
+            right: 20px;
+            width: calc(100% - 40px);
+            max-width: 350px;
             background: rgba(5, 10, 25, 0.98);
             backdrop-filter: blur(20px);
             border-radius: 20px;
             border: 1px solid cyan;
-            box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
-            z-index: 100;
+            z-index: 140;
             transition: all 0.3s ease;
-            font-size: 11px;
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
         }
 
         .ai-assistant.closed {
-            width: auto;
-        }
-
-        .ai-assistant.closed .ai-messages,
-        .ai-assistant.closed .ai-input-area,
-        .ai-assistant.closed .quick-buttons,
-        .ai-assistant.closed .ai-features {
             display: none;
         }
 
         .ai-header {
             background: linear-gradient(135deg, cyan, magenta);
-            padding: 10px 15px;
-            border-radius: 19px 19px 0 0;
-            cursor: pointer;
+            padding: 12px 15px;
+            border-radius: 20px 20px 0 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -341,38 +317,26 @@
             font-size: 0.85rem;
         }
 
-        .ai-toggle-btn {
+        .ai-close {
             background: rgba(255,255,255,0.2);
             border: none;
-            padding: 3px 10px;
+            padding: 4px 12px;
             border-radius: 15px;
+            font-size: 12px;
             cursor: pointer;
-            font-size: 10px;
         }
 
         .ai-messages {
             height: 300px;
             overflow-y: auto;
-            padding: 10px;
+            padding: 12px;
         }
 
         .ai-message {
             margin-bottom: 8px;
-            padding: 6px 10px;
+            padding: 8px 10px;
             border-radius: 12px;
-            animation: messageSlide 0.2s;
-            font-size: 10px;
-        }
-
-        @keyframes messageSlide {
-            from {
-                opacity: 0;
-                transform: translateX(15px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
+            font-size: 0.75rem;
         }
 
         .ai-message.bot {
@@ -386,51 +350,6 @@
             text-align: right;
         }
 
-        .ai-features {
-            display: flex;
-            gap: 5px;
-            padding: 8px 10px;
-            flex-wrap: wrap;
-            border-top: 1px solid rgba(0, 255, 255, 0.2);
-            background: rgba(0,0,0,0.3);
-        }
-
-        .ai-feature-btn {
-            background: rgba(0, 255, 255, 0.15);
-            padding: 4px 8px;
-            border-radius: 15px;
-            font-size: 9px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        .ai-feature-btn:hover {
-            background: cyan;
-            color: black;
-        }
-
-        .quick-buttons {
-            display: flex;
-            gap: 5px;
-            padding: 8px 10px;
-            flex-wrap: wrap;
-            border-top: 1px solid rgba(0, 255, 255, 0.2);
-        }
-
-        .quick-btn {
-            background: rgba(0, 255, 255, 0.2);
-            padding: 4px 10px;
-            border-radius: 15px;
-            font-size: 9px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        .quick-btn:hover {
-            background: cyan;
-            color: black;
-        }
-
         .ai-input-area {
             display: flex;
             padding: 10px;
@@ -440,25 +359,43 @@
 
         .ai-input-area input {
             flex: 1;
-            padding: 6px 10px;
+            padding: 8px 12px;
             background: rgba(0, 0, 0, 0.8);
             border: 1px solid cyan;
-            border-radius: 15px;
+            border-radius: 20px;
             color: white;
-            font-size: 10px;
+            font-size: 0.75rem;
         }
 
-        .ai-input-area button {
-            padding: 6px 12px;
-            font-size: 10px;
-            margin: 0;
+        .quick-buttons {
+            display: flex;
+            gap: 6px;
+            padding: 8px 10px;
+            flex-wrap: wrap;
+            border-top: 1px solid rgba(0, 255, 255, 0.2);
         }
 
-        @media (max-width: 600px) {
-            .hero-title { font-size: 1.2rem; }
-            .side-menu { width: 260px; }
-            .ai-assistant { width: 300px; right: 10px; bottom: 10px; }
-            .ai-messages { height: 250px; }
+        .quick-btn {
+            background: rgba(0, 255, 255, 0.2);
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 0.65rem;
+            cursor: pointer;
+        }
+
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        footer {
+            text-align: center;
+            font-size: 0.6rem;
+            margin-top: 20px;
+            opacity: 0.5;
+            padding: 10px;
         }
     </style>
 </head>
@@ -475,67 +412,44 @@
         </div>
         <div>
             <h1 class="hero-title">✨ NOVA AI ✨</h1>
-            <p class="hero-subtitle">Ultra Sorgu Teknolojisi | Dünyada Olmayan AI</p>
-            <p class="menu-hint">☰ Menüden sorgu seçin</p>
+            <p class="hero-subtitle">Dünyada Olmayan Sorgu Teknolojisi</p>
+            <p class="menu-hint">☰ Menüden sorgu seç</p>
         </div>
     </div>
 
     <div id="queryPanel" class="query-panel">
-        <div style="text-align: center; padding: 40px 20px;">
-            <p style="color: cyan; font-size: 0.9rem;">🌀 Sol üstteki menüden bir sorgu seçin</p>
-            <p style="font-size: 0.7rem; margin-top: 10px;">11 farklı sorgu tipi | Gelişmiş AI asistan</p>
-        </div>
+        <!-- Dinamik sorgu paneli -->
     </div>
+    <footer>🔒 NOVA AI | Gelişmiş Yapay Zeka | Mobil Optimize</footer>
 </div>
 
-<!-- Ultra Gelişmiş AI Asistan -->
-<div class="ai-assistant" id="aiAssistant">
-    <div class="ai-header" id="aiHeader">
-        <h4>🧠 NOVA AI - Dünyanın En Gelişmiş Asistanı</h4>
-        <button class="ai-toggle-btn" id="aiToggleBtn">▼</button>
+<!-- Robot Butonu -->
+<div class="robot-btn" id="robotBtn">
+    <span>🤖</span>
+</div>
+
+<!-- AI Asistan Açılır Pencere -->
+<div class="ai-assistant closed" id="aiAssistant">
+    <div class="ai-header">
+        <h4>🧠 NOVA AI Asistan</h4>
+        <button class="ai-close" id="aiCloseBtn">✖</button>
     </div>
     <div class="ai-messages" id="aiMessages">
         <div class="ai-message bot">
-            ✨ Merhaba! Ben NOVA AI, dünyanın en gelişmiş yapay zeka asistanı.<br><br>
-            🎯 <strong>50+ Özellik:</strong><br>
-            • Sorgu analizi ve yorumlama<br>
-            • Veri formatlama (JSON, XML, CSV)<br>
-            • Akıllı raporlama<br>
-            • Veri karşılaştırma<br>
-            • Anomali tespiti<br>
-            • Trend analizi<br>
-            • Tahminleme<br>
-            • Otomatik özet çıkarma<br>
-            • Çoklu dil desteği<br>
-            • Sesli komut<br>
-            • Ve çok daha fazlası...
+            ✨ Merhaba! Ben NOVA AI.<br>
+            📌 Sorgu yap, analiz et, rapor al.<br>
+            💬 "yardım" yazarak komutları gör.
         </div>
     </div>
-    <div class="ai-features" id="aiFeatures">
-        <div class="ai-feature-btn" data-action="analyze">📊 Analiz</div>
-        <div class="ai-feature-btn" data-action="format">🎨 Formatla</div>
-        <div class="ai-feature-btn" data-action="report">📋 Rapor</div>
-        <div class="ai-feature-btn" data-action="compare">🔄 Karşılaştır</div>
-        <div class="ai-feature-btn" data-action="export">📎 CSV</div>
-        <div class="ai-feature-btn" data-action="excel">📊 Excel</div>
-        <div class="ai-feature-btn" data-action="summary">📝 Özet</div>
-        <div class="ai-feature-btn" data-action="trend">📈 Trend</div>
-        <div class="ai-feature-btn" data-action="anomaly">⚠️ Anomali</div>
-        <div class="ai-feature-btn" data-action="predict">🔮 Tahmin</div>
-        <div class="ai-feature-btn" data-action="translate">🌐 Çevir</div>
-        <div class="ai-feature-btn" data-action="validate">✅ Doğrula</div>
-        <div class="ai-feature-btn" data-action="stats">📊 İstatistik</div>
-        <div class="ai-feature-btn" data-action="clean">🧹 Temizle</div>
-        <div class="ai-feature-btn" data-action="help">❓ Yardım</div>
-    </div>
-    <div class="quick-buttons" id="quickButtons">
-        <div class="quick-btn" data-action="analyze">📊 Analiz Et</div>
-        <div class="quick-btn" data-action="format">🎨 Formatla</div>
-        <div class="quick-btn" data-action="report">📋 Rapor Al</div>
-        <div class="quick-btn" data-action="summary">📝 Özet Çıkar</div>
+    <div class="quick-buttons">
+        <div class="quick-btn" data-action="analyze">📊 Analiz</div>
+        <div class="quick-btn" data-action="format">🎨 Format</div>
+        <div class="quick-btn" data-action="report">📋 Rapor</div>
+        <div class="quick-btn" data-action="export">📎 CSV</div>
+        <div class="quick-btn" data-action="help">❓ Yardım</div>
     </div>
     <div class="ai-input-area">
-        <input type="text" id="aiInput" placeholder="AI'ya sor... (analiz, rapor, format, yardım)">
+        <input type="text" id="aiInput" placeholder="AI'ya sor...">
         <button id="aiSendBtn">➤</button>
     </div>
 </div>
@@ -543,29 +457,29 @@
 <script>
     // ========== KONFİGÜRASYON ==========
     const API_BASE = "https://apiservices.alwaysdata.net/apiservices";
-    const CUSTOM_UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36";
+    const CUSTOM_UA = "Mozilla/5.0 (iPhone; CPU iPhone OS 16_0 like Mac OS X) AppleWebKit/605.1.15";
     
-    // Tüm Sorgu Tipleri (11 adet)
+    // Tüm Sorgu Tipleri
     const QUERIES = {
-        tc: { name: "🔍 TC Kimlik", params: ["tc"], placeholder: ["TC no"], build: (p) => `${API_BASE}/tc.php?tc=${p.tc}` },
-        tcpro: { name: "⭐ TC PRO", params: ["tc"], placeholder: ["TC no"], build: (p) => `${API_BASE}/tcpro.php?tc=${p.tc}` },
-        adsoyad: { name: "📛 Ad Soyad", params: ["ad","soyad"], placeholder: ["Ad","Soyad"], build: (p) => `${API_BASE}/adsoyad.php?ad=${p.ad}&soyad=${p.soyad}` },
-        adsoyadpro: { name: "📇 Ad Soyad PRO", params: ["ad","soyad","il"], placeholder: ["Ad","Soyad","İl"], build: (p) => `${API_BASE}/adsoyadpro.php?ad=${p.ad}&soyad=${p.soyad}&il=${p.il}` },
-        aile: { name: "👪 Aile", params: ["tc"], placeholder: ["TC no"], build: (p) => `${API_BASE}/aile.php?tc=${p.tc}` },
-        ailepro: { name: "🏡 Aile PRO", params: ["tc"], placeholder: ["TC no"], build: (p) => `${API_BASE}/ailepro.php?tc=${p.tc}` },
-        kardes: { name: "👥 Kardeş", params: ["tc"], placeholder: ["TC no"], build: (p) => `${API_BASE}/kardes.php?tc=${p.tc}` },
-        adres: { name: "🏠 Adres", params: ["tc"], placeholder: ["TC no"], build: (p) => `${API_BASE}/adres.php?tc=${p.tc}` },
-        iban: { name: "💳 IBAN", params: ["iban"], placeholder: ["IBAN"], build: (p) => `${API_BASE}/iban.php?iban=${p.iban}` },
-        operator: { name: "📱 GSM Operatör", params: ["gsm"], placeholder: ["GSM"], build: (p) => `${API_BASE}/gncloperator.php?numara=${p.gsm}` },
-        tcgsm: { name: "📞 TC'den GSM", params: ["tc"], placeholder: ["TC no"], build: (p) => `${API_BASE}/tcgsm.php?tc=${p.tc}` }
+        tc: { name: "🔍 TC Kimlik", params: ["tc"], placeholders: ["11 haneli TC"], build: (p) => `${API_BASE}/tc.php?tc=${p.tc}` },
+        tcpro: { name: "⭐ TC PRO", params: ["tc"], placeholders: ["11 haneli TC"], build: (p) => `${API_BASE}/tcpro.php?tc=${p.tc}` },
+        adsoyad: { name: "📛 Ad Soyad", params: ["ad", "soyad"], placeholders: ["Ad", "Soyad"], build: (p) => `${API_BASE}/adsoyad.php?ad=${p.ad}&soyad=${p.soyad}` },
+        adsoyadpro: { name: "📇 Ad Soyad PRO", params: ["ad", "soyad", "il"], placeholders: ["Ad", "Soyad", "İl"], build: (p) => `${API_BASE}/adsoyadpro.php?ad=${p.ad}&soyad=${p.soyad}&il=${p.il}` },
+        aile: { name: "👪 Aile", params: ["tc"], placeholders: ["11 haneli TC"], build: (p) => `${API_BASE}/aile.php?tc=${p.tc}` },
+        ailepro: { name: "🏡 Aile PRO", params: ["tc"], placeholders: ["11 haneli TC"], build: (p) => `${API_BASE}/ailepro.php?tc=${p.tc}` },
+        kardes: { name: "👥 Kardeş", params: ["tc"], placeholders: ["11 haneli TC"], build: (p) => `${API_BASE}/kardes.php?tc=${p.tc}` },
+        adres: { name: "🏠 Adres", params: ["tc"], placeholders: ["11 haneli TC"], build: (p) => `${API_BASE}/adres.php?tc=${p.tc}` },
+        iban: { name: "💳 IBAN", params: ["iban"], placeholders: ["IBAN no"], build: (p) => `${API_BASE}/iban.php?iban=${p.iban}` },
+        operator: { name: "📱 GSM Operatör", params: ["gsm"], placeholders: ["GSM (10 haneli)"], build: (p) => `${API_BASE}/gncloperator.php?numara=${p.gsm}` },
+        tcgsm: { name: "📞 TC'den GSM", params: ["tc"], placeholders: ["11 haneli TC"], build: (p) => `${API_BASE}/tcgsm.php?tc=${p.tc}` }
     };
     
-    let activeQuery = null;
+    let activeQuery = "tc";
     let lastResult = null;
     let lastRawResult = "";
     let sideMenuOpen = false;
     
-    // ========== YARDIMCI FONKSİYONLAR ==========
+    // ========== TEMİZLEME ==========
     function cleanResponse(data) {
         if (!data) return data;
         const cleaned = JSON.parse(JSON.stringify(data));
@@ -595,13 +509,8 @@
         }
     }
     
-    // ========== SORGU ÇALIŞTIR ==========
+    // ========== SORGU ==========
     async function executeQuery() {
-        if (!activeQuery) {
-            addAIMessage("⚠️ Önce menüden bir sorgu seçin!", false);
-            return;
-        }
-        
         const def = QUERIES[activeQuery];
         const params = {};
         
@@ -609,7 +518,7 @@
             const p = def.params[i];
             const input = document.getElementById(`param_${p}`);
             if (!input || !input.value.trim()) {
-                addAIMessage(`❌ Lütfen "${p}" alanını doldurun!`, false);
+                addAIMessage(`❌ "${p}" alanını doldur!`, false);
                 return;
             }
             params[p] = encodeURIComponent(input.value.trim());
@@ -617,29 +526,21 @@
         
         const url = def.build(params);
         const resultDiv = document.getElementById("resultArea");
-        if (resultDiv) resultDiv.innerHTML = "⏳ Sorgulanıyor...";
+        resultDiv.innerHTML = "⏳ Sorgulanıyor...";
         
-        addAIMessage(`🔍 "${def.name}" sorgusu başlatıldı...`, false);
+        addAIMessage(`🔍 "${def.name}" sorgulanıyor...`, false);
         
         const data = await fastFetch(url);
         lastResult = data;
         lastRawResult = JSON.stringify(data, null, 2);
         
-        if (resultDiv) {
-            resultDiv.innerHTML = `<pre style="margin:0; white-space:pre-wrap;">${escapeHtml(lastRawResult)}</pre>`;
-        }
+        resultDiv.innerHTML = `<pre style="margin:0; white-space:pre-wrap;">${escapeHtml(lastRawResult)}</pre>`;
         
-        const dataSize = lastRawResult.length;
-        const dataLines = lastRawResult.split('\n').length;
-        
-        addAIMessage(`✅ Sorgu tamamlandı! ${dataLines} satır, ${(dataSize/1024).toFixed(2)} KB veri.`, false);
-        
-        if (data.results) {
-            addAIMessage(`📊 ${data.results.length} kayıt bulundu. Detaylı analiz için "analiz et" yazabilirsiniz.`, false);
-        }
+        const lines = lastRawResult.split('\n').length;
+        addAIMessage(`✅ Tamamlandı! ${lines} satır veri.`, false);
     }
     
-    // ========== ULTRA GELİŞMİŞ AI FONKSİYONLARI ==========
+    // ========== AI FONKSİYONLARI ==========
     function addAIMessage(message, isUser = true) {
         const messagesDiv = document.getElementById("aiMessages");
         const msgDiv = document.createElement("div");
@@ -648,293 +549,128 @@
         messagesDiv.appendChild(msgDiv);
         messagesDiv.scrollTop = messagesDiv.scrollHeight;
         
-        if (messagesDiv.children.length > 80) {
+        if (messagesDiv.children.length > 40) {
             messagesDiv.removeChild(messagesDiv.children[0]);
         }
     }
     
     function analyzeResult() {
         if (!lastResult) {
-            addAIMessage("⚠️ Önce bir sorgu yapın!", false);
+            addAIMessage("⚠️ Önce sorgu yap!", false);
             return;
         }
         
-        addAIMessage("📈 Derinlemesine analiz yapılıyor...", false);
+        addAIMessage("📊 Analiz ediliyor...", false);
         
         setTimeout(() => {
-            const resultStr = JSON.stringify(lastResult);
             const hasData = lastResult.success !== false;
             const resultCount = lastResult.results ? lastResult.results.length : (lastResult.aile_bilgileri ? lastResult.aile_bilgileri.kayitlar?.length : 0);
             
-            let analysis = "🔍 **KAPSAMLI ANALİZ**\n\n";
-            analysis += `✓ Durum: ${hasData ? 'BAŞARILI' : 'BAŞARISIZ'}\n`;
-            analysis += `✓ Veri Boyutu: ${(resultStr.length/1024).toFixed(2)} KB\n`;
-            analysis += `✓ Toplam Karakter: ${resultStr.length}\n`;
-            analysis += `✓ Kayıt Sayısı: ${resultCount || 'Belirsiz'}\n`;
+            let analysis = `🔍 Sonuç: ${hasData ? '✅ Başarılı' : '❌ Başarısız'}\n`;
+            analysis += `📦 Boyut: ${(lastRawResult.length/1024).toFixed(1)} KB\n`;
+            analysis += `📄 Kayıt: ${resultCount || '?'}\n`;
             
             if (lastResult.results && lastResult.results[0]) {
                 const first = lastResult.results[0];
-                analysis += `\n📌 **ÖRNEK KAYIT:**\n`;
-                Object.entries(first).forEach(([k,v]) => {
-                    analysis += `   ${k}: ${v}\n`;
-                });
+                if (first.ADI) analysis += `👤 ${first.ADI} ${first.SOYADI || ''}`;
             }
-            
-            analysis += `\n💡 **ÖNERİLER:**\n`;
-            analysis += `• Veriyi CSV olarak dışa aktarabilirsiniz\n`;
-            analysis += `• Rapor alarak detaylı inceleyebilirsiniz\n`;
-            analysis += `• Trend analizi için "trend" komutunu kullanın`;
-            
             addAIMessage(analysis, false);
-        }, 500);
+        }, 300);
     }
     
     function formatResult() {
         if (!lastRawResult) {
-            addAIMessage("⚠️ Önce bir sorgu yapın!", false);
+            addAIMessage("⚠️ Önce sorgu yap!", false);
             return;
         }
-        
         try {
             const parsed = JSON.parse(lastRawResult);
             const formatted = JSON.stringify(parsed, null, 4);
-            document.getElementById("resultArea").innerHTML = `<pre style="margin:0; white-space:pre-wrap;">${escapeHtml(formatted)}</pre>`;
-            addAIMessage("✅ Veri formatlandı! Daha okunabilir hale geldi.", false);
+            document.getElementById("resultArea").innerHTML = `<pre style="margin:0;">${escapeHtml(formatted)}</pre>`;
+            addAIMessage("✅ Formatlandı!", false);
         } catch(e) {
-            addAIMessage("❌ Formatlama hatası!", false);
+            addAIMessage("❌ Hata!", false);
         }
     }
     
     function generateReport() {
         if (!lastResult) {
-            addAIMessage("⚠️ Rapor için önce sorgu yapın!", false);
+            addAIMessage("⚠️ Önce sorgu yap!", false);
             return;
         }
         
-        addAIMessage("📋 Detaylı rapor oluşturuluyor...", false);
+        const date = new Date().toLocaleString();
+        let report = `📋 NOVA RAPOR\n══════════\n📅 ${date}\n🔍 ${QUERIES[activeQuery].name}\n📦 ${(lastRawResult.length/1024).toFixed(1)} KB\n📄 ${lastRawResult.split('\n').length} satır`;
         
-        setTimeout(() => {
-            const timestamp = new Date().toLocaleString('tr-TR');
-            let report = `📊 **NOVA AI RAPORU**\n`;
-            report += `═══════════════════════════════\n`;
-            report += `📅 Tarih: ${timestamp}\n`;
-            report += `🔍 Sorgu: ${activeQuery ? QUERIES[activeQuery].name : 'Belirsiz'}\n`;
-            report += `📦 Veri: ${(lastRawResult.length/1024).toFixed(2)} KB\n`;
-            report += `📄 Satır: ${lastRawResult.split('\n').length}\n`;
-            
-            if (lastResult.results) {
-                report += `👥 Kayıt: ${lastResult.results.length}\n`;
-                const sample = lastResult.results[0];
-                if (sample) {
-                    report += `\n📌 ÖRNEK VERİ:\n`;
-                    Object.entries(sample).slice(0, 8).forEach(([k,v]) => {
-                        report += `   ${k}: ${v}\n`;
-                    });
-                }
-            }
-            
-            report += `\n✅ Rapor oluşturuldu. Daha fazla analiz için "analiz" yazın.`;
-            addAIMessage(report, false);
-        }, 500);
-    }
-    
-    function generateSummary() {
-        if (!lastResult) {
-            addAIMessage("⚠️ Özet için önce sorgu yapın!", false);
-            return;
+        if (lastResult.results) {
+            report += `\n👥 ${lastResult.results.length} kayıt`;
         }
         
-        addAIMessage("📝 Özet çıkarılıyor...", false);
-        
-        setTimeout(() => {
-            let summary = "📝 **VERİ ÖZETİ**\n\n";
-            
-            if (lastResult.results) {
-                summary += `Toplam ${lastResult.results.length} kayıt bulundu.\n\n`;
-                
-                const first = lastResult.results[0];
-                if (first) {
-                    summary += `Örnek kayıt özeti:\n`;
-                    const important = ['ADI', 'SOYADI', 'TC', 'DOĞUM TARİHİ', 'İL', 'GSM'];
-                    important.forEach(key => {
-                        if (first[key]) summary += `• ${key}: ${first[key]}\n`;
-                    });
-                }
-            } else if (lastResult.aile_bilgileri) {
-                const family = lastResult.aile_bilgileri;
-                summary += `Aile bilgileri:\n`;
-                summary += `• Toplam üye: ${family.toplam_uye || 'Belirsiz'}\n`;
-                if (family.kayitlar) {
-                    summary += `• Kayıtlar: ${family.kayitlar.length} kişi\n`;
-                }
-            }
-            
-            summary += `\n💡 Detaylı analiz için "analiz et" yazın.`;
-            addAIMessage(summary, false);
-        }, 400);
-    }
-    
-    function compareData() {
-        if (!lastResult) {
-            addAIMessage("⚠️ Karşılaştırma için önce sorgu yapın!", false);
-            return;
-        }
-        addAIMessage("🔄 Karşılaştırma modu aktif. Lütfen karşılaştırmak istediğiniz değeri yazın.", false);
+        addAIMessage(report, false);
     }
     
     function exportToCSV() {
         if (!lastResult || !lastResult.results) {
-            addAIMessage("⚠️ CSV için geçerli sorgu sonucu gerekli!", false);
+            addAIMessage("⚠️ CSV için veri yok!", false);
             return;
         }
         
         try {
             const data = lastResult.results;
-            if (data.length === 0) {
-                addAIMessage("⚠️ Dışa aktarılacak veri yok!", false);
-                return;
-            }
-            
             const headers = Object.keys(data[0]);
             let csv = headers.join(',') + '\n';
-            
             data.forEach(row => {
-                const values = headers.map(header => {
-                    let value = row[header] || '';
-                    if (typeof value === 'string' && (value.includes(',') || value.includes('"'))) {
-                        value = `"${value.replace(/"/g, '""')}"`;
-                    }
-                    return value;
-                });
+                const values = headers.map(h => `"${(row[h] || '').toString().replace(/"/g, '""')}"`);
                 csv += values.join(',') + '\n';
             });
             
             const blob = new Blob([csv], {type: "text/csv"});
             const a = document.createElement("a");
             const url = URL.createObjectURL(blob);
-            a.download = `nova_export_${Date.now()}.csv`;
+            a.download = `nova_${Date.now()}.csv`;
             a.href = url;
             a.click();
             URL.revokeObjectURL(url);
-            
-            addAIMessage(`✅ ${data.length} kayıt CSV olarak dışa aktarıldı!`, false);
+            addAIMessage(`✅ CSV dışa aktarıldı! ${data.length} kayıt`, false);
         } catch(e) {
             addAIMessage("❌ CSV hatası!", false);
         }
     }
     
-    function exportToExcel() {
-        exportToCSV();
-        addAIMessage("💡 CSV dosyasını Excel ile açabilirsiniz.", false);
-    }
-    
-    function trendAnalysis() {
-        if (!lastResult) {
-            addAIMessage("⚠️ Trend analizi için önce sorgu yapın!", false);
-            return;
-        }
-        addAIMessage("📈 Trend analizi yapılıyor... Verilerde belirgin bir desen tespit edildi. Detaylı rapor için 'rapor' yazın.", false);
-    }
-    
-    function anomalyDetection() {
-        if (!lastResult) {
-            addAIMessage("⚠️ Anomali tespiti için önce sorgu yapın!", false);
-            return;
-        }
-        addAIMessage("⚠️ Anomali taraması tamamlandı. Verilerde herhangi bir anormallik tespit edilmedi.", false);
-    }
-    
-    function predictData() {
-        if (!lastResult) {
-            addAIMessage("⚠️ Tahmin için önce sorgu yapın!", false);
-            return;
-        }
-        addAIMessage("🔮 Tahminleme yapılıyor... AI modeli verileri analiz ediyor. Sonuçlar yakında hazır olacak.", false);
-    }
-    
-    function translateData() {
-        if (!lastResult) {
-            addAIMessage("⚠️ Çeviri için önce sorgu yapın!", false);
-            return;
-        }
-        addAIMessage("🌐 Veri çevriliyor... İngilizce'ye çeviri tamamlandı.", false);
-    }
-    
-    function validateData() {
-        if (!lastResult) {
-            addAIMessage("⚠️ Doğrulama için önce sorgu yapın!", false);
-            return;
-        }
-        addAIMessage("✅ Veri doğrulama tamamlandı. Tüm alanlar geçerli formatta.", false);
-    }
-    
-    function getStatistics() {
-        if (!lastResult) {
-            addAIMessage("⚠️ İstatistik için önce sorgu yapın!", false);
-            return;
-        }
-        const stats = `📊 İSTATİSTİKLER\n\n• Veri boyutu: ${(lastRawResult.length/1024).toFixed(2)} KB\n• Toplam satır: ${lastRawResult.split('\n').length}\n• JSON geçerliliği: ✅\n• Kayıt kalitesi: Yüksek`;
-        addAIMessage(stats, false);
-    }
-    
-    function cleanData() {
-        if (!lastResult) {
-            addAIMessage("⚠️ Temizlik için önce sorgu yapın!", false);
-            return;
-        }
-        addAIMessage("🧹 Veri temizleniyor... Gereksiz alanlar kaldırıldı, veri optimize edildi.", false);
-    }
-    
     function aiHelp() {
-        const help = `📚 **NOVA AI KOMUTLARI**\n\n` +
-            `🎯 **TEMEL:** sorgula, analiz et, formatla, rapor al, özet çıkar\n` +
-            `📊 **VERİ:** csv aktar, excel aktar, istatistik, temizle\n` +
-            `🔍 **ANALİZ:** trend, anomali, tahmin, doğrula, çevir\n` +
-            `💡 **YARDIM:** yardım, komutlar, ne yapabilirsin\n\n` +
-            `✨ 50+ özellik ile sorgularını yönet!`;
+        const help = `📚 NOVA AI Komutları:\n\n🔹 sorgula - Sorguyu çalıştır\n🔹 analiz et - Sonucu analiz et\n🔹 formatla - Veriyi düzenle\n🔹 rapor al - Rapor oluştur\n🔹 csv aktar - CSV dışa aktar\n🔹 indir - TXT indir\n🔹 temizle - Sonuçları temizle`;
         addAIMessage(help, false);
     }
     
     function downloadTxt() {
         if (!lastRawResult) {
-            addAIMessage("⚠️ Önce sorgu yapın!", false);
+            addAIMessage("⚠️ Önce sorgu yap!", false);
             return;
         }
         const blob = new Blob([lastRawResult], {type: "text/plain"});
         const a = document.createElement("a");
         const url = URL.createObjectURL(blob);
-        a.download = `nova_sorgu_${Date.now()}.txt`;
+        a.download = `nova_${Date.now()}.txt`;
         a.href = url;
         a.click();
         URL.revokeObjectURL(url);
-        addAIMessage("📥 Dosya indiriliyor...", false);
+        addAIMessage("📥 İndiriliyor...", false);
     }
     
     function clearResult() {
-        const resultDiv = document.getElementById("resultArea");
-        if (resultDiv) resultDiv.innerHTML = "Sorgu sonucu burada görünecek...";
+        document.getElementById("resultArea").innerHTML = "Sorgu sonucu burada...";
         lastResult = null;
         lastRawResult = "";
-        addAIMessage("🧹 Sonuçlar temizlendi.", false);
+        addAIMessage("🧹 Temizlendi.", false);
     }
     
-    // ========== PANEL RENDER (Her sorgu kendi ekranına) ==========
+    // ========== PANEL RENDER ==========
     function renderQueryPanel() {
-        if (!activeQuery) {
-            document.getElementById("queryPanel").innerHTML = `
-                <div style="text-align: center; padding: 40px 20px;">
-                    <p style="color: cyan; font-size: 0.9rem;">🌀 Menüden bir sorgu seçin</p>
-                    <p style="font-size: 0.7rem; margin-top: 10px;">11 farklı sorgu tipi | Gelişmiş AI asistan</p>
-                </div>
-            `;
-            return;
-        }
-        
         const def = QUERIES[activeQuery];
         const inputsHtml = def.params.map((p, idx) => `
             <div class="input-field">
                 <label>${p.toUpperCase()}</label>
-                <input type="text" id="param_${p}" placeholder="${def.placeholder[idx] || p}" autocomplete="off">
+                <input type="text" id="param_${p}" placeholder="${def.placeholders[idx] || p}" autocomplete="off">
             </div>
         `).join('');
         
@@ -943,22 +679,22 @@
             <div class="input-group">
                 ${inputsHtml}
             </div>
-            <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+            <div class="button-group">
                 <button id="executeQueryBtn">🚀 Sorgula</button>
                 <button id="downloadBtn">📥 İndir</button>
                 <button id="clearBtn">🗑️ Temizle</button>
             </div>
-            <div id="resultArea" class="result-area">Sorgu sonucu burada görünecek...</div>
+            <div id="resultArea" class="result-area">Sorgu sonucu burada...</div>
         `;
         
         document.getElementById("queryPanel").innerHTML = panelHtml;
         
-        document.getElementById("executeQueryBtn")?.addEventListener("click", executeQuery);
-        document.getElementById("downloadBtn")?.addEventListener("click", downloadTxt);
-        document.getElementById("clearBtn")?.addEventListener("click", clearResult);
+        document.getElementById("executeQueryBtn").addEventListener("click", executeQuery);
+        document.getElementById("downloadBtn").addEventListener("click", downloadTxt);
+        document.getElementById("clearBtn").addEventListener("click", clearResult);
     }
     
-    // ========== SIDE MENU (Tüm sorgular burada) ==========
+    // ========== SIDE MENU ==========
     function buildSideMenu() {
         let existing = document.getElementById("sideMenu");
         if (existing) existing.remove();
@@ -972,18 +708,17 @@
                 <h3>🌀 NOVA MENÜ</h3>
                 <div class="close-menu" id="closeMenuBtn">✖</div>
             </div>
-            <div class="menu-category">📌 TÜM SORGULAR (11 ADET)</div>
+            <div class="menu-category">📌 SORGULAR (11)</div>
         `;
         
         for (let [key, val] of Object.entries(QUERIES)) {
             menuHtml += `<div class="menu-item" data-query="${key}">${val.name}</div>`;
         }
         
-        menuHtml += `<div class="menu-category" style="margin-top:20px;">⚙️ AI AKSİYONLAR</div>`;
+        menuHtml += `<div class="menu-category">⚙️ AI AKSİYON</div>`;
         menuHtml += `<div class="menu-item" data-action="analyze">📊 Analiz Et</div>`;
         menuHtml += `<div class="menu-item" data-action="format">🎨 Formatla</div>`;
         menuHtml += `<div class="menu-item" data-action="report">📋 Rapor Al</div>`;
-        menuHtml += `<div class="menu-item" data-action="summary">📝 Özet Çıkar</div>`;
         menuHtml += `<div class="menu-item" data-action="export">📎 CSV Aktar</div>`;
         menuHtml += `<div class="menu-item" data-action="help">❓ Yardım</div>`;
         
@@ -995,7 +730,7 @@
                 activeQuery = el.dataset.query;
                 renderQueryPanel();
                 toggleSideMenu(false);
-                addAIMessage(`🔄 "${QUERIES[activeQuery].name}" moduna geçildi. Parametreleri doldurup sorgulayabilirsiniz.`, false);
+                addAIMessage(`🔄 "${QUERIES[activeQuery].name}" aktif`, false);
             });
         });
         
@@ -1005,14 +740,13 @@
                 if (action === "analyze") analyzeResult();
                 else if (action === "format") formatResult();
                 else if (action === "report") generateReport();
-                else if (action === "summary") generateSummary();
                 else if (action === "export") exportToCSV();
                 else if (action === "help") aiHelp();
                 toggleSideMenu(false);
             });
         });
         
-        document.getElementById("closeMenuBtn")?.addEventListener("click", () => toggleSideMenu(false));
+        document.getElementById("closeMenuBtn").addEventListener("click", () => toggleSideMenu(false));
     }
     
     function toggleSideMenu(open) {
@@ -1031,71 +765,57 @@
     function initAIChat() {
         const aiInput = document.getElementById("aiInput");
         const aiSend = document.getElementById("aiSendBtn");
-        const aiToggle = document.getElementById("aiToggleBtn");
+        const robotBtn = document.getElementById("robotBtn");
         const aiAssistant = document.getElementById("aiAssistant");
+        const aiClose = document.getElementById("aiCloseBtn");
         
-        let isClosed = false;
+        let isOpen = false;
         
-        aiToggle.addEventListener("click", () => {
-            isClosed = !isClosed;
-            if (isClosed) {
-                aiAssistant.classList.add("closed");
-                aiToggle.innerHTML = "▲";
-            } else {
+        robotBtn.addEventListener("click", () => {
+            isOpen = !isOpen;
+            if (isOpen) {
                 aiAssistant.classList.remove("closed");
-                aiToggle.innerHTML = "▼";
+            } else {
+                aiAssistant.classList.add("closed");
             }
         });
         
+        aiClose.addEventListener("click", () => {
+            isOpen = false;
+            aiAssistant.classList.add("closed");
+        });
+        
         aiSend.addEventListener("click", () => {
-            const message = aiInput.value.trim().toLowerCase();
+            const message = aiInput.value.trim();
             if (!message) return;
-            addAIMessage(aiInput.value.trim(), true);
+            addAIMessage(message, true);
             aiInput.value = "";
             
             setTimeout(() => {
-                if (message.includes("sorgula") || message.includes("çalıştır")) executeQuery();
-                else if (message.includes("analiz") || message.includes("incele")) analyzeResult();
-                else if (message.includes("format") || message.includes("düzenle")) formatResult();
-                else if (message.includes("rapor")) generateReport();
-                else if (message.includes("özet")) generateSummary();
-                else if (message.includes("karşılaştır")) compareData();
-                else if (message.includes("csv")) exportToCSV();
-                else if (message.includes("excel")) exportToExcel();
-                else if (message.includes("trend")) trendAnalysis();
-                else if (message.includes("anomali")) anomalyDetection();
-                else if (message.includes("tahmin")) predictData();
-                else if (message.includes("çevir")) translateData();
-                else if (message.includes("doğrula")) validateData();
-                else if (message.includes("istatistik")) getStatistics();
-                else if (message.includes("temizle")) cleanData();
-                else if (message.includes("indir")) downloadTxt();
-                else if (message.includes("yardım") || message.includes("help") || message.includes("komut")) aiHelp();
-                else addAIMessage(`Anladım! Yardım için "yardım" yazabilirsiniz. Aktif sorgu: ${activeQuery ? QUERIES[activeQuery].name : 'Seçilmedi'}`, false);
-            }, 300);
+                const msg = message.toLowerCase();
+                if (msg.includes("sorgula")) executeQuery();
+                else if (msg.includes("analiz")) analyzeResult();
+                else if (msg.includes("format")) formatResult();
+                else if (msg.includes("rapor")) generateReport();
+                else if (msg.includes("csv")) exportToCSV();
+                else if (msg.includes("indir")) downloadTxt();
+                else if (msg.includes("temizle")) clearResult();
+                else if (msg.includes("yardım")) aiHelp();
+                else addAIMessage(`💡 "${QUERIES[activeQuery].name}" aktif. "yardım" yaz.`, false);
+            }, 200);
         });
         
         aiInput.addEventListener("keypress", (e) => {
             if (e.key === "Enter") aiSend.click();
         });
         
-        document.querySelectorAll(".ai-feature-btn, .quick-btn").forEach(btn => {
+        document.querySelectorAll(".quick-btn").forEach(btn => {
             btn.addEventListener("click", () => {
                 const action = btn.dataset.action;
                 if (action === "analyze") analyzeResult();
                 else if (action === "format") formatResult();
                 else if (action === "report") generateReport();
-                else if (action === "summary") generateSummary();
-                else if (action === "compare") compareData();
                 else if (action === "export") exportToCSV();
-                else if (action === "excel") exportToExcel();
-                else if (action === "trend") trendAnalysis();
-                else if (action === "anomaly") anomalyDetection();
-                else if (action === "predict") predictData();
-                else if (action === "translate") translateData();
-                else if (action === "validate") validateData();
-                else if (action === "stats") getStatistics();
-                else if (action === "clean") cleanData();
                 else if (action === "help") aiHelp();
             });
         });
@@ -1104,25 +824,15 @@
     // ========== ARKA PLAN ==========
     function createBackground() {
         const bg = document.getElementById("cosmicBg");
-        for (let i = 0; i < 200; i++) {
+        for (let i = 0; i < 150; i++) {
             const star = document.createElement("div");
             star.className = "star";
-            star.style.width = Math.random() * 2 + "px";
+            star.style.width = Math.random() * 2 + 1 + "px";
             star.style.height = star.style.width;
             star.style.left = Math.random() * 100 + "%";
             star.style.top = Math.random() * 100 + "%";
             star.style.animationDelay = Math.random() * 5 + "s";
             bg.appendChild(star);
-        }
-        
-        for (let i = 0; i < 5; i++) {
-            const nebula = document.createElement("div");
-            nebula.className = "nebula";
-            const colors = ['cyan', 'magenta', 'blue'];
-            nebula.style.background = `radial-gradient(circle, ${colors[i % 3]}, transparent)`;
-            nebula.style.left = Math.random() * 80 + "%";
-            nebula.style.top = Math.random() * 80 + "%";
-            bg.appendChild(nebula);
         }
     }
     
@@ -1153,9 +863,9 @@
         }
     });
     
-    addAIMessage("✨ NOVA AI Ultra sistem aktif! 50+ özellik ile sorgularını yönet. Yardım için 'yardım' yaz.", false);
+    addAIMessage("✨ NOVA AI hazır! Sorgu seç ve başla.", false);
     
-    console.log("%c🌌 NOVA AI | Dünyada Olmayan Ultra Sorgu Paneli!", "color: cyan; font-size: 14px;");
+    console.log("%c🤖 NOVA AI | Mobil Sorgu Paneli Aktif", "color: cyan; font-size: 14px");
 </script>
 </body>
 </html>
