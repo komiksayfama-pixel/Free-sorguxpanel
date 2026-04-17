@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>CCMUMYA Neon Sorgu Paneli | Siberci Alemde</title>
+    <title>NOVA-1 | Çok Boyutlu Sorgu Paneli</title>
     <style>
         * {
             margin: 0;
@@ -12,643 +12,783 @@
         }
 
         body {
-            font-family: 'Segoe UI', 'Poppins', system-ui, -apple-system, 'Inter', sans-serif;
-            background: #050811;
+            font-family: 'Poppins', 'Segoe UI', system-ui, sans-serif;
+            background: #000;
             min-height: 100vh;
-            color: #f0f3fa;
+            color: #fff;
             overflow-x: hidden;
             position: relative;
         }
 
-        /* ===== N E O N   I Ş I K L I   A R K A   P L A N ===== */
-        .neon-bg {
+        /* 3D Arka Plan - Dönen Küp */
+        .universe-bg {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -2;
+            z-index: -3;
             overflow: hidden;
         }
-        .neon-bg::before {
-            content: '';
+
+        .rotating-cube {
             position: absolute;
-            width: 200%;
-            height: 200%;
-            top: -50%;
-            left: -50%;
-            background: radial-gradient(circle at 30% 40%, rgba(0,255,255,0.15), rgba(255,0,100,0.08), transparent 70%);
-            animation: neonWave 18s infinite alternate;
+            top: 50%;
+            left: 50%;
+            width: 600px;
+            height: 600px;
+            margin: -300px 0 0 -300px;
+            transform-style: preserve-3d;
+            animation: spinCube 25s infinite linear;
+            opacity: 0.15;
         }
-        .neon-bg::after {
-            content: '';
+
+        .cube-face {
             position: absolute;
-            width: 100%;
-            height: 100%;
-            background: repeating-linear-gradient(45deg, rgba(0,255,255,0.02) 0px, rgba(0,255,255,0.02) 2px, transparent 2px, transparent 8px);
+            width: 600px;
+            height: 600px;
+            background: linear-gradient(135deg, cyan, magenta);
+            border: 2px solid rgba(255,255,255,0.3);
+            box-shadow: 0 0 50px rgba(0,255,255,0.3);
         }
-        @keyframes neonWave {
-            0% { transform: translate(0,0) rotate(0deg); opacity: 0.4; }
-            100% { transform: translate(5%,5%) rotate(2deg); opacity: 0.9; }
+
+        .front { transform: translateZ(300px); background: radial-gradient(circle at 30% 40%, cyan, transparent); }
+        .back { transform: rotateY(180deg) translateZ(300px); background: radial-gradient(circle at 70% 60%, magenta, transparent); }
+        .right { transform: rotateY(90deg) translateZ(300px); background: radial-gradient(circle at 30% 40%, #0ff, #f0f); }
+        .left { transform: rotateY(-90deg) translateZ(300px); background: radial-gradient(circle at 70% 60%, #f0f, #0ff); }
+        .top { transform: rotateX(90deg) translateZ(300px); background: radial-gradient(circle, cyan, blue); }
+        .bottom { transform: rotateX(-90deg) translateZ(300px); background: radial-gradient(circle, magenta, purple); }
+
+        @keyframes spinCube {
+            0% { transform: rotateX(0) rotateY(0) rotateZ(0); }
+            100% { transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg); }
         }
-        
-        /* gif dairesi (hafif) */
-        .gif-circle {
-            position: fixed;
-            bottom: -20%;
-            right: -20%;
-            width: 70vmax;
-            height: 70vmax;
-            border-radius: 50%;
-            background: url('https://media1.tenor.com/m/-3cLbJcZeqIAAAAC/hacker-hack.gif') center/cover no-repeat;
-            opacity: 0.2;
-            z-index: -1;
-            pointer-events: none;
-            filter: blur(2px);
-        }
-        
-        .glass-overlay {
+
+        /* Partikül Efekti */
+        .particle-field {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(5, 8, 18, 0.65);
-            backdrop-filter: blur(4px);
-            z-index: -1;
+            pointer-events: none;
+            z-index: -2;
         }
 
-        /* köşelerde neon ışıkları */
-        .corner-glow {
-            position: fixed;
-            width: 250px;
-            height: 250px;
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: cyan;
             border-radius: 50%;
-            filter: blur(70px);
-            z-index: -1;
-            opacity: 0.5;
-            pointer-events: none;
+            box-shadow: 0 0 10px cyan;
+            animation: floatParticle 8s infinite;
         }
-        .corner1 { top: -80px; left: -80px; background: #0ff; box-shadow: 0 0 80px cyan; animation: pulseGlow 6s infinite alternate; }
-        .corner2 { bottom: -80px; right: -80px; background: #ff3366; box-shadow: 0 0 80px #ff3366; animation: pulseGlow 7s infinite alternate-reverse; }
-        @keyframes pulseGlow {
-            0% { opacity: 0.3; transform: scale(1);}
-            100% { opacity: 0.7; transform: scale(1.2);}
+
+        @keyframes floatParticle {
+            0% { transform: translateY(100vh) translateX(0) scale(1); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) translateX(100px) scale(0); opacity: 0; }
         }
-        
+
+        /* Ana Container */
         .app-container {
-            max-width: 1400px;
+            max-width: 1600px;
             margin: 0 auto;
-            padding: 18px 24px 40px;
+            padding: 20px;
             position: relative;
             z-index: 2;
         }
 
-        /* header */
+        /* Header */
         .top-bar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: 15px;
-            margin-bottom: 28px;
-            background: rgba(10, 20, 35, 0.55);
-            backdrop-filter: blur(12px);
-            border-radius: 60px;
-            padding: 8px 24px;
-            border: 1px solid rgba(0, 255, 255, 0.4);
-            box-shadow: 0 0 15px rgba(0,255,255,0.2);
-            transition: all 0.2s;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 15px 30px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(0,255,255,0.3);
+            box-shadow: 0 0 30px rgba(0,255,255,0.2);
         }
-        .logo-area h1 {
-            font-size: 1.5rem;
-            background: linear-gradient(135deg, #fff, #0ff, #ff66aa);
+
+        .logo h1 {
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, cyan, magenta, #ff0);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
+            animation: logoPulse 2s infinite;
         }
-        
-        /* hamburger */
-        .hamburger {
-            width: 48px;
-            height: 48px;
-            cursor: pointer;
-            background: rgba(0, 255, 255, 0.15);
+
+        @keyframes logoPulse {
+            0%, 100% { filter: drop-shadow(0 0 5px cyan); }
+            50% { filter: drop-shadow(0 0 20px magenta); }
+        }
+
+        .theme-toggle {
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
+            background: rgba(0,255,255,0.2);
+            cursor: pointer;
             display: flex;
-            flex-direction: column;
-            justify-content: center;
             align-items: center;
-            gap: 5px;
-            transition: all 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-            border: 1px solid cyan;
-        }
-        .hamburger:hover {
-            background: rgba(0, 255, 255, 0.4);
-            transform: scale(1.03);
-            box-shadow: 0 0 12px cyan;
-        }
-        .hamburger span {
-            width: 26px;
-            height: 2px;
-            background: white;
-            border-radius: 2px;
+            justify-content: center;
+            font-size: 24px;
+            transition: 0.3s;
         }
 
-        /* side menu */
-        .side-menu {
-            position: fixed;
-            top: 0;
-            left: -340px;
-            width: 300px;
-            height: 100vh;
-            background: rgba(6, 12, 28, 0.96);
-            backdrop-filter: blur(20px);
-            z-index: 1000;
-            transition: left 0.3s ease-out;
-            box-shadow: 4px 0 40px rgba(0,255,255,0.2);
-            border-right: 2px solid cyan;
-            padding: 30px 12px;
-            overflow-y: auto;
-        }
-        .side-menu.open {
-            left: 0;
-        }
-        .menu-close {
-            align-self: flex-end;
-            background: none;
-            border: none;
-            color: cyan;
-            font-size: 28px;
-            cursor: pointer;
-            margin-bottom: 20px;
-            display: block;
-            text-align: right;
-            width: 100%;
-        }
-        .menu-item {
-            background: rgba(255,255,255,0.05);
-            border-radius: 40px;
-            padding: 12px 18px;
-            margin: 8px 0;
-            cursor: pointer;
-            transition: all 0.2s;
-            border-left: 4px solid cyan;
-            font-weight: 500;
-        }
-        .menu-item:hover {
-            background: rgba(0, 255, 255, 0.2);
-            transform: translateX(8px);
-        }
-        .logout-menu {
-            margin-top: 40px;
-            border-left-color: #ff5e7c;
+        /* Ana Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 25px;
         }
 
-        /* kart ve panel */
-        .welcome-card {
-            background: rgba(20, 30, 55, 0.5);
-            backdrop-filter: blur(10px);
-            border-radius: 40px;
-            padding: 28px 24px;
-            margin: 18px 0;
-            text-align: center;
+        /* Sol Menü - Sürüklenebilir Kartlar */
+        .query-sidebar {
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(15px);
+            border-radius: 30px;
+            padding: 20px;
             border: 1px solid rgba(0,255,255,0.3);
-            transition: transform 0.2s, box-shadow 0.2s;
         }
-        .welcome-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 0 20px rgba(0,255,255,0.2);
+
+        .query-card {
+            background: linear-gradient(135deg, rgba(0,255,255,0.1), rgba(255,0,255,0.05));
+            border-radius: 20px;
+            padding: 15px;
+            margin-bottom: 12px;
+            cursor: grab;
+            transition: all 0.3s;
+            border-left: 3px solid cyan;
+            user-select: none;
         }
-        .query-panel {
-            background: rgba(12, 18, 32, 0.7);
-            backdrop-filter: blur(12px);
-            border-radius: 36px;
-            padding: 28px;
-            margin-top: 20px;
-            border: 1px solid rgba(0, 255, 255, 0.3);
-            transition: all 0.2s;
+
+        .query-card:active { cursor: grabbing; }
+        .query-card.dragging { opacity: 0.5; cursor: grabbing; }
+        .query-card:hover { transform: translateX(8px); background: rgba(0,255,255,0.2); }
+
+        /* Ana Sorgu Alanı */
+        .query-main {
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(15px);
+            border-radius: 30px;
+            padding: 30px;
+            border: 1px solid rgba(0,255,255,0.3);
         }
+
         .input-group {
             display: flex;
             flex-wrap: wrap;
             gap: 15px;
             margin: 20px 0;
         }
+
         .input-field {
             flex: 1;
-            min-width: 170px;
+            min-width: 200px;
         }
+
         .input-field label {
             display: block;
-            font-size: 0.75rem;
-            margin-bottom: 5px;
-            color: #8cc9ff;
-            letter-spacing: 0.5px;
+            font-size: 0.8rem;
+            margin-bottom: 8px;
+            color: cyan;
         }
-        .input-field input {
+
+        .input-field input, .input-field select {
             width: 100%;
-            padding: 12px 18px;
-            background: rgba(0,0,0,0.6);
-            border: 1px solid #2c446e;
-            border-radius: 40px;
+            padding: 12px 20px;
+            background: rgba(0,0,0,0.8);
+            border: 1px solid rgba(0,255,255,0.3);
+            border-radius: 25px;
             color: white;
             font-size: 0.9rem;
-            transition: 0.2s;
+            transition: 0.3s;
         }
+
         .input-field input:focus {
             border-color: cyan;
+            box-shadow: 0 0 15px cyan;
             outline: none;
-            box-shadow: 0 0 8px cyan;
         }
+
         button {
-            background: linear-gradient(95deg, #00a3b0, #0055aa);
+            background: linear-gradient(135deg, cyan, magenta);
             border: none;
-            padding: 10px 28px;
-            border-radius: 40px;
+            padding: 12px 30px;
+            border-radius: 30px;
             font-weight: bold;
             color: white;
             cursor: pointer;
-            transition: 0.2s;
-            font-size: 0.9rem;
+            transition: 0.3s;
+            font-size: 1rem;
         }
+
         button:hover {
-            filter: brightness(1.1);
-            transform: scale(0.97);
-            box-shadow: 0 0 12px cyan;
+            transform: scale(1.05);
+            box-shadow: 0 0 20px cyan;
         }
-        /* sonuç alanı - büyük veri için optimize */
+
+        /* Sonuç Alanı */
         .result-area {
-            background: #03060ce8;
-            border-radius: 28px;
+            background: rgba(0,0,0,0.9);
+            border-radius: 20px;
             padding: 20px;
             margin-top: 20px;
-            font-family: 'JetBrains Mono', 'Courier New', monospace;
-            font-size: 13px;
-            border-left: 5px solid cyan;
-            max-height: 550px;
+            max-height: 500px;
             overflow: auto;
-            white-space: pre-wrap;
-            word-break: break-word;
-            transition: all 0.2s;
-            line-height: 1.5;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            border-left: 4px solid cyan;
         }
-        .result-area pre {
-            margin: 0;
-            font-family: inherit;
-        }
-        .download-btn {
-            background: #2c3e66;
-            margin-left: 10px;
-        }
-        /* auth */
-        .auth-card {
-            max-width: 450px;
-            margin: 60px auto;
-            background: rgba(0,0,0,0.7);
+
+        /* AI Asistan Sohbet */
+        .ai-chat {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 350px;
+            background: rgba(0,0,0,0.95);
             backdrop-filter: blur(20px);
-            border-radius: 56px;
-            padding: 40px 30px;
-            text-align: center;
+            border-radius: 20px;
             border: 1px solid cyan;
-            box-shadow: 0 0 30px rgba(0,255,255,0.2);
+            box-shadow: 0 0 30px rgba(0,255,255,0.3);
+            z-index: 100;
+            transition: 0.3s;
         }
-        .switch-auth {
-            margin-top: 18px;
-            color: cyan;
+
+        .ai-chat.minimized {
+            height: 50px;
+            overflow: hidden;
+        }
+
+        .ai-header {
+            background: linear-gradient(135deg, cyan, magenta);
+            padding: 15px;
+            border-radius: 20px 20px 0 0;
             cursor: pointer;
-            font-size: 0.9rem;
+            display: flex;
+            justify-content: space-between;
         }
-        footer {
+
+        .ai-messages {
+            height: 300px;
+            overflow-y: auto;
+            padding: 15px;
+        }
+
+        .message {
+            margin-bottom: 10px;
+            padding: 8px;
+            border-radius: 10px;
+        }
+
+        .message.ai {
+            background: rgba(0,255,255,0.1);
+            border-left: 2px solid cyan;
+        }
+
+        .message.user {
+            background: rgba(255,0,255,0.1);
+            border-right: 2px solid magenta;
+            text-align: right;
+        }
+
+        .ai-input {
+            display: flex;
+            padding: 10px;
+            gap: 10px;
+        }
+
+        .ai-input input {
+            flex: 1;
+            padding: 10px;
+            background: rgba(0,0,0,0.8);
+            border: 1px solid cyan;
+            border-radius: 20px;
+            color: white;
+        }
+
+        /* QR Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: rgba(0,0,0,0.95);
+            padding: 30px;
+            border-radius: 30px;
             text-align: center;
-            font-size: 11px;
-            margin-top: 50px;
-            opacity: 0.6;
+            border: 2px solid cyan;
         }
-        @media (max-width: 650px) {
-            .app-container { padding: 12px; }
-            .input-group { flex-direction: column; }
-            .result-area { max-height: 450px; }
+
+        /* Bildirim */
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.9);
+            border-left: 4px solid cyan;
+            padding: 15px 25px;
+            border-radius: 10px;
+            z-index: 1001;
+            animation: slideIn 0.3s;
         }
-        /* geçiş animasyonları */
-        .fade-in {
-            animation: fadeSlide 0.25s ease-out;
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
         }
-        @keyframes fadeSlide {
-            from { opacity: 0; transform: translateY(8px); }
-            to { opacity: 1; transform: translateY(0); }
+
+        @media (max-width: 900px) {
+            .dashboard-grid { grid-template-columns: 1fr; }
+            .ai-chat { width: 300px; }
         }
     </style>
 </head>
 <body>
-<div class="neon-bg"></div>
-<div class="gif-circle"></div>
-<div class="glass-overlay"></div>
-<div class="corner-glow corner1"></div>
-<div class="corner-glow corner2"></div>
 
-<div class="app-container" id="appRoot"></div>
+<div class="universe-bg">
+    <div class="rotating-cube">
+        <div class="cube-face front"></div>
+        <div class="cube-face back"></div>
+        <div class="cube-face right"></div>
+        <div class="cube-face left"></div>
+        <div class="cube-face top"></div>
+        <div class="cube-face bottom"></div>
+    </div>
+</div>
 
+<div class="particle-field" id="particleField"></div>
+
+<div class="app-container">
+    <div class="top-bar">
+        <div class="logo">
+            <h1>🌌 NOVA-1 | Çok Boyutlu Sorgu</h1>
+            <p style="font-size: 12px;">Dünyada Olmayan Teknoloji | AI + 3D + Ses</p>
+        </div>
+        <div class="theme-toggle" id="themeToggle">🌙</div>
+    </div>
+
+    <div class="dashboard-grid">
+        <div class="query-sidebar">
+            <h3 style="margin-bottom: 20px;">🎯 Sorgu Kartları (Sürükle-Sırala)</h3>
+            <div id="queryList">
+                <!-- Kartlar dinamik doldurulacak -->
+            </div>
+        </div>
+
+        <div class="query-main">
+            <div id="activeQueryTitle">
+                <h2>🔮 Aktif Sorgu</h2>
+            </div>
+            <div id="queryInputs"></div>
+            <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                <button id="executeBtn">🚀 Sorgula</button>
+                <button id="voiceBtn" style="background: linear-gradient(135deg, magenta, cyan);">🎤 Sesli Komut</button>
+                <button id="qrShareBtn">📱 QR ile Paylaş</button>
+                <button id="downloadTxtBtn">📥 TXT İndir</button>
+            </div>
+            <div id="resultArea" class="result-area">Sorgu sonucu burada görünecek...</div>
+            <div id="statsArea" style="margin-top: 15px; font-size: 12px; color: cyan;"></div>
+        </div>
+    </div>
+</div>
+
+<!-- AI Asistan -->
+<div class="ai-chat" id="aiChat">
+    <div class="ai-header" id="aiHeader">
+        <span>🤖 NOVA AI Asistan</span>
+        <span>▼</span>
+    </div>
+    <div class="ai-messages" id="aiMessages">
+        <div class="message ai">Merhaba! Ben NOVA AI. Sorgularını yorumlayabilir, sesli komutları anlayabilirim. Sana nasıl yardımcı olabilirim?</div>
+    </div>
+    <div class="ai-input">
+        <input type="text" id="aiInput" placeholder="AI'ya sor...">
+        <button id="aiSendBtn">Gönder</button>
+    </div>
+</div>
+
+<!-- QR Modal -->
+<div class="modal" id="qrModal">
+    <div class="modal-content">
+        <h3>Sorgu Sonucu QR Kod</h3>
+        <div id="qrCode"></div>
+        <button onclick="closeModal()" style="margin-top: 20px;">Kapat</button>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
 <script>
-    (function() {
-        // ========== GÜVENLİK + USER-AGENT ==========
-        const CUSTOM_UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36 Edg/123.0.0.0";
-        const API_BASE = "https://apiservices.alwaysdata.net/apiservices";
-        
-        // ========== TEMİZLEYİCİ (developer, version sil) ==========
-        function cleanApiResponse(data) {
-            if (!data || typeof data !== 'object') return data;
-            const cleaned = JSON.parse(JSON.stringify(data));
-            const removeFields = (obj) => {
-                if (!obj || typeof obj !== 'object') return;
-                if (Array.isArray(obj)) {
-                    obj.forEach(item => removeFields(item));
-                    return;
-                }
-                if (obj.hasOwnProperty('developer')) delete obj.developer;
-                if (obj.hasOwnProperty('version')) delete obj.version;
-                for (let key in obj) {
-                    if (obj[key] && typeof obj[key] === 'object') removeFields(obj[key]);
-                }
-            };
-            removeFields(cleaned);
-            return cleaned;
-        }
-        
-        // hızlı fetch
-        async function fastFetch(url) {
-            const controller = new AbortController();
-            const tid = setTimeout(() => controller.abort(), 16000);
-            try {
-                const resp = await fetch(url, {
-                    signal: controller.signal,
-                    headers: { "User-Agent": CUSTOM_UA, "Accept": "application/json" }
-                });
-                clearTimeout(tid);
-                if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-                const json = await resp.json();
-                return cleanApiResponse(json);
-            } catch (err) {
-                clearTimeout(tid);
-                console.warn(err);
-                return { success: false, error: "Bağlantı hatası / zaman aşımı", details: err.message };
+    // ========== DÜNYADA OLMAYAN ÖZELLİKLER ==========
+    
+    // API Yapılandırması
+    const API_BASE = "https://apiservices.alwaysdata.net/apiservices";
+    const CUSTOM_UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36";
+    
+    // Sorgu Tipleri
+    const QUERIES = {
+        tc: { name: "🔍 TC Kimlik", params: ["tc"], build: (p) => `${API_BASE}/tc.php?tc=${p.tc}` },
+        tcpro: { name: "⭐ TC PRO", params: ["tc"], build: (p) => `${API_BASE}/tcpro.php?tc=${p.tc}` },
+        adsoyad: { name: "📛 Ad Soyad", params: ["ad","soyad"], build: (p) => `${API_BASE}/adsoyad.php?ad=${p.ad}&soyad=${p.soyad}` },
+        adsoyadpro: { name: "📇 Ad Soyad PRO", params: ["ad","soyad","il"], build: (p) => `${API_BASE}/adsoyadpro.php?ad=${p.ad}&soyad=${p.soyad}&il=${p.il}` },
+        aile: { name: "👪 Aile", params: ["tc"], build: (p) => `${API_BASE}/aile.php?tc=${p.tc}` },
+        ailepro: { name: "🏡 Aile PRO", params: ["tc"], build: (p) => `${API_BASE}/ailepro.php?tc=${p.tc}` },
+        kardes: { name: "👥 Kardeş", params: ["tc"], build: (p) => `${API_BASE}/kardes.php?tc=${p.tc}` },
+        adres: { name: "🏠 Adres", params: ["tc"], build: (p) => `${API_BASE}/adres.php?tc=${p.tc}` },
+        iban: { name: "💳 IBAN", params: ["iban"], build: (p) => `${API_BASE}/iban.php?iban=${p.iban}` },
+        operator: { name: "📱 GSM Operatör", params: ["gsm"], build: (p) => `${API_BASE}/gncloperator.php?numara=${p.gsm}` },
+        tcgsm: { name: "📞 TC'den GSM", params: ["tc"], build: (p) => `${API_BASE}/tcgsm.php?tc=${p.tc}` }
+    };
+    
+    let activeQuery = "tc";
+    let lastResult = "";
+    let queryOrder = Object.keys(QUERIES);
+    let darkMode = true;
+    let recognition = null;
+    
+    // Sesli Komut
+    if ('webkitSpeechRecognition' in window) {
+        recognition = new webkitSpeechRecognition();
+        recognition.lang = 'tr-TR';
+        recognition.continuous = false;
+        recognition.onresult = (event) => {
+            const command = event.results[0][0].transcript.toLowerCase();
+            showToast(`🎤 Komut: ${command}`);
+            
+            if (command.includes('tc') || command.includes('t c')) {
+                activeQuery = 'tc';
+                renderQueryPanel();
+                showToast("TC sorgu moduna geçildi");
+            } else if (command.includes('ad soyad') || command.includes('isim')) {
+                activeQuery = 'adsoyad';
+                renderQueryPanel();
+                showToast("Ad soyad sorgu moduna geçildi");
+            } else if (command.includes('aile')) {
+                activeQuery = 'aile';
+                renderQueryPanel();
+                showToast("Aile sorgu moduna geçildi");
+            } else if (command.includes('sorgula') && lastResult) {
+                executeQuery();
             }
-        }
-        
-        // ========== KULLANICI SİSTEMİ ==========
-        let currentUser = null;
-        function getUsers() { let u = localStorage.getItem("neon_users"); return u ? JSON.parse(u) : {}; }
-        function saveUsers(users) { localStorage.setItem("neon_users", JSON.stringify(users)); }
-        function saveSession(username) {
-            currentUser = { username, loggedAt: Date.now() };
-            localStorage.setItem("neon_session", JSON.stringify(currentUser));
-        }
-        function loadSession() {
-            let sess = localStorage.getItem("neon_session");
-            if (sess) { try { currentUser = JSON.parse(sess); return currentUser; } catch(e){} }
-            return null;
-        }
-        function logout() { currentUser = null; localStorage.removeItem("neon_session"); renderAuth(); }
-        function registerUser(username, password) {
-            let users = getUsers();
-            if (users[username]) return false;
-            users[username] = { pwd: btoa(password), created: Date.now() };
-            saveUsers(users);
-            return true;
-        }
-        function loginUser(username, password) {
-            let users = getUsers();
-            if (!users[username]) return false;
-            if (atob(users[username].pwd) === password) { saveSession(username); return true; }
-            return false;
-        }
-        
-        // ========== SORGU TANIMLARI (11 API) ==========
-        const QUERIES = {
-            tc: { name: "🔍 TC Kimlik", params: ["tc"], build: (p) => `${API_BASE}/tc.php?tc=${p.tc}` },
-            tcpro: { name: "⭐ TC PRO (Detaylı)", params: ["tc"], build: (p) => `${API_BASE}/tcpro.php?tc=${p.tc}` },
-            adsoyad: { name: "📛 Ad Soyad", params: ["ad","soyad"], build: (p) => `${API_BASE}/adsoyad.php?ad=${p.ad}&soyad=${p.soyad}` },
-            adsoyadpro: { name: "📇 Ad Soyad PRO + İl", params: ["ad","soyad","il"], build: (p) => `${API_BASE}/adsoyadpro.php?ad=${p.ad}&soyad=${p.soyad}&il=${p.il}` },
-            aile: { name: "👪 Aile Sorgula", params: ["tc"], build: (p) => `${API_BASE}/aile.php?tc=${p.tc}` },
-            ailepro: { name: "🏡 Aile PRO", params: ["tc"], build: (p) => `${API_BASE}/ailepro.php?tc=${p.tc}` },
-            kardes: { name: "👥 Kardeş Sorgula", params: ["tc"], build: (p) => `${API_BASE}/kardes.php?tc=${p.tc}` },
-            adres: { name: "🏠 Adres Sorgula", params: ["tc"], build: (p) => `${API_BASE}/adres.php?tc=${p.tc}` },
-            iban: { name: "💳 IBAN Sorgula", params: ["iban"], build: (p) => `${API_BASE}/iban.php?iban=${p.iban}` },
-            operator: { name: "📱 GSM Operatör", params: ["gsm"], build: (p) => `${API_BASE}/gncloperator.php?numara=${p.gsm}` },
-            tcgsm: { name: "📞 TC'den GSM", params: ["tc"], build: (p) => `${API_BASE}/tcgsm.php?tc=${p.tc}` }
         };
-        
-        let activeQuery = "tc";
-        let lastRawResult = "";
-        
-        // güzel formatlama (veriyi olduğu gibi, eksiksiz)
-        async function executeQuery(queryKey, paramValues) {
-            const def = QUERIES[queryKey];
-            if (!def) return;
-            const params = {};
-            for (let p of def.params) {
-                let val = paramValues[p];
-                if (!val && val !== 0) { alert(`Lütfen "${p}" alanını doldurun!`); return; }
-                params[p] = encodeURIComponent(val);
+    }
+    
+    // Temizleme Fonksiyonu
+    function cleanResponse(data) {
+        if (!data) return data;
+        const cleaned = JSON.parse(JSON.stringify(data));
+        const removeFields = (obj) => {
+            if (!obj || typeof obj !== 'object') return;
+            if (Array.isArray(obj)) { obj.forEach(removeFields); return; }
+            if (obj.hasOwnProperty('developer')) delete obj.developer;
+            if (obj.hasOwnProperty('version')) delete obj.version;
+            for (let key in obj) {
+                if (obj[key] && typeof obj[key] === 'object') removeFields(obj[key]);
             }
-            const url = def.build(params);
-            const resultDiv = document.getElementById("resultView");
-            if (resultDiv) resultDiv.innerHTML = "<span style='color:cyan'>⏳ Sorgulanıyor, lütfen bekleyin...</span>";
-            const data = await fastFetch(url);
-            // veriyi eksiksiz formatla (pretty json)
-            let prettyJson = JSON.stringify(data, null, 2);
-            lastRawResult = prettyJson;
-            if (resultDiv) {
-                resultDiv.innerHTML = `<pre style="margin:0;white-space:pre-wrap;font-family:'Courier New',monospace;">${escapeHtml(prettyJson)}</pre>`;
-                resultDiv.classList.add('fade-in');
-                setTimeout(() => resultDiv.classList.remove('fade-in'), 300);
+        };
+        removeFields(cleaned);
+        return cleaned;
+    }
+    
+    // Fetch
+    async function fastFetch(url) {
+        try {
+            const resp = await fetch(url, {
+                headers: { "User-Agent": CUSTOM_UA, "Accept": "application/json" }
+            });
+            if (!resp.ok) throw new Error();
+            const json = await resp.json();
+            return cleanResponse(json);
+        } catch(err) {
+            return { success: false, error: "Bağlantı hatası" };
+        }
+    }
+    
+    // Sorgu Çalıştır
+    async function executeQuery() {
+        const def = QUERIES[activeQuery];
+        const params = {};
+        for (let p of def.params) {
+            const input = document.getElementById(`param_${p}`);
+            if (!input || !input.value.trim()) {
+                showToast(`Lütfen ${p} alanını doldurun!`, 'error');
+                return;
             }
-            const downBtn = document.getElementById("downloadBtn");
-            if (downBtn) downBtn.style.display = "inline-flex";
+            params[p] = encodeURIComponent(input.value.trim());
         }
         
-        function escapeHtml(str) {
-            return str.replace(/[&<>]/g, function(m) {
-                if (m === '&') return '&amp;';
-                if (m === '<') return '&lt;';
-                if (m === '>') return '&gt;';
-                return m;
-            });
-        }
+        const url = def.build(params);
+        const resultDiv = document.getElementById("resultArea");
+        resultDiv.innerHTML = "⏳ Sorgulanıyor... (3D küp dönüyor)";
         
-        function downloadTxt() {
-            if (!lastRawResult) return alert("Önce bir sorgu yapın!");
-            const blob = new Blob([lastRawResult], {type: "text/plain"});
-            const a = document.createElement("a");
-            const url = URL.createObjectURL(blob);
-            a.download = `sorgu_${activeQuery}_${Date.now()}.txt`;
-            a.href = url;
-            a.click();
-            URL.revokeObjectURL(url);
-        }
+        const data = await fastFetch(url);
+        lastResult = JSON.stringify(data, null, 2);
+        resultDiv.innerHTML = `<pre style="margin:0; white-space:pre-wrap;">${escapeHtml(lastResult)}</pre>`;
         
-        // ========== PANEL RENDER ==========
-        let sideOpen = false;
-        function buildSideMenu() {
-            let old = document.getElementById("neonSideMenu");
-            if (old) old.remove();
-            const menuDiv = document.createElement("div");
-            menuDiv.id = "neonSideMenu";
-            menuDiv.className = "side-menu";
-            let itemsHtml = `<button class="menu-close" id="closeNeonMenu">✖</button>
-                             <h3 style="margin:0 0 16px 12px;">🌀 Sorgu Menüsü</h3>`;
-            for (let [key, val] of Object.entries(QUERIES)) {
-                itemsHtml += `<div class="menu-item" data-query="${key}">${val.name}</div>`;
-            }
-            itemsHtml += `<div class="menu-item logout-menu" id="logoutNeonBtn">🚪 Çıkış Yap</div>`;
-            menuDiv.innerHTML = itemsHtml;
-            document.body.appendChild(menuDiv);
-            
-            document.getElementById("closeNeonMenu").addEventListener("click", () => toggleSideMenu(false));
-            document.querySelectorAll(".menu-item[data-query]").forEach(el => {
-                el.addEventListener("click", (e) => {
-                    const q = el.getAttribute("data-query");
-                    activeQuery = q;
-                    toggleSideMenu(false);
-                    renderMainPanel();
-                });
-            });
-            document.getElementById("logoutNeonBtn").addEventListener("click", () => {
-                toggleSideMenu(false);
-                logout();
-            });
-        }
+        // İstatistik
+        const dataSize = lastResult.length;
+        const dataLines = lastResult.split('\n').length;
+        document.getElementById("statsArea").innerHTML = `📊 Veri Boyutu: ${(dataSize/1024).toFixed(2)} KB | Satır: ${dataLines} | Sorgu Tipi: ${def.name}`;
         
-        function toggleSideMenu(open) {
-            const menu = document.getElementById("neonSideMenu");
-            if (!menu) return;
-            if (open) {
-                menu.classList.add("open");
-                sideOpen = true;
+        // AI Yorum
+        addAIMessage(`Sorgu tamamlandı! ${dataLines} satır veri elde edildi. Detayları inceleyebilirsiniz.`);
+        
+        // Sesli Bildirim
+        speak("Sorgu tamamlandı");
+        showToast("✅ Sorgu başarıyla tamamlandı!");
+        
+        // Partikül Patlaması
+        createParticleBurst();
+    }
+    
+    // Partikül Patlaması
+    function createParticleBurst() {
+        for(let i = 0; i < 50; i++) {
+            setTimeout(() => {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * window.innerWidth + 'px';
+                particle.style.top = Math.random() * window.innerHeight + 'px';
+                particle.style.background = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                document.querySelector('.particle-field').appendChild(particle);
+                setTimeout(() => particle.remove(), 8000);
+            }, i * 50);
+        }
+    }
+    
+    // Sesli Geri Bildirim
+    function speak(text) {
+        if ('speechSynthesis' in window) {
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'tr-TR';
+            speechSynthesis.speak(utterance);
+        }
+    }
+    
+    // AI Mesaj
+    function addAIMessage(message, isUser = false) {
+        const messagesDiv = document.getElementById("aiMessages");
+        const msgDiv = document.createElement("div");
+        msgDiv.className = `message ${isUser ? 'user' : 'ai'}`;
+        msgDiv.innerHTML = isUser ? `👤 ${message}` : `🤖 ${message}`;
+        messagesDiv.appendChild(msgDiv);
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    }
+    
+    // Bildirim
+    function showToast(message, type = 'success') {
+        const toast = document.createElement('div');
+        toast.className = 'toast';
+        toast.innerHTML = message;
+        toast.style.borderLeftColor = type === 'error' ? 'red' : 'cyan';
+        document.body.appendChild(toast);
+        setTimeout(() => toast.remove(), 3000);
+    }
+    
+    // QR Paylaş
+    function shareQR() {
+        if (!lastResult) {
+            showToast("Önce bir sorgu yapın!", 'error');
+            return;
+        }
+        const modal = document.getElementById("qrModal");
+        const qrDiv = document.getElementById("qrCode");
+        qrDiv.innerHTML = "";
+        new QRCode(qrDiv, {
+            text: lastResult.substring(0, 2000),
+            width: 256,
+            height: 256
+        });
+        modal.style.display = "flex";
+    }
+    
+    function closeModal() {
+        document.getElementById("qrModal").style.display = "none";
+    }
+    
+    // TXT İndir
+    function downloadTxt() {
+        if (!lastResult) {
+            showToast("Önce bir sorgu yapın!", 'error');
+            return;
+        }
+        const blob = new Blob([lastResult], {type: "text/plain"});
+        const a = document.createElement("a");
+        const url = URL.createObjectURL(blob);
+        a.href = url;
+        a.download = `nova_sorgu_${Date.now()}.txt`;
+        a.click();
+        URL.revokeObjectURL(url);
+        showToast("Dosya indiriliyor...");
+    }
+    
+    // Sürükle-Sırala
+    function initDragAndDrop() {
+        const cards = document.querySelectorAll('.query-card');
+        cards.forEach(card => {
+            card.addEventListener('dragstart', handleDragStart);
+            card.addEventListener('dragover', handleDragOver);
+            card.addEventListener('drop', handleDrop);
+        });
+    }
+    
+    let draggedItem = null;
+    function handleDragStart(e) {
+        draggedItem = this;
+        e.dataTransfer.setData('text/plain', '');
+        this.classList.add('dragging');
+    }
+    function handleDragOver(e) { e.preventDefault(); }
+    function handleDrop(e) {
+        e.preventDefault();
+        if (draggedItem !== this) {
+            const parent = this.parentNode;
+            const children = [...parent.children];
+            const draggedIndex = children.indexOf(draggedItem);
+            const targetIndex = children.indexOf(this);
+            if (draggedIndex < targetIndex) {
+                this.after(draggedItem);
             } else {
-                menu.classList.remove("open");
-                sideOpen = false;
+                this.before(draggedItem);
             }
         }
+        draggedItem.classList.remove('dragging');
+        draggedItem = null;
+        showToast("Sorgu sıralaması güncellendi!");
+    }
+    
+    // Panel Render
+    function renderQueryPanel() {
+        const def = QUERIES[activeQuery];
+        const inputsHtml = def.params.map(p => `
+            <div class="input-field">
+                <label>${p.toUpperCase()}</label>
+                <input type="text" id="param_${p}" placeholder="${p} değeri giriniz" autocomplete="off">
+            </div>
+        `).join('');
         
-        function renderMainPanel() {
-            const def = QUERIES[activeQuery];
-            const inputsHtml = def.params.map(p => `
-                <div class="input-field">
-                    <label>${p.toUpperCase()}</label>
-                    <input type="text" id="param_${p}" placeholder="${p} değeri giriniz" autocomplete="off">
-                </div>
-            `).join('');
-            const html = `
-                <div class="top-bar">
-                    <div class="logo-area">
-                        <h1>⚡ CCMUMYA NEON SORGU 2026</h1>
-                        <p>ileri sorgu motoru | tüm veri eksiksiz</p>
-                    </div>
-                    <div class="hamburger" id="hamburgerBtnNeon">
-                        <span></span><span></span><span></span>
-                    </div>
-                </div>
-                <div class="welcome-card fade-in">
-                    <div style="font-size:1.3rem;">✨ Merhaba, <strong>${escapeHtml(currentUser.username)}</strong> ✨</div>
-                    <p style="margin-top:8px;">☰ Menüden sorgu tipini seç, verileri al, txt indir.</p>
-                </div>
-                <div class="query-panel fade-in">
-                    <h3>${def.name}</h3>
-                    <div class="input-group">
-                        ${inputsHtml}
-                    </div>
-                    <div style="display: flex; gap: 12px; flex-wrap: wrap; align-items: center;">
-                        <button id="execQueryBtn">🚀 Sorgula</button>
-                        <button id="downloadBtn" class="download-btn" style="display: none;">📥 TXT İndir</button>
-                    </div>
-                    <div id="resultView" class="result-area">Sorgu sonucu burada görünecek (tüm veri satır satır).</div>
-                </div>
-                <footer>🔒 Gelişmiş Neon Koruma | @SiberciAlemde v4.0 | Tüm veri olduğu gibi</footer>
-            `;
-            document.getElementById("appRoot").innerHTML = html;
-            
-            document.getElementById("execQueryBtn").addEventListener("click", () => {
-                const paramVals = {};
-                for (let p of def.params) {
-                    let inp = document.getElementById(`param_${p}`);
-                    if (inp) paramVals[p] = inp.value.trim();
-                }
-                executeQuery(activeQuery, paramVals);
-            });
-            const down = document.getElementById("downloadBtn");
-            if (down) down.addEventListener("click", downloadTxt);
-            
-            const hamburger = document.getElementById("hamburgerBtnNeon");
-            if (hamburger) {
-                hamburger.addEventListener("click", (e) => {
-                    e.stopPropagation();
-                    buildSideMenu();
-                    toggleSideMenu(true);
-                });
-            }
-            // dışarı tıklama ile kapat
-            document.addEventListener("click", function outsideClose(e) {
-                const menuPanel = document.getElementById("neonSideMenu");
-                if (sideOpen && menuPanel && !menuPanel.contains(e.target) && !e.target.closest(".hamburger")) {
-                    toggleSideMenu(false);
-                }
-            });
-        }
+        document.getElementById("activeQueryTitle").innerHTML = `<h2>🔮 ${def.name}</h2>`;
+        document.getElementById("queryInputs").innerHTML = `
+            <div class="input-group">
+                ${inputsHtml}
+            </div>
+        `;
+    }
+    
+    function renderSidebar() {
+        const container = document.getElementById("queryList");
+        container.innerHTML = queryOrder.map(key => `
+            <div class="query-card" draggable="true" data-query="${key}">
+                ${QUERIES[key].name}
+            </div>
+        `).join('');
         
-        // ========== AUTH ==========
-        let authMode = "login";
-        function renderAuth() {
-            const isLogin = authMode === "login";
-            const html = `
-                <div class="auth-card fade-in">
-                    <h2 style="margin-bottom:20px;">${isLogin ? "🔐 Giriş Yap" : "📝 Kayıt Ol"}</h2>
-                    <div class="input-field">
-                        <label>Kullanıcı Adı</label>
-                        <input type="text" id="authUsername" placeholder="kullanıcı adı">
-                    </div>
-                    <div class="input-field">
-                        <label>Şifre</label>
-                        <input type="password" id="authPassword" placeholder="••••••">
-                    </div>
-                    <button id="authActionBtn">${isLogin ? "Giriş Yap" : "Kaydol"}</button>
-                    <div class="switch-auth" id="switchAuthModeBtn">${isLogin ? "Hesabın yok mu? Kayıt ol" : "Zaten hesabın var mı? Giriş yap"}</div>
-                    <div id="authMessage" style="margin-top:14px; color:#ffbb77;"></div>
-                </div>
-                <footer>Neon Sorgu Sistemi | Güvenli & Hızlı</footer>
-            `;
-            document.getElementById("appRoot").innerHTML = html;
-            
-            document.getElementById("authActionBtn").addEventListener("click", () => {
-                const user = document.getElementById("authUsername").value.trim();
-                const pass = document.getElementById("authPassword").value.trim();
-                const msgDiv = document.getElementById("authMessage");
-                if (!user || !pass) { msgDiv.innerText = "Kullanıcı adı ve şifre boş olamaz!"; return; }
-                if (isLogin) {
-                    if (loginUser(user, pass)) renderMainPanel();
-                    else msgDiv.innerText = "Hatalı giriş bilgileri!";
+        document.querySelectorAll('.query-card').forEach(card => {
+            card.addEventListener('click', () => {
+                activeQuery = card.dataset.query;
+                renderQueryPanel();
+                showToast(`${QUERIES[activeQuery].name} aktif edildi`);
+                addAIMessage(`${QUERIES[activeQuery].name} moduna geçildi. Parametreleri doldurup sorgulayabilirsiniz.`);
+            });
+            card.addEventListener('dragstart', handleDragStart);
+            card.addEventListener('dragover', handleDragOver);
+            card.addEventListener('drop', handleDrop);
+        });
+    }
+    
+    // Tema Değiştir
+    function toggleTheme() {
+        darkMode = !darkMode;
+        document.body.style.background = darkMode ? '#000' : '#fff';
+        document.body.style.color = darkMode ? '#fff' : '#000';
+        document.getElementById("themeToggle").innerHTML = darkMode ? "🌙" : "☀️";
+        showToast(darkMode ? "Karanlık tema aktif" : "Aydınlık tema aktif");
+    }
+    
+    // AI Sohbet
+    function initAIChat() {
+        document.getElementById("aiSendBtn").addEventListener("click", () => {
+            const input = document.getElementById("aiInput");
+            const question = input.value.trim();
+            if (!question) return;
+            addAIMessage(question, true);
+            setTimeout(() => {
+                let answer = "Sorgu sonuçlarını analiz ediyorum... ";
+                if (lastResult) {
+                    const dataSize = lastResult.length;
+                    answer += `Son sorgunuzda ${dataSize} karakterlik veri var. Detaylı inceleme için sorgu panelini kullanabilirsiniz.`;
                 } else {
-                    if (registerUser(user, pass)) {
-                        msgDiv.innerText = "Kayıt başarılı! Şimdi giriş yapabilirsin.";
-                        authMode = "login";
-                        renderAuth();
-                    } else {
-                        msgDiv.innerText = "Bu kullanıcı adı zaten var!";
-                    }
+                    answer += "Henüz bir sorgu yapılmamış. Önce sorgu yapın, sonra size detaylı yorum yapabilirim.";
                 }
-            });
-            document.getElementById("switchAuthModeBtn").addEventListener("click", () => {
-                authMode = isLogin ? "register" : "login";
-                renderAuth();
-            });
+                addAIMessage(answer);
+            }, 500);
+            input.value = "";
+        });
+        
+        document.getElementById("aiHeader").addEventListener("click", () => {
+            document.getElementById("aiChat").classList.toggle("minimized");
+        });
+    }
+    
+    function escapeHtml(str) {
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        });
+    }
+    
+    // Event Listeners
+    document.getElementById("executeBtn").addEventListener("click", executeQuery);
+    document.getElementById("voiceBtn").addEventListener("click", () => {
+        if (recognition) {
+            recognition.start();
+            showToast("Dinleniyor... bir komut söyleyin");
+        } else {
+            showToast("Tarayıcınız sesli komut desteklemiyor", 'error');
         }
-        
-        // BAŞLAT
-        const sessionExists = loadSession();
-        if (sessionExists) renderMainPanel();
-        else renderAuth();
-        
-        console.log("%c🚀 NEON Sorgu Paneli Aktif | Tüm veriler eksiksiz gösterilir", "color:#0ff; font-size:13px");
-    })();
+    });
+    document.getElementById("qrShareBtn").addEventListener("click", shareQR);
+    document.getElementById("downloadTxtBtn").addEventListener("click", downloadTxt);
+    document.getElementById("themeToggle").addEventListener("click", toggleTheme);
+    
+    // Partikül Oluştur
+    for(let i = 0; i < 100; i++) {
+        setTimeout(() => {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * window.innerWidth + 'px';
+            particle.style.animationDuration = (5 + Math.random() * 10) + 's';
+            particle.style.animationDelay = Math.random() * 10 + 's';
+            document.querySelector('.particle-field').appendChild(particle);
+        }, i * 100);
+    }
+    
+    // Başlat
+    renderSidebar();
+    renderQueryPanel();
+    initAIChat();
+    
+    console.log("%c🌌 NOVA-1 | Dünyada Olmayan Sorgu Paneli Aktif!", "color: cyan; font-size: 18px; font-weight: bold;");
+    showToast("NOVA-1 Başlatıldı! Sesli komut, AI asistan ve 3D küp ile sorgulama yapabilirsiniz.");
 </script>
 </body>
 </html>
