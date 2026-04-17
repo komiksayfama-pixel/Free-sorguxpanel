@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
-    <title>NOVA AI | Mobil Sorgu Paneli</title>
+    <title>NOVA AI | GİF Sorgu Paneli</title>
     <style>
         * {
             margin: 0;
@@ -14,36 +14,56 @@
 
         body {
             font-family: -apple-system, 'Segoe UI', 'Poppins', system-ui, sans-serif;
-            background: radial-gradient(circle at 20% 30%, #0a0a2a, #010105);
+            background: #0a0a2a;
             min-height: 100vh;
             color: #fff;
             overflow-x: hidden;
             position: relative;
         }
 
-        /* Arka Plan - Mobil için optimize */
-        .cosmic-bg {
+        /* ===== ANA GIF ARKA PLAN ===== */
+        .gif-bg {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             z-index: -2;
+            overflow: hidden;
         }
 
-        .star {
+        /* Hamburger Menü Arka Plan GIF */
+        .gif-bg::before {
+            content: '';
             position: absolute;
-            background: white;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://media0.giphy.com/media/v1.Y2lkPTZjMDliOTUydGsxbnc5OGdvZDl1ZmRuaHVpYnB2endxMngwZHAxYWN4NzdycHFvcCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/smGpsxCQzXwDS/giphy.gif') center/cover no-repeat;
+            opacity: 0.15;
+            filter: blur(3px);
+        }
+
+        /* Yuvarlak Daire İçinde GIF - Geçiş Efekti */
+        .circle-gif {
+            position: fixed;
+            width: 280px;
+            height: 280px;
             border-radius: 50%;
-            animation: twinkle 3s infinite;
+            background: url('https://media0.giphy.com/media/v1.Y2lkPTZjMDliOTUydGsxbnc5OGdvZDl1ZmRuaHVpYnB2endxMngwZHAxYWN4NzdycHFvcCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/smGpsxCQzXwDS/giphy.gif') center/cover no-repeat;
+            box-shadow: 0 0 50px rgba(0, 255, 255, 0.5);
+            z-index: -1;
+            pointer-events: none;
+            animation: floatCircle 8s infinite ease-in-out;
         }
 
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.2; }
-            50% { opacity: 0.8; }
+        @keyframes floatCircle {
+            0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.3; }
+            50% { transform: translate(20px, -20px) scale(1.05); opacity: 0.5; }
         }
 
-        /* Ana Container - Mobil Tam Genişlik */
+        /* Ana Container */
         .app-container {
             width: 100%;
             max-width: 100%;
@@ -53,9 +73,9 @@
             z-index: 2;
         }
 
-        /* Header - Küçük ve Şık */
+        /* Header */
         .hero-header {
-            background: rgba(10, 20, 40, 0.5);
+            background: rgba(10, 20, 40, 0.6);
             backdrop-filter: blur(15px);
             border-radius: 28px;
             padding: 20px 16px;
@@ -63,14 +83,15 @@
             margin-bottom: 16px;
             border: 1px solid rgba(0, 255, 255, 0.3);
             position: relative;
+            overflow: hidden;
         }
 
         .hamburger-menu {
             position: absolute;
             top: 12px;
             left: 12px;
-            width: 40px;
-            height: 40px;
+            width: 42px;
+            height: 42px;
             cursor: pointer;
             background: rgba(0, 255, 255, 0.2);
             border-radius: 50%;
@@ -82,10 +103,11 @@
             transition: 0.2s;
             border: 1px solid cyan;
             z-index: 10;
+            backdrop-filter: blur(5px);
         }
 
         .hamburger-menu span {
-            width: 20px;
+            width: 22px;
             height: 2px;
             background: white;
             border-radius: 2px;
@@ -105,20 +127,14 @@
             opacity: 0.8;
         }
 
-        .menu-hint {
-            font-size: 0.65rem;
-            margin-top: 8px;
-            color: cyan;
-        }
-
-        /* Side Menu - Mobil için optimize */
+        /* Side Menu */
         .side-menu {
             position: fixed;
             top: 0;
             left: -280px;
             width: 280px;
             height: 100vh;
-            background: rgba(5, 10, 25, 0.98);
+            background: rgba(5, 10, 25, 0.95);
             backdrop-filter: blur(20px);
             z-index: 2000;
             transition: left 0.3s ease;
@@ -156,7 +172,6 @@
             margin: 15px 0 8px 0;
             color: cyan;
             font-size: 0.7rem;
-            letter-spacing: 1px;
         }
 
         .menu-item {
@@ -168,9 +183,6 @@
             transition: 0.2s;
             border-left: 2px solid cyan;
             font-size: 0.8rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
         }
 
         .menu-item:active {
@@ -178,7 +190,69 @@
             transform: translateX(4px);
         }
 
-        /* Sorgu Paneli - Mobil uyumlu */
+        /* Auth Card */
+        .auth-card {
+            background: rgba(10, 20, 40, 0.7);
+            backdrop-filter: blur(20px);
+            border-radius: 28px;
+            padding: 25px 20px;
+            margin: 30px auto;
+            max-width: 350px;
+            text-align: center;
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .auth-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: cyan;
+        }
+
+        .auth-input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            border-radius: 25px;
+            color: white;
+            font-size: 0.9rem;
+        }
+
+        .auth-btn {
+            background: linear-gradient(135deg, cyan, magenta);
+            width: 100%;
+            padding: 12px;
+            border-radius: 25px;
+            margin-top: 15px;
+        }
+
+        .switch-auth {
+            margin-top: 15px;
+            color: cyan;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+
+        /* Kayıt Butonu Altında GIF Daire */
+        .register-gif {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin: 20px auto 0;
+            background: url('https://media0.giphy.com/media/v1.Y2lkPTZjMDliOTUydGsxbnc5OGdvZDl1ZmRuaHVpYnB2endxMngwZHAxYWN4NzdycHFvcCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/smGpsxCQzXwDS/giphy.gif') center/cover no-repeat;
+            box-shadow: 0 0 20px cyan;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 20px cyan; }
+            50% { transform: scale(1.05); box-shadow: 0 0 35px magenta; }
+        }
+
+        /* Sorgu Paneli */
         .query-panel {
             background: rgba(10, 20, 40, 0.6);
             backdrop-filter: blur(15px);
@@ -189,7 +263,7 @@
         }
 
         .query-title {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             margin-bottom: 15px;
             color: cyan;
         }
@@ -201,17 +275,6 @@
             margin: 15px 0;
         }
 
-        .input-field {
-            width: 100%;
-        }
-
-        .input-field label {
-            display: block;
-            font-size: 0.7rem;
-            margin-bottom: 5px;
-            color: #8cc9ff;
-        }
-
         .input-field input {
             width: 100%;
             padding: 10px 14px;
@@ -220,11 +283,6 @@
             border-radius: 20px;
             color: white;
             font-size: 0.85rem;
-        }
-
-        .input-field input:focus {
-            border-color: cyan;
-            outline: none;
         }
 
         button {
@@ -239,10 +297,6 @@
             margin: 4px;
         }
 
-        button:active {
-            transform: scale(0.97);
-        }
-
         .result-area {
             background: rgba(0, 0, 0, 0.8);
             border-radius: 16px;
@@ -250,14 +304,13 @@
             margin-top: 15px;
             max-height: 350px;
             overflow: auto;
-            font-family: 'Courier New', monospace;
+            font-family: monospace;
             font-size: 10px;
             border-left: 3px solid cyan;
             white-space: pre-wrap;
-            word-break: break-word;
         }
 
-        /* Robot Butonu - Küçük ve Şık */
+        /* Robot Butonu */
         .robot-btn {
             position: fixed;
             bottom: 20px;
@@ -271,20 +324,15 @@
             justify-content: center;
             cursor: pointer;
             z-index: 150;
-            box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
-            transition: 0.2s;
+            box-shadow: 0 0 15px cyan;
             border: 2px solid white;
-        }
-
-        .robot-btn:active {
-            transform: scale(0.95);
         }
 
         .robot-btn span {
             font-size: 32px;
         }
 
-        /* AI Asistan - Açılır Kapanır Mobil Pencere */
+        /* AI Asistan */
         .ai-assistant {
             position: fixed;
             bottom: 85px;
@@ -297,7 +345,6 @@
             border: 1px solid cyan;
             z-index: 140;
             transition: all 0.3s ease;
-            box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
         }
 
         .ai-assistant.closed {
@@ -310,24 +357,10 @@
             border-radius: 20px 20px 0 0;
             display: flex;
             justify-content: space-between;
-            align-items: center;
-        }
-
-        .ai-header h4 {
-            font-size: 0.85rem;
-        }
-
-        .ai-close {
-            background: rgba(255,255,255,0.2);
-            border: none;
-            padding: 4px 12px;
-            border-radius: 15px;
-            font-size: 12px;
-            cursor: pointer;
         }
 
         .ai-messages {
-            height: 300px;
+            height: 280px;
             overflow-y: auto;
             padding: 12px;
         }
@@ -344,17 +377,10 @@
             border-left: 2px solid cyan;
         }
 
-        .ai-message.user {
-            background: rgba(255, 0, 255, 0.1);
-            border-right: 2px solid magenta;
-            text-align: right;
-        }
-
         .ai-input-area {
             display: flex;
             padding: 10px;
             gap: 8px;
-            border-top: 1px solid rgba(0, 255, 255, 0.3);
         }
 
         .ai-input-area input {
@@ -364,7 +390,6 @@
             border: 1px solid cyan;
             border-radius: 20px;
             color: white;
-            font-size: 0.75rem;
         }
 
         .quick-buttons {
@@ -372,7 +397,6 @@
             gap: 6px;
             padding: 8px 10px;
             flex-wrap: wrap;
-            border-top: 1px solid rgba(0, 255, 255, 0.2);
         }
 
         .quick-btn {
@@ -383,11 +407,10 @@
             cursor: pointer;
         }
 
-        .button-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 10px;
+        .logout-btn {
+            background: rgba(255, 0, 100, 0.3);
+            margin-top: 20px;
+            width: 100%;
         }
 
         footer {
@@ -395,57 +418,39 @@
             font-size: 0.6rem;
             margin-top: 20px;
             opacity: 0.5;
-            padding: 10px;
         }
     </style>
 </head>
 <body>
 
-<div class="cosmic-bg" id="cosmicBg"></div>
+<!-- GIF Arka Plan -->
+<div class="gif-bg"></div>
 
-<div class="app-container">
-    <div class="hero-header">
-        <div class="hamburger-menu" id="hamburgerBtn">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-        <div>
-            <h1 class="hero-title">✨ NOVA AI ✨</h1>
-            <p class="hero-subtitle">Dünyada Olmayan Sorgu Teknolojisi</p>
-            <p class="menu-hint">☰ Menüden sorgu seç</p>
-        </div>
-    </div>
+<!-- Hareketli Daire GIF -->
+<div class="circle-gif" style="top: 10%; left: -100px;"></div>
+<div class="circle-gif" style="bottom: 10%; right: -100px; width: 200px; height: 200px; animation-delay: 2s;"></div>
+<div class="circle-gif" style="top: 50%; left: 50%; transform: translate(-50%, -50%); width: 400px; height: 400px; opacity: 0.15; animation: none;"></div>
 
-    <div id="queryPanel" class="query-panel">
-        <!-- Dinamik sorgu paneli -->
-    </div>
-    <footer>🔒 NOVA AI | Gelişmiş Yapay Zeka | Mobil Optimize</footer>
-</div>
+<div class="app-container" id="appRoot"></div>
 
 <!-- Robot Butonu -->
 <div class="robot-btn" id="robotBtn">
     <span>🤖</span>
 </div>
 
-<!-- AI Asistan Açılır Pencere -->
+<!-- AI Asistan -->
 <div class="ai-assistant closed" id="aiAssistant">
     <div class="ai-header">
-        <h4>🧠 NOVA AI Asistan</h4>
-        <button class="ai-close" id="aiCloseBtn">✖</button>
+        <h4>🧠 NOVA AI</h4>
+        <button class="ai-close" id="aiCloseBtn" style="background: none; border: none; color: white;">✖</button>
     </div>
     <div class="ai-messages" id="aiMessages">
-        <div class="ai-message bot">
-            ✨ Merhaba! Ben NOVA AI.<br>
-            📌 Sorgu yap, analiz et, rapor al.<br>
-            💬 "yardım" yazarak komutları gör.
-        </div>
+        <div class="ai-message bot">✨ Merhaba! NOVA AI hazır. Sorgu yap, analiz et, yardım al.</div>
     </div>
     <div class="quick-buttons">
         <div class="quick-btn" data-action="analyze">📊 Analiz</div>
         <div class="quick-btn" data-action="format">🎨 Format</div>
         <div class="quick-btn" data-action="report">📋 Rapor</div>
-        <div class="quick-btn" data-action="export">📎 CSV</div>
         <div class="quick-btn" data-action="help">❓ Yardım</div>
     </div>
     <div class="ai-input-area">
@@ -459,7 +464,6 @@
     const API_BASE = "https://apiservices.alwaysdata.net/apiservices";
     const CUSTOM_UA = "Mozilla/5.0 (iPhone; CPU iPhone OS 16_0 like Mac OS X) AppleWebKit/605.1.15";
     
-    // Tüm Sorgu Tipleri
     const QUERIES = {
         tc: { name: "🔍 TC Kimlik", params: ["tc"], placeholders: ["11 haneli TC"], build: (p) => `${API_BASE}/tc.php?tc=${p.tc}` },
         tcpro: { name: "⭐ TC PRO", params: ["tc"], placeholders: ["11 haneli TC"], build: (p) => `${API_BASE}/tcpro.php?tc=${p.tc}` },
@@ -477,9 +481,56 @@
     let activeQuery = "tc";
     let lastResult = null;
     let lastRawResult = "";
+    let currentUser = null;
     let sideMenuOpen = false;
     
-    // ========== TEMİZLEME ==========
+    // ========== KULLANICI SİSTEMİ ==========
+    function getUsers() {
+        let u = localStorage.getItem("nova_users");
+        return u ? JSON.parse(u) : {};
+    }
+    
+    function saveUsers(users) {
+        localStorage.setItem("nova_users", JSON.stringify(users));
+    }
+    
+    function registerUser(username, password) {
+        let users = getUsers();
+        if (users[username]) return false;
+        users[username] = { pwd: btoa(password), created: Date.now() };
+        saveUsers(users);
+        return true;
+    }
+    
+    function loginUser(username, password) {
+        let users = getUsers();
+        if (!users[username]) return false;
+        if (atob(users[username].pwd) === password) {
+            currentUser = { username, loggedAt: Date.now() };
+            localStorage.setItem("nova_session", JSON.stringify(currentUser));
+            return true;
+        }
+        return false;
+    }
+    
+    function logout() {
+        currentUser = null;
+        localStorage.removeItem("nova_session");
+        renderAuth();
+    }
+    
+    function checkSession() {
+        let sess = localStorage.getItem("nova_session");
+        if (sess) {
+            try {
+                currentUser = JSON.parse(sess);
+                return true;
+            } catch(e) {}
+        }
+        return false;
+    }
+    
+    // ========== API ==========
     function cleanResponse(data) {
         if (!data) return data;
         const cleaned = JSON.parse(JSON.stringify(data));
@@ -509,13 +560,11 @@
         }
     }
     
-    // ========== SORGU ==========
     async function executeQuery() {
         const def = QUERIES[activeQuery];
         const params = {};
         
-        for (let i = 0; i < def.params.length; i++) {
-            const p = def.params[i];
+        for (let p of def.params) {
             const input = document.getElementById(`param_${p}`);
             if (!input || !input.value.trim()) {
                 addAIMessage(`❌ "${p}" alanını doldur!`, false);
@@ -535,9 +584,7 @@
         lastRawResult = JSON.stringify(data, null, 2);
         
         resultDiv.innerHTML = `<pre style="margin:0; white-space:pre-wrap;">${escapeHtml(lastRawResult)}</pre>`;
-        
-        const lines = lastRawResult.split('\n').length;
-        addAIMessage(`✅ Tamamlandı! ${lines} satır veri.`, false);
+        addAIMessage(`✅ Tamamlandı!`, false);
     }
     
     // ========== AI FONKSİYONLARI ==========
@@ -548,105 +595,34 @@
         msgDiv.innerHTML = isUser ? `👤 ${message}` : `🤖 ${message}`;
         messagesDiv.appendChild(msgDiv);
         messagesDiv.scrollTop = messagesDiv.scrollHeight;
-        
-        if (messagesDiv.children.length > 40) {
-            messagesDiv.removeChild(messagesDiv.children[0]);
-        }
     }
     
     function analyzeResult() {
-        if (!lastResult) {
-            addAIMessage("⚠️ Önce sorgu yap!", false);
-            return;
-        }
-        
-        addAIMessage("📊 Analiz ediliyor...", false);
-        
-        setTimeout(() => {
-            const hasData = lastResult.success !== false;
-            const resultCount = lastResult.results ? lastResult.results.length : (lastResult.aile_bilgileri ? lastResult.aile_bilgileri.kayitlar?.length : 0);
-            
-            let analysis = `🔍 Sonuç: ${hasData ? '✅ Başarılı' : '❌ Başarısız'}\n`;
-            analysis += `📦 Boyut: ${(lastRawResult.length/1024).toFixed(1)} KB\n`;
-            analysis += `📄 Kayıt: ${resultCount || '?'}\n`;
-            
-            if (lastResult.results && lastResult.results[0]) {
-                const first = lastResult.results[0];
-                if (first.ADI) analysis += `👤 ${first.ADI} ${first.SOYADI || ''}`;
-            }
-            addAIMessage(analysis, false);
-        }, 300);
+        if (!lastResult) { addAIMessage("⚠️ Önce sorgu yap!", false); return; }
+        addAIMessage(`📊 Boyut: ${(lastRawResult.length/1024).toFixed(1)} KB | ${lastRawResult.split('\n').length} satır`, false);
     }
     
     function formatResult() {
-        if (!lastRawResult) {
-            addAIMessage("⚠️ Önce sorgu yap!", false);
-            return;
-        }
+        if (!lastRawResult) { addAIMessage("⚠️ Önce sorgu yap!", false); return; }
         try {
             const parsed = JSON.parse(lastRawResult);
             const formatted = JSON.stringify(parsed, null, 4);
             document.getElementById("resultArea").innerHTML = `<pre style="margin:0;">${escapeHtml(formatted)}</pre>`;
             addAIMessage("✅ Formatlandı!", false);
-        } catch(e) {
-            addAIMessage("❌ Hata!", false);
-        }
+        } catch(e) { addAIMessage("❌ Hata!", false); }
     }
     
     function generateReport() {
-        if (!lastResult) {
-            addAIMessage("⚠️ Önce sorgu yap!", false);
-            return;
-        }
-        
-        const date = new Date().toLocaleString();
-        let report = `📋 NOVA RAPOR\n══════════\n📅 ${date}\n🔍 ${QUERIES[activeQuery].name}\n📦 ${(lastRawResult.length/1024).toFixed(1)} KB\n📄 ${lastRawResult.split('\n').length} satır`;
-        
-        if (lastResult.results) {
-            report += `\n👥 ${lastResult.results.length} kayıt`;
-        }
-        
-        addAIMessage(report, false);
-    }
-    
-    function exportToCSV() {
-        if (!lastResult || !lastResult.results) {
-            addAIMessage("⚠️ CSV için veri yok!", false);
-            return;
-        }
-        
-        try {
-            const data = lastResult.results;
-            const headers = Object.keys(data[0]);
-            let csv = headers.join(',') + '\n';
-            data.forEach(row => {
-                const values = headers.map(h => `"${(row[h] || '').toString().replace(/"/g, '""')}"`);
-                csv += values.join(',') + '\n';
-            });
-            
-            const blob = new Blob([csv], {type: "text/csv"});
-            const a = document.createElement("a");
-            const url = URL.createObjectURL(blob);
-            a.download = `nova_${Date.now()}.csv`;
-            a.href = url;
-            a.click();
-            URL.revokeObjectURL(url);
-            addAIMessage(`✅ CSV dışa aktarıldı! ${data.length} kayıt`, false);
-        } catch(e) {
-            addAIMessage("❌ CSV hatası!", false);
-        }
+        if (!lastResult) { addAIMessage("⚠️ Önce sorgu yap!", false); return; }
+        addAIMessage(`📋 Rapor: ${QUERIES[activeQuery].name} | ${(lastRawResult.length/1024).toFixed(1)} KB`, false);
     }
     
     function aiHelp() {
-        const help = `📚 NOVA AI Komutları:\n\n🔹 sorgula - Sorguyu çalıştır\n🔹 analiz et - Sonucu analiz et\n🔹 formatla - Veriyi düzenle\n🔹 rapor al - Rapor oluştur\n🔹 csv aktar - CSV dışa aktar\n🔹 indir - TXT indir\n🔹 temizle - Sonuçları temizle`;
-        addAIMessage(help, false);
+        addAIMessage("📚 Komutlar: sorgula | analiz et | formatla | rapor al | yardım", false);
     }
     
     function downloadTxt() {
-        if (!lastRawResult) {
-            addAIMessage("⚠️ Önce sorgu yap!", false);
-            return;
-        }
+        if (!lastRawResult) { addAIMessage("⚠️ Önce sorgu yap!", false); return; }
         const blob = new Blob([lastRawResult], {type: "text/plain"});
         const a = document.createElement("a");
         const url = URL.createObjectURL(blob);
@@ -669,29 +645,28 @@
         const def = QUERIES[activeQuery];
         const inputsHtml = def.params.map((p, idx) => `
             <div class="input-field">
-                <label>${p.toUpperCase()}</label>
                 <input type="text" id="param_${p}" placeholder="${def.placeholders[idx] || p}" autocomplete="off">
             </div>
         `).join('');
         
         const panelHtml = `
             <h3 class="query-title">${def.name}</h3>
-            <div class="input-group">
-                ${inputsHtml}
-            </div>
-            <div class="button-group">
+            <div class="input-group">${inputsHtml}</div>
+            <div style="display: flex; flex-wrap: wrap; gap: 8px;">
                 <button id="executeQueryBtn">🚀 Sorgula</button>
                 <button id="downloadBtn">📥 İndir</button>
                 <button id="clearBtn">🗑️ Temizle</button>
             </div>
             <div id="resultArea" class="result-area">Sorgu sonucu burada...</div>
+            <button id="logoutBtn" class="logout-btn">🚪 Çıkış Yap</button>
         `;
         
-        document.getElementById("queryPanel").innerHTML = panelHtml;
+        document.getElementById("appRoot").innerHTML = panelHtml;
         
         document.getElementById("executeQueryBtn").addEventListener("click", executeQuery);
         document.getElementById("downloadBtn").addEventListener("click", downloadTxt);
         document.getElementById("clearBtn").addEventListener("click", clearResult);
+        document.getElementById("logoutBtn").addEventListener("click", logout);
     }
     
     // ========== SIDE MENU ==========
@@ -719,7 +694,6 @@
         menuHtml += `<div class="menu-item" data-action="analyze">📊 Analiz Et</div>`;
         menuHtml += `<div class="menu-item" data-action="format">🎨 Formatla</div>`;
         menuHtml += `<div class="menu-item" data-action="report">📋 Rapor Al</div>`;
-        menuHtml += `<div class="menu-item" data-action="export">📎 CSV Aktar</div>`;
         menuHtml += `<div class="menu-item" data-action="help">❓ Yardım</div>`;
         
         menuDiv.innerHTML = menuHtml;
@@ -740,7 +714,6 @@
                 if (action === "analyze") analyzeResult();
                 else if (action === "format") formatResult();
                 else if (action === "report") generateReport();
-                else if (action === "export") exportToCSV();
                 else if (action === "help") aiHelp();
                 toggleSideMenu(false);
             });
@@ -761,6 +734,59 @@
         }
     }
     
+    // ========== AUTH RENDER ==========
+    let authMode = "login";
+    
+    function renderAuth() {
+        const isLogin = authMode === "login";
+        const html = `
+            <div class="auth-card">
+                <h3>${isLogin ? "🔐 GİRİŞ YAP" : "📝 KAYIT OL"}</h3>
+                <input type="text" id="authUser" class="auth-input" placeholder="Kullanıcı Adı">
+                <input type="password" id="authPass" class="auth-input" placeholder="Şifre">
+                <button class="auth-btn" id="authBtn">${isLogin ? "Giriş Yap" : "Kayıt Ol"}</button>
+                <div class="switch-auth" id="switchAuth">${isLogin ? "Hesabın yok mu? Kayıt ol" : "Zaten hesabın var mı? Giriş yap"}</div>
+                <div id="authMsg" style="margin-top: 12px; font-size: 0.75rem; color: #ffaa66;"></div>
+                <div class="register-gif"></div>
+            </div>
+            <footer>🔒 NOVA AI | GIF Sorgu Sistemi</footer>
+        `;
+        
+        document.getElementById("appRoot").innerHTML = html;
+        
+        document.getElementById("authBtn").addEventListener("click", () => {
+            const user = document.getElementById("authUser").value.trim();
+            const pass = document.getElementById("authPass").value.trim();
+            const msgDiv = document.getElementById("authMsg");
+            
+            if (!user || !pass) {
+                msgDiv.innerText = "Kullanıcı adı ve şifre girin!";
+                return;
+            }
+            
+            if (isLogin) {
+                if (loginUser(user, pass)) {
+                    renderQueryPanel();
+                } else {
+                    msgDiv.innerText = "Hatalı giriş!";
+                }
+            } else {
+                if (registerUser(user, pass)) {
+                    msgDiv.innerText = "Kayıt başarılı! Şimdi giriş yapın.";
+                    authMode = "login";
+                    renderAuth();
+                } else {
+                    msgDiv.innerText = "Bu kullanıcı adı zaten var!";
+                }
+            }
+        });
+        
+        document.getElementById("switchAuth").addEventListener("click", () => {
+            authMode = isLogin ? "register" : "login";
+            renderAuth();
+        });
+    }
+    
     // ========== AI ASİSTAN ==========
     function initAIChat() {
         const aiInput = document.getElementById("aiInput");
@@ -773,11 +799,7 @@
         
         robotBtn.addEventListener("click", () => {
             isOpen = !isOpen;
-            if (isOpen) {
-                aiAssistant.classList.remove("closed");
-            } else {
-                aiAssistant.classList.add("closed");
-            }
+            aiAssistant.classList.toggle("closed", !isOpen);
         });
         
         aiClose.addEventListener("click", () => {
@@ -797,11 +819,10 @@
                 else if (msg.includes("analiz")) analyzeResult();
                 else if (msg.includes("format")) formatResult();
                 else if (msg.includes("rapor")) generateReport();
-                else if (msg.includes("csv")) exportToCSV();
                 else if (msg.includes("indir")) downloadTxt();
                 else if (msg.includes("temizle")) clearResult();
                 else if (msg.includes("yardım")) aiHelp();
-                else addAIMessage(`💡 "${QUERIES[activeQuery].name}" aktif. "yardım" yaz.`, false);
+                else addAIMessage(`💬 "${QUERIES[activeQuery].name}" aktif. "yardım" yaz.`, false);
             }, 200);
         });
         
@@ -815,25 +836,9 @@
                 if (action === "analyze") analyzeResult();
                 else if (action === "format") formatResult();
                 else if (action === "report") generateReport();
-                else if (action === "export") exportToCSV();
                 else if (action === "help") aiHelp();
             });
         });
-    }
-    
-    // ========== ARKA PLAN ==========
-    function createBackground() {
-        const bg = document.getElementById("cosmicBg");
-        for (let i = 0; i < 150; i++) {
-            const star = document.createElement("div");
-            star.className = "star";
-            star.style.width = Math.random() * 2 + 1 + "px";
-            star.style.height = star.style.width;
-            star.style.left = Math.random() * 100 + "%";
-            star.style.top = Math.random() * 100 + "%";
-            star.style.animationDelay = Math.random() * 5 + "s";
-            bg.appendChild(star);
-        }
     }
     
     function escapeHtml(str) {
@@ -846,12 +851,16 @@
     }
     
     // ========== BAŞLAT ==========
-    createBackground();
-    renderQueryPanel();
+    if (checkSession()) {
+        renderQueryPanel();
+    } else {
+        renderAuth();
+    }
+    
     buildSideMenu();
     initAIChat();
     
-    document.getElementById("hamburgerBtn").addEventListener("click", () => {
+    document.getElementById("hamburgerBtn")?.addEventListener("click", () => {
         buildSideMenu();
         toggleSideMenu(true);
     });
@@ -863,9 +872,7 @@
         }
     });
     
-    addAIMessage("✨ NOVA AI hazır! Sorgu seç ve başla.", false);
-    
-    console.log("%c🤖 NOVA AI | Mobil Sorgu Paneli Aktif", "color: cyan; font-size: 14px");
+    console.log("%c🤖 NOVA AI | GIF Sorgu Paneli Aktif", "color: cyan; font-size: 14px");
 </script>
 </body>
 </html>
