@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
-    <title>NOVA AI | GİF Sorgu Paneli</title>
+    <title>NOVA AI | Mobil GIF Panel</title>
     <style>
         * {
             margin: 0;
@@ -21,7 +21,7 @@
             position: relative;
         }
 
-        /* ===== ANA GIF ARKA PLAN ===== */
+        /* ===== TEK GIF - ARKA PLAN ===== */
         .gif-bg {
             position: fixed;
             top: 0;
@@ -29,69 +29,57 @@
             width: 100%;
             height: 100%;
             z-index: -2;
-            overflow: hidden;
-        }
-
-        /* Hamburger Menü Arka Plan GIF */
-        .gif-bg::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
             background: url('https://media0.giphy.com/media/v1.Y2lkPTZjMDliOTUydGsxbnc5OGdvZDl1ZmRuaHVpYnB2endxMngwZHAxYWN4NzdycHFvcCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/smGpsxCQzXwDS/giphy.gif') center/cover no-repeat;
-            opacity: 0.15;
-            filter: blur(3px);
+            opacity: 0.12;
+            filter: blur(2px);
         }
 
         /* Yuvarlak Daire İçinde GIF - Geçiş Efekti */
         .circle-gif {
             position: fixed;
-            width: 280px;
-            height: 280px;
+            width: 180px;
+            height: 180px;
             border-radius: 50%;
             background: url('https://media0.giphy.com/media/v1.Y2lkPTZjMDliOTUydGsxbnc5OGdvZDl1ZmRuaHVpYnB2endxMngwZHAxYWN4NzdycHFvcCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/smGpsxCQzXwDS/giphy.gif') center/cover no-repeat;
-            box-shadow: 0 0 50px rgba(0, 255, 255, 0.5);
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
             z-index: -1;
             pointer-events: none;
-            animation: floatCircle 8s infinite ease-in-out;
+            animation: floatCircle 6s infinite ease-in-out;
         }
 
         @keyframes floatCircle {
-            0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.3; }
-            50% { transform: translate(20px, -20px) scale(1.05); opacity: 0.5; }
+            0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.25; }
+            50% { transform: translate(15px, -15px) scale(1.03); opacity: 0.4; }
         }
 
-        /* Ana Container */
+        /* Ana Container - Telefon Boyutu */
         .app-container {
             width: 100%;
             max-width: 100%;
             margin: 0;
-            padding: 12px;
+            padding: 10px;
             position: relative;
             z-index: 2;
         }
 
-        /* Header */
+        /* Header - Küçük */
         .hero-header {
-            background: rgba(10, 20, 40, 0.6);
-            backdrop-filter: blur(15px);
-            border-radius: 28px;
-            padding: 20px 16px;
+            background: rgba(10, 20, 40, 0.55);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 12px 12px;
             text-align: center;
-            margin-bottom: 16px;
-            border: 1px solid rgba(0, 255, 255, 0.3);
+            margin-bottom: 12px;
+            border: 1px solid rgba(0, 255, 255, 0.25);
             position: relative;
-            overflow: hidden;
         }
 
         .hamburger-menu {
             position: absolute;
-            top: 12px;
-            left: 12px;
-            width: 42px;
-            height: 42px;
+            top: 8px;
+            left: 10px;
+            width: 36px;
+            height: 36px;
             cursor: pointer;
             background: rgba(0, 255, 255, 0.2);
             border-radius: 50%;
@@ -99,22 +87,21 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            gap: 4px;
+            gap: 3px;
             transition: 0.2s;
             border: 1px solid cyan;
             z-index: 10;
-            backdrop-filter: blur(5px);
         }
 
         .hamburger-menu span {
-            width: 22px;
+            width: 18px;
             height: 2px;
             background: white;
             border-radius: 2px;
         }
 
         .hero-title {
-            font-size: 1.4rem;
+            font-size: 1.1rem;
             background: linear-gradient(135deg, #fff, cyan, magenta);
             -webkit-background-clip: text;
             background-clip: text;
@@ -122,25 +109,31 @@
         }
 
         .hero-subtitle {
-            font-size: 0.7rem;
-            margin-top: 6px;
-            opacity: 0.8;
+            font-size: 0.6rem;
+            margin-top: 4px;
+            opacity: 0.7;
         }
 
-        /* Side Menu */
+        .menu-hint {
+            font-size: 0.55rem;
+            margin-top: 5px;
+            color: cyan;
+        }
+
+        /* Side Menu - Küçük */
         .side-menu {
             position: fixed;
             top: 0;
-            left: -280px;
-            width: 280px;
+            left: -260px;
+            width: 260px;
             height: 100vh;
-            background: rgba(5, 10, 25, 0.95);
-            backdrop-filter: blur(20px);
+            background: rgba(5, 10, 25, 0.97);
+            backdrop-filter: blur(15px);
             z-index: 2000;
             transition: left 0.3s ease;
-            box-shadow: 5px 0 30px rgba(0, 255, 255, 0.2);
+            box-shadow: 3px 0 25px rgba(0, 255, 255, 0.2);
             border-right: 1px solid cyan;
-            padding: 20px 12px;
+            padding: 15px 10px;
             overflow-y: auto;
         }
 
@@ -152,37 +145,37 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
             border-bottom: 1px solid cyan;
         }
 
-        .menu-header h3 {
-            font-size: 1rem;
+        .menu-header h4 {
+            font-size: 0.85rem;
             color: cyan;
         }
 
         .close-menu {
-            font-size: 24px;
+            font-size: 22px;
             cursor: pointer;
             color: cyan;
         }
 
         .menu-category {
-            margin: 15px 0 8px 0;
+            margin: 12px 0 6px 0;
             color: cyan;
-            font-size: 0.7rem;
+            font-size: 0.6rem;
         }
 
         .menu-item {
             background: rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
-            padding: 10px 14px;
-            margin: 6px 0;
+            border-radius: 10px;
+            padding: 8px 12px;
+            margin: 5px 0;
             cursor: pointer;
-            transition: 0.2s;
+            transition: 0.15s;
             border-left: 2px solid cyan;
-            font-size: 0.8rem;
+            font-size: 0.7rem;
         }
 
         .menu-item:active {
@@ -190,133 +183,146 @@
             transform: translateX(4px);
         }
 
-        /* Auth Card */
+        /* Auth Card - Küçük, GIF altta */
         .auth-card {
-            background: rgba(10, 20, 40, 0.7);
-            backdrop-filter: blur(20px);
-            border-radius: 28px;
-            padding: 25px 20px;
-            margin: 30px auto;
-            max-width: 350px;
+            background: rgba(10, 20, 40, 0.65);
+            backdrop-filter: blur(15px);
+            border-radius: 24px;
+            padding: 20px 16px;
+            margin: 20px auto;
+            max-width: 320px;
             text-align: center;
             border: 1px solid rgba(0, 255, 255, 0.3);
-            position: relative;
-            overflow: hidden;
         }
 
-        .auth-card h3 {
-            font-size: 1.3rem;
-            margin-bottom: 20px;
+        .auth-card h4 {
+            font-size: 1rem;
+            margin-bottom: 15px;
             color: cyan;
         }
 
         .auth-input {
             width: 100%;
-            padding: 12px;
-            margin: 10px 0;
+            padding: 8px 12px;
+            margin: 8px 0;
             background: rgba(0, 0, 0, 0.6);
             border: 1px solid rgba(0, 255, 255, 0.3);
-            border-radius: 25px;
+            border-radius: 20px;
             color: white;
-            font-size: 0.9rem;
+            font-size: 0.75rem;
         }
 
         .auth-btn {
             background: linear-gradient(135deg, cyan, magenta);
             width: 100%;
-            padding: 12px;
-            border-radius: 25px;
-            margin-top: 15px;
+            padding: 8px;
+            border-radius: 20px;
+            margin-top: 10px;
+            font-size: 0.75rem;
         }
 
         .switch-auth {
-            margin-top: 15px;
+            margin-top: 10px;
             color: cyan;
             cursor: pointer;
-            font-size: 0.8rem;
+            font-size: 0.65rem;
         }
 
-        /* Kayıt Butonu Altında GIF Daire */
-        .register-gif {
-            width: 100px;
-            height: 100px;
+        /* Kayıt Bölümü Altında GIF - Yuvarlak Daire */
+        .auth-gif {
+            width: 70px;
+            height: 70px;
             border-radius: 50%;
-            margin: 20px auto 0;
+            margin: 15px auto 0;
             background: url('https://media0.giphy.com/media/v1.Y2lkPTZjMDliOTUydGsxbnc5OGdvZDl1ZmRuaHVpYnB2endxMngwZHAxYWN4NzdycHFvcCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/smGpsxCQzXwDS/giphy.gif') center/cover no-repeat;
-            box-shadow: 0 0 20px cyan;
-            animation: pulse 2s infinite;
+            box-shadow: 0 0 15px cyan;
+            animation: authPulse 2s infinite;
         }
 
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); box-shadow: 0 0 20px cyan; }
-            50% { transform: scale(1.05); box-shadow: 0 0 35px magenta; }
+        @keyframes authPulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 10px cyan; }
+            50% { transform: scale(1.05); box-shadow: 0 0 20px magenta; }
         }
 
-        /* Sorgu Paneli */
+        /* Sorgu Paneli - Küçük */
         .query-panel {
             background: rgba(10, 20, 40, 0.6);
-            backdrop-filter: blur(15px);
-            border-radius: 24px;
-            padding: 20px;
-            margin-top: 12px;
-            border: 1px solid rgba(0, 255, 255, 0.3);
+            backdrop-filter: blur(12px);
+            border-radius: 20px;
+            padding: 15px;
+            margin-top: 10px;
+            border: 1px solid rgba(0, 255, 255, 0.25);
         }
 
         .query-title {
-            font-size: 1.1rem;
-            margin-bottom: 15px;
+            font-size: 0.9rem;
+            margin-bottom: 12px;
             color: cyan;
         }
 
         .input-group {
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            margin: 15px 0;
+            gap: 8px;
+            margin: 10px 0;
         }
 
         .input-field input {
             width: 100%;
-            padding: 10px 14px;
+            padding: 8px 12px;
             background: rgba(0, 0, 0, 0.6);
             border: 1px solid rgba(0, 255, 255, 0.3);
-            border-radius: 20px;
+            border-radius: 18px;
             color: white;
-            font-size: 0.85rem;
+            font-size: 0.7rem;
         }
 
         button {
             background: linear-gradient(135deg, cyan, magenta);
             border: none;
-            padding: 10px 20px;
-            border-radius: 25px;
+            padding: 7px 14px;
+            border-radius: 20px;
             font-weight: bold;
             color: white;
             cursor: pointer;
-            font-size: 0.8rem;
-            margin: 4px;
+            font-size: 0.7rem;
+            margin: 3px;
+        }
+
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 10px;
         }
 
         .result-area {
-            background: rgba(0, 0, 0, 0.8);
-            border-radius: 16px;
-            padding: 14px;
-            margin-top: 15px;
-            max-height: 350px;
+            background: rgba(0, 0, 0, 0.85);
+            border-radius: 14px;
+            padding: 10px;
+            margin-top: 12px;
+            max-height: 280px;
             overflow: auto;
             font-family: monospace;
-            font-size: 10px;
-            border-left: 3px solid cyan;
+            font-size: 9px;
+            border-left: 2px solid cyan;
             white-space: pre-wrap;
         }
 
-        /* Robot Butonu */
+        .logout-btn {
+            background: rgba(255, 0, 100, 0.5);
+            width: 100%;
+            margin-top: 12px;
+            padding: 7px;
+        }
+
+        /* Robot Butonu - Küçük */
         .robot-btn {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 55px;
-            height: 55px;
+            bottom: 15px;
+            right: 15px;
+            width: 45px;
+            height: 45px;
             background: linear-gradient(135deg, cyan, magenta);
             border-radius: 50%;
             display: flex;
@@ -324,24 +330,24 @@
             justify-content: center;
             cursor: pointer;
             z-index: 150;
-            box-shadow: 0 0 15px cyan;
-            border: 2px solid white;
+            box-shadow: 0 0 12px cyan;
+            border: 1.5px solid white;
         }
 
         .robot-btn span {
-            font-size: 32px;
+            font-size: 26px;
         }
 
-        /* AI Asistan */
+        /* AI Asistan - Küçük */
         .ai-assistant {
             position: fixed;
-            bottom: 85px;
-            right: 20px;
-            width: calc(100% - 40px);
-            max-width: 350px;
+            bottom: 70px;
+            right: 15px;
+            width: calc(100% - 30px);
+            max-width: 300px;
             background: rgba(5, 10, 25, 0.98);
-            backdrop-filter: blur(20px);
-            border-radius: 20px;
+            backdrop-filter: blur(15px);
+            border-radius: 16px;
             border: 1px solid cyan;
             z-index: 140;
             transition: all 0.3s ease;
@@ -353,23 +359,24 @@
 
         .ai-header {
             background: linear-gradient(135deg, cyan, magenta);
-            padding: 12px 15px;
-            border-radius: 20px 20px 0 0;
+            padding: 8px 12px;
+            border-radius: 16px 16px 0 0;
             display: flex;
             justify-content: space-between;
+            font-size: 0.7rem;
         }
 
         .ai-messages {
-            height: 280px;
+            height: 220px;
             overflow-y: auto;
-            padding: 12px;
+            padding: 10px;
         }
 
         .ai-message {
-            margin-bottom: 8px;
-            padding: 8px 10px;
-            border-radius: 12px;
-            font-size: 0.75rem;
+            margin-bottom: 6px;
+            padding: 6px 8px;
+            border-radius: 10px;
+            font-size: 0.65rem;
         }
 
         .ai-message.bot {
@@ -377,59 +384,60 @@
             border-left: 2px solid cyan;
         }
 
+        .ai-message.user {
+            background: rgba(255, 0, 255, 0.1);
+            border-right: 2px solid magenta;
+            text-align: right;
+        }
+
         .ai-input-area {
             display: flex;
-            padding: 10px;
-            gap: 8px;
+            padding: 8px;
+            gap: 6px;
         }
 
         .ai-input-area input {
             flex: 1;
-            padding: 8px 12px;
+            padding: 6px 10px;
             background: rgba(0, 0, 0, 0.8);
             border: 1px solid cyan;
-            border-radius: 20px;
+            border-radius: 16px;
             color: white;
+            font-size: 0.65rem;
         }
 
         .quick-buttons {
             display: flex;
-            gap: 6px;
-            padding: 8px 10px;
+            gap: 5px;
+            padding: 6px 8px;
             flex-wrap: wrap;
         }
 
         .quick-btn {
             background: rgba(0, 255, 255, 0.2);
-            padding: 4px 10px;
-            border-radius: 15px;
-            font-size: 0.65rem;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.55rem;
             cursor: pointer;
-        }
-
-        .logout-btn {
-            background: rgba(255, 0, 100, 0.3);
-            margin-top: 20px;
-            width: 100%;
         }
 
         footer {
             text-align: center;
-            font-size: 0.6rem;
-            margin-top: 20px;
+            font-size: 0.5rem;
+            margin-top: 15px;
             opacity: 0.5;
+            padding: 8px;
         }
     </style>
 </head>
 <body>
 
-<!-- GIF Arka Plan -->
+<!-- TEK GIF - Arka Plan -->
 <div class="gif-bg"></div>
 
-<!-- Hareketli Daire GIF -->
-<div class="circle-gif" style="top: 10%; left: -100px;"></div>
-<div class="circle-gif" style="bottom: 10%; right: -100px; width: 200px; height: 200px; animation-delay: 2s;"></div>
-<div class="circle-gif" style="top: 50%; left: 50%; transform: translate(-50%, -50%); width: 400px; height: 400px; opacity: 0.15; animation: none;"></div>
+<!-- Yuvarlak Daire GIF - Geçiş Efekti -->
+<div class="circle-gif" style="top: 5%; left: -60px;"></div>
+<div class="circle-gif" style="bottom: 5%; right: -60px; width: 140px; height: 140px; animation-delay: 2s;"></div>
 
 <div class="app-container" id="appRoot"></div>
 
@@ -441,11 +449,11 @@
 <!-- AI Asistan -->
 <div class="ai-assistant closed" id="aiAssistant">
     <div class="ai-header">
-        <h4>🧠 NOVA AI</h4>
-        <button class="ai-close" id="aiCloseBtn" style="background: none; border: none; color: white;">✖</button>
+        <span>🧠 NOVA AI</span>
+        <button class="ai-close" id="aiCloseBtn" style="background: none; border: none; color: white; font-size: 12px;">✖</button>
     </div>
     <div class="ai-messages" id="aiMessages">
-        <div class="ai-message bot">✨ Merhaba! NOVA AI hazır. Sorgu yap, analiz et, yardım al.</div>
+        <div class="ai-message bot">✨ Merhaba! NOVA AI hazır.</div>
     </div>
     <div class="quick-buttons">
         <div class="quick-btn" data-action="analyze">📊 Analiz</div>
@@ -460,22 +468,22 @@
 </div>
 
 <script>
-    // ========== KONFİGÜRASYON ==========
+    // ========== KONFİG ==========
     const API_BASE = "https://apiservices.alwaysdata.net/apiservices";
     const CUSTOM_UA = "Mozilla/5.0 (iPhone; CPU iPhone OS 16_0 like Mac OS X) AppleWebKit/605.1.15";
     
     const QUERIES = {
-        tc: { name: "🔍 TC Kimlik", params: ["tc"], placeholders: ["11 haneli TC"], build: (p) => `${API_BASE}/tc.php?tc=${p.tc}` },
-        tcpro: { name: "⭐ TC PRO", params: ["tc"], placeholders: ["11 haneli TC"], build: (p) => `${API_BASE}/tcpro.php?tc=${p.tc}` },
-        adsoyad: { name: "📛 Ad Soyad", params: ["ad", "soyad"], placeholders: ["Ad", "Soyad"], build: (p) => `${API_BASE}/adsoyad.php?ad=${p.ad}&soyad=${p.soyad}` },
-        adsoyadpro: { name: "📇 Ad Soyad PRO", params: ["ad", "soyad", "il"], placeholders: ["Ad", "Soyad", "İl"], build: (p) => `${API_BASE}/adsoyadpro.php?ad=${p.ad}&soyad=${p.soyad}&il=${p.il}` },
-        aile: { name: "👪 Aile", params: ["tc"], placeholders: ["11 haneli TC"], build: (p) => `${API_BASE}/aile.php?tc=${p.tc}` },
-        ailepro: { name: "🏡 Aile PRO", params: ["tc"], placeholders: ["11 haneli TC"], build: (p) => `${API_BASE}/ailepro.php?tc=${p.tc}` },
-        kardes: { name: "👥 Kardeş", params: ["tc"], placeholders: ["11 haneli TC"], build: (p) => `${API_BASE}/kardes.php?tc=${p.tc}` },
-        adres: { name: "🏠 Adres", params: ["tc"], placeholders: ["11 haneli TC"], build: (p) => `${API_BASE}/adres.php?tc=${p.tc}` },
-        iban: { name: "💳 IBAN", params: ["iban"], placeholders: ["IBAN no"], build: (p) => `${API_BASE}/iban.php?iban=${p.iban}` },
-        operator: { name: "📱 GSM Operatör", params: ["gsm"], placeholders: ["GSM (10 haneli)"], build: (p) => `${API_BASE}/gncloperator.php?numara=${p.gsm}` },
-        tcgsm: { name: "📞 TC'den GSM", params: ["tc"], placeholders: ["11 haneli TC"], build: (p) => `${API_BASE}/tcgsm.php?tc=${p.tc}` }
+        tc: { name: "🔍 TC Kimlik", params: ["tc"], ph: ["11 haneli TC"], build: (p) => `${API_BASE}/tc.php?tc=${p.tc}` },
+        tcpro: { name: "⭐ TC PRO", params: ["tc"], ph: ["11 haneli TC"], build: (p) => `${API_BASE}/tcpro.php?tc=${p.tc}` },
+        adsoyad: { name: "📛 Ad Soyad", params: ["ad","soyad"], ph: ["Ad","Soyad"], build: (p) => `${API_BASE}/adsoyad.php?ad=${p.ad}&soyad=${p.soyad}` },
+        adsoyadpro: { name: "📇 Ad Soyad PRO", params: ["ad","soyad","il"], ph: ["Ad","Soyad","İl"], build: (p) => `${API_BASE}/adsoyadpro.php?ad=${p.ad}&soyad=${p.soyad}&il=${p.il}` },
+        aile: { name: "👪 Aile", params: ["tc"], ph: ["11 haneli TC"], build: (p) => `${API_BASE}/aile.php?tc=${p.tc}` },
+        ailepro: { name: "🏡 Aile PRO", params: ["tc"], ph: ["11 haneli TC"], build: (p) => `${API_BASE}/ailepro.php?tc=${p.tc}` },
+        kardes: { name: "👥 Kardeş", params: ["tc"], ph: ["11 haneli TC"], build: (p) => `${API_BASE}/kardes.php?tc=${p.tc}` },
+        adres: { name: "🏠 Adres", params: ["tc"], ph: ["11 haneli TC"], build: (p) => `${API_BASE}/adres.php?tc=${p.tc}` },
+        iban: { name: "💳 IBAN", params: ["iban"], ph: ["IBAN no"], build: (p) => `${API_BASE}/iban.php?iban=${p.iban}` },
+        operator: { name: "📱 GSM Operatör", params: ["gsm"], ph: ["GSM (10 haneli)"], build: (p) => `${API_BASE}/gncloperator.php?numara=${p.gsm}` },
+        tcgsm: { name: "📞 TC'den GSM", params: ["tc"], ph: ["11 haneli TC"], build: (p) => `${API_BASE}/tcgsm.php?tc=${p.tc}` }
     };
     
     let activeQuery = "tc";
@@ -484,15 +492,12 @@
     let currentUser = null;
     let sideMenuOpen = false;
     
-    // ========== KULLANICI SİSTEMİ ==========
+    // ========== KULLANICI ==========
     function getUsers() {
         let u = localStorage.getItem("nova_users");
         return u ? JSON.parse(u) : {};
     }
-    
-    function saveUsers(users) {
-        localStorage.setItem("nova_users", JSON.stringify(users));
-    }
+    function saveUsers(users) { localStorage.setItem("nova_users", JSON.stringify(users)); }
     
     function registerUser(username, password) {
         let users = getUsers();
@@ -506,7 +511,7 @@
         let users = getUsers();
         if (!users[username]) return false;
         if (atob(users[username].pwd) === password) {
-            currentUser = { username, loggedAt: Date.now() };
+            currentUser = { username };
             localStorage.setItem("nova_session", JSON.stringify(currentUser));
             return true;
         }
@@ -521,12 +526,7 @@
     
     function checkSession() {
         let sess = localStorage.getItem("nova_session");
-        if (sess) {
-            try {
-                currentUser = JSON.parse(sess);
-                return true;
-            } catch(e) {}
-        }
+        if (sess) { try { currentUser = JSON.parse(sess); return true; } catch(e){} }
         return false;
     }
     
@@ -563,7 +563,6 @@
     async function executeQuery() {
         const def = QUERIES[activeQuery];
         const params = {};
-        
         for (let p of def.params) {
             const input = document.getElementById(`param_${p}`);
             if (!input || !input.value.trim()) {
@@ -572,22 +571,18 @@
             }
             params[p] = encodeURIComponent(input.value.trim());
         }
-        
         const url = def.build(params);
         const resultDiv = document.getElementById("resultArea");
         resultDiv.innerHTML = "⏳ Sorgulanıyor...";
-        
         addAIMessage(`🔍 "${def.name}" sorgulanıyor...`, false);
-        
         const data = await fastFetch(url);
         lastResult = data;
         lastRawResult = JSON.stringify(data, null, 2);
-        
         resultDiv.innerHTML = `<pre style="margin:0; white-space:pre-wrap;">${escapeHtml(lastRawResult)}</pre>`;
         addAIMessage(`✅ Tamamlandı!`, false);
     }
     
-    // ========== AI FONKSİYONLARI ==========
+    // ========== AI ==========
     function addAIMessage(message, isUser = true) {
         const messagesDiv = document.getElementById("aiMessages");
         const msgDiv = document.createElement("div");
@@ -595,6 +590,7 @@
         msgDiv.innerHTML = isUser ? `👤 ${message}` : `🤖 ${message}`;
         messagesDiv.appendChild(msgDiv);
         messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        if (messagesDiv.children.length > 30) messagesDiv.removeChild(messagesDiv.children[0]);
     }
     
     function analyzeResult() {
@@ -606,8 +602,7 @@
         if (!lastRawResult) { addAIMessage("⚠️ Önce sorgu yap!", false); return; }
         try {
             const parsed = JSON.parse(lastRawResult);
-            const formatted = JSON.stringify(parsed, null, 4);
-            document.getElementById("resultArea").innerHTML = `<pre style="margin:0;">${escapeHtml(formatted)}</pre>`;
+            document.getElementById("resultArea").innerHTML = `<pre style="margin:0;">${escapeHtml(JSON.stringify(parsed, null, 4))}</pre>`;
             addAIMessage("✅ Formatlandı!", false);
         } catch(e) { addAIMessage("❌ Hata!", false); }
     }
@@ -645,20 +640,33 @@
         const def = QUERIES[activeQuery];
         const inputsHtml = def.params.map((p, idx) => `
             <div class="input-field">
-                <input type="text" id="param_${p}" placeholder="${def.placeholders[idx] || p}" autocomplete="off">
+                <input type="text" id="param_${p}" placeholder="${def.ph[idx] || p}" autocomplete="off">
             </div>
         `).join('');
         
         const panelHtml = `
-            <h3 class="query-title">${def.name}</h3>
-            <div class="input-group">${inputsHtml}</div>
-            <div style="display: flex; flex-wrap: wrap; gap: 8px;">
-                <button id="executeQueryBtn">🚀 Sorgula</button>
-                <button id="downloadBtn">📥 İndir</button>
-                <button id="clearBtn">🗑️ Temizle</button>
+            <div class="hero-header">
+                <div class="hamburger-menu" id="hamburgerBtn">
+                    <span></span><span></span><span></span>
+                </div>
+                <div>
+                    <h2 class="hero-title">✨ NOVA AI ✨</h2>
+                    <p class="hero-subtitle">Gelişmiş Sorgu Paneli</p>
+                    <p class="menu-hint">☰ Menüden sorgu seç</p>
+                </div>
             </div>
-            <div id="resultArea" class="result-area">Sorgu sonucu burada...</div>
-            <button id="logoutBtn" class="logout-btn">🚪 Çıkış Yap</button>
+            <div class="query-panel">
+                <h4 class="query-title">${def.name}</h4>
+                <div class="input-group">${inputsHtml}</div>
+                <div class="button-group">
+                    <button id="executeQueryBtn">🚀 Sorgula</button>
+                    <button id="downloadBtn">📥 İndir</button>
+                    <button id="clearBtn">🗑️ Temizle</button>
+                </div>
+                <div id="resultArea" class="result-area">Sorgu sonucu burada...</div>
+                <button id="logoutBtn" class="logout-btn">🚪 Çıkış Yap</button>
+            </div>
+            <footer>🔒 NOVA AI | Mobil GIF Panel</footer>
         `;
         
         document.getElementById("appRoot").innerHTML = panelHtml;
@@ -667,6 +675,7 @@
         document.getElementById("downloadBtn").addEventListener("click", downloadTxt);
         document.getElementById("clearBtn").addEventListener("click", clearResult);
         document.getElementById("logoutBtn").addEventListener("click", logout);
+        document.getElementById("hamburgerBtn").addEventListener("click", () => { buildSideMenu(); toggleSideMenu(true); });
     }
     
     // ========== SIDE MENU ==========
@@ -678,18 +687,11 @@
         menuDiv.id = "sideMenu";
         menuDiv.className = "side-menu";
         
-        let menuHtml = `
-            <div class="menu-header">
-                <h3>🌀 NOVA MENÜ</h3>
-                <div class="close-menu" id="closeMenuBtn">✖</div>
-            </div>
-            <div class="menu-category">📌 SORGULAR (11)</div>
-        `;
-        
+        let menuHtml = `<div class="menu-header"><h4>🌀 NOVA MENÜ</h4><div class="close-menu" id="closeMenuBtn">✖</div></div>
+                        <div class="menu-category">📌 SORGULAR (11)</div>`;
         for (let [key, val] of Object.entries(QUERIES)) {
             menuHtml += `<div class="menu-item" data-query="${key}">${val.name}</div>`;
         }
-        
         menuHtml += `<div class="menu-category">⚙️ AI AKSİYON</div>`;
         menuHtml += `<div class="menu-item" data-action="analyze">📊 Analiz Et</div>`;
         menuHtml += `<div class="menu-item" data-action="format">🎨 Formatla</div>`;
@@ -725,13 +727,8 @@
     function toggleSideMenu(open) {
         const menu = document.getElementById("sideMenu");
         if (!menu) return;
-        if (open) {
-            menu.classList.add("open");
-            sideMenuOpen = true;
-        } else {
-            menu.classList.remove("open");
-            sideMenuOpen = false;
-        }
+        if (open) { menu.classList.add("open"); sideMenuOpen = true; }
+        else { menu.classList.remove("open"); sideMenuOpen = false; }
     }
     
     // ========== AUTH RENDER ==========
@@ -740,16 +737,22 @@
     function renderAuth() {
         const isLogin = authMode === "login";
         const html = `
+            <div class="hero-header" style="margin-bottom:5px;">
+                <div>
+                    <h2 class="hero-title">✨ NOVA AI ✨</h2>
+                    <p class="hero-subtitle">Gelişmiş Sorgu Paneli</p>
+                </div>
+            </div>
             <div class="auth-card">
-                <h3>${isLogin ? "🔐 GİRİŞ YAP" : "📝 KAYIT OL"}</h3>
+                <h4>${isLogin ? "🔐 GİRİŞ YAP" : "📝 KAYIT OL"}</h4>
                 <input type="text" id="authUser" class="auth-input" placeholder="Kullanıcı Adı">
                 <input type="password" id="authPass" class="auth-input" placeholder="Şifre">
                 <button class="auth-btn" id="authBtn">${isLogin ? "Giriş Yap" : "Kayıt Ol"}</button>
                 <div class="switch-auth" id="switchAuth">${isLogin ? "Hesabın yok mu? Kayıt ol" : "Zaten hesabın var mı? Giriş yap"}</div>
-                <div id="authMsg" style="margin-top: 12px; font-size: 0.75rem; color: #ffaa66;"></div>
-                <div class="register-gif"></div>
+                <div id="authMsg" style="margin-top: 8px; font-size: 0.6rem; color: #ffaa66;"></div>
+                <div class="auth-gif"></div>
             </div>
-            <footer>🔒 NOVA AI | GIF Sorgu Sistemi</footer>
+            <footer>🔒 NOVA AI | Mobil GIF Panel</footer>
         `;
         
         document.getElementById("appRoot").innerHTML = html;
@@ -758,26 +761,16 @@
             const user = document.getElementById("authUser").value.trim();
             const pass = document.getElementById("authPass").value.trim();
             const msgDiv = document.getElementById("authMsg");
-            
-            if (!user || !pass) {
-                msgDiv.innerText = "Kullanıcı adı ve şifre girin!";
-                return;
-            }
-            
+            if (!user || !pass) { msgDiv.innerText = "Kullanıcı adı ve şifre girin!"; return; }
             if (isLogin) {
-                if (loginUser(user, pass)) {
-                    renderQueryPanel();
-                } else {
-                    msgDiv.innerText = "Hatalı giriş!";
-                }
+                if (loginUser(user, pass)) { renderQueryPanel(); }
+                else { msgDiv.innerText = "Hatalı giriş!"; }
             } else {
                 if (registerUser(user, pass)) {
                     msgDiv.innerText = "Kayıt başarılı! Şimdi giriş yapın.";
                     authMode = "login";
                     renderAuth();
-                } else {
-                    msgDiv.innerText = "Bu kullanıcı adı zaten var!";
-                }
+                } else { msgDiv.innerText = "Bu kullanıcı adı zaten var!"; }
             }
         });
         
@@ -794,25 +787,21 @@
         const robotBtn = document.getElementById("robotBtn");
         const aiAssistant = document.getElementById("aiAssistant");
         const aiClose = document.getElementById("aiCloseBtn");
-        
         let isOpen = false;
         
         robotBtn.addEventListener("click", () => {
             isOpen = !isOpen;
             aiAssistant.classList.toggle("closed", !isOpen);
         });
-        
         aiClose.addEventListener("click", () => {
             isOpen = false;
             aiAssistant.classList.add("closed");
         });
-        
         aiSend.addEventListener("click", () => {
             const message = aiInput.value.trim();
             if (!message) return;
             addAIMessage(message, true);
             aiInput.value = "";
-            
             setTimeout(() => {
                 const msg = message.toLowerCase();
                 if (msg.includes("sorgula")) executeQuery();
@@ -825,10 +814,7 @@
                 else addAIMessage(`💬 "${QUERIES[activeQuery].name}" aktif. "yardım" yaz.`, false);
             }, 200);
         });
-        
-        aiInput.addEventListener("keypress", (e) => {
-            if (e.key === "Enter") aiSend.click();
-        });
+        aiInput.addEventListener("keypress", (e) => { if (e.key === "Enter") aiSend.click(); });
         
         document.querySelectorAll(".quick-btn").forEach(btn => {
             btn.addEventListener("click", () => {
@@ -851,19 +837,10 @@
     }
     
     // ========== BAŞLAT ==========
-    if (checkSession()) {
-        renderQueryPanel();
-    } else {
-        renderAuth();
-    }
+    if (checkSession()) { renderQueryPanel(); }
+    else { renderAuth(); }
     
-    buildSideMenu();
     initAIChat();
-    
-    document.getElementById("hamburgerBtn")?.addEventListener("click", () => {
-        buildSideMenu();
-        toggleSideMenu(true);
-    });
     
     document.addEventListener("click", function(e) {
         const menu = document.getElementById("sideMenu");
@@ -872,7 +849,7 @@
         }
     });
     
-    console.log("%c🤖 NOVA AI | GIF Sorgu Paneli Aktif", "color: cyan; font-size: 14px");
+    console.log("%c🤖 NOVA AI | Mobil GIF Panel Aktif", "color: cyan; font-size: 12px");
 </script>
 </body>
 </html>
