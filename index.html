@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>CCMUMYA Sorgu Paneli | Siberci Alemde</title>
+    <title>CCMUMYA Neon Sorgu Paneli | Siberci Alemde</title>
     <style>
         * {
             margin: 0;
@@ -12,16 +12,16 @@
         }
 
         body {
-            font-family: 'Segoe UI', system-ui, -apple-system, 'Inter', sans-serif;
-            background: #0a0f1e;
+            font-family: 'Segoe UI', 'Poppins', system-ui, -apple-system, 'Inter', sans-serif;
+            background: #050811;
             min-height: 100vh;
             color: #f0f3fa;
             overflow-x: hidden;
             position: relative;
         }
 
-        /* ARKA PLAN GIF - DÜZELTİLDİ */
-        .animated-bg {
+        /* ===== N E O N   I Ş I K L I   A R K A   P L A N ===== */
+        .neon-bg {
             position: fixed;
             top: 0;
             left: 0;
@@ -29,47 +29,77 @@
             height: 100%;
             z-index: -2;
             overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            pointer-events: none;
         }
-
+        .neon-bg::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            top: -50%;
+            left: -50%;
+            background: radial-gradient(circle at 30% 40%, rgba(0,255,255,0.15), rgba(255,0,100,0.08), transparent 70%);
+            animation: neonWave 18s infinite alternate;
+        }
+        .neon-bg::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(45deg, rgba(0,255,255,0.02) 0px, rgba(0,255,255,0.02) 2px, transparent 2px, transparent 8px);
+        }
+        @keyframes neonWave {
+            0% { transform: translate(0,0) rotate(0deg); opacity: 0.4; }
+            100% { transform: translate(5%,5%) rotate(2deg); opacity: 0.9; }
+        }
+        
+        /* gif dairesi (hafif) */
         .gif-circle {
-            width: 100vmax;
-            height: 100vmax;
-            max-width: 900px;
-            max-height: 900px;
+            position: fixed;
+            bottom: -20%;
+            right: -20%;
+            width: 70vmax;
+            height: 70vmax;
             border-radius: 50%;
-            /* Çalışan GIF linki - doğrudan mp4 yerine çalışan bir GIF */
             background: url('https://media1.tenor.com/m/-3cLbJcZeqIAAAAC/hacker-hack.gif') center/cover no-repeat;
-            box-shadow: 0 0 50px rgba(0, 255, 255, 0.2);
-            opacity: 0.3;
-            animation: slowPulse 8s infinite ease-in-out;
+            opacity: 0.2;
+            z-index: -1;
+            pointer-events: none;
+            filter: blur(2px);
         }
-
-        @keyframes slowPulse {
-            0% { transform: scale(1); opacity: 0.3; }
-            50% { transform: scale(1.05); opacity: 0.4; }
-            100% { transform: scale(1); opacity: 0.3; }
-        }
-
-        /* basit overlay */
+        
         .glass-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(5, 10, 25, 0.7);
-            backdrop-filter: blur(3px);
+            background: rgba(5, 8, 18, 0.65);
+            backdrop-filter: blur(4px);
             z-index: -1;
         }
 
+        /* köşelerde neon ışıkları */
+        .corner-glow {
+            position: fixed;
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            filter: blur(70px);
+            z-index: -1;
+            opacity: 0.5;
+            pointer-events: none;
+        }
+        .corner1 { top: -80px; left: -80px; background: #0ff; box-shadow: 0 0 80px cyan; animation: pulseGlow 6s infinite alternate; }
+        .corner2 { bottom: -80px; right: -80px; background: #ff3366; box-shadow: 0 0 80px #ff3366; animation: pulseGlow 7s infinite alternate-reverse; }
+        @keyframes pulseGlow {
+            0% { opacity: 0.3; transform: scale(1);}
+            100% { opacity: 0.7; transform: scale(1.2);}
+        }
+        
         .app-container {
-            max-width: 1300px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 16px 20px 30px;
+            padding: 18px 24px 40px;
             position: relative;
             z-index: 2;
         }
@@ -80,70 +110,65 @@
             justify-content: space-between;
             align-items: center;
             gap: 15px;
-            margin-bottom: 25px;
-            background: rgba(15, 25, 45, 0.7);
-            backdrop-filter: blur(10px);
-            border-radius: 50px;
-            padding: 10px 24px;
-            border: 1px solid rgba(0, 255, 255, 0.2);
+            margin-bottom: 28px;
+            background: rgba(10, 20, 35, 0.55);
+            backdrop-filter: blur(12px);
+            border-radius: 60px;
+            padding: 8px 24px;
+            border: 1px solid rgba(0, 255, 255, 0.4);
+            box-shadow: 0 0 15px rgba(0,255,255,0.2);
+            transition: all 0.2s;
         }
-
         .logo-area h1 {
-            font-size: 1.4rem;
-            background: linear-gradient(135deg, #fff, #0ff);
+            font-size: 1.5rem;
+            background: linear-gradient(135deg, #fff, #0ff, #ff66aa);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
         }
-        .logo-area p {
-            font-size: 0.7rem;
-            opacity: 0.7;
-        }
-
-        /* hamburger buton */
+        
+        /* hamburger */
         .hamburger {
-            width: 44px;
-            height: 44px;
+            width: 48px;
+            height: 48px;
             cursor: pointer;
-            background: rgba(0, 255, 255, 0.1);
+            background: rgba(0, 255, 255, 0.15);
             border-radius: 50%;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             gap: 5px;
-            transition: 0.2s;
+            transition: all 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
             border: 1px solid cyan;
         }
         .hamburger:hover {
-            background: rgba(0, 255, 255, 0.3);
-            transform: scale(1.02);
+            background: rgba(0, 255, 255, 0.4);
+            transform: scale(1.03);
+            box-shadow: 0 0 12px cyan;
         }
         .hamburger span {
-            width: 24px;
+            width: 26px;
             height: 2px;
             background: white;
             border-radius: 2px;
         }
 
-        /* SIDEMENU */
+        /* side menu */
         .side-menu {
             position: fixed;
             top: 0;
-            left: -300px;
-            width: 280px;
+            left: -340px;
+            width: 300px;
             height: 100vh;
-            background: rgba(6, 12, 24, 0.96);
-            backdrop-filter: blur(16px);
+            background: rgba(6, 12, 28, 0.96);
+            backdrop-filter: blur(20px);
             z-index: 1000;
-            transition: left 0.25s ease;
-            box-shadow: 2px 0 30px rgba(0,0,0,0.5);
-            border-right: 1px solid cyan;
-            padding: 25px 12px;
+            transition: left 0.3s ease-out;
+            box-shadow: 4px 0 40px rgba(0,255,255,0.2);
+            border-right: 2px solid cyan;
+            padding: 30px 12px;
             overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
         }
         .side-menu.open {
             left: 0;
@@ -153,231 +178,236 @@
             background: none;
             border: none;
             color: cyan;
-            font-size: 26px;
+            font-size: 28px;
             cursor: pointer;
-            margin-bottom: 10px;
+            margin-bottom: 20px;
+            display: block;
+            text-align: right;
+            width: 100%;
         }
         .menu-item {
-            background: rgba(255,255,255,0.04);
+            background: rgba(255,255,255,0.05);
             border-radius: 40px;
-            padding: 10px 16px;
-            margin: 4px 0;
+            padding: 12px 18px;
+            margin: 8px 0;
             cursor: pointer;
-            transition: 0.15s;
-            border-left: 3px solid cyan;
-            font-size: 0.9rem;
+            transition: all 0.2s;
+            border-left: 4px solid cyan;
+            font-weight: 500;
         }
         .menu-item:hover {
-            background: rgba(0, 255, 255, 0.15);
-            transform: translateX(5px);
+            background: rgba(0, 255, 255, 0.2);
+            transform: translateX(8px);
         }
         .logout-menu {
-            margin-top: 30px;
+            margin-top: 40px;
             border-left-color: #ff5e7c;
         }
 
-        /* kart */
+        /* kart ve panel */
         .welcome-card {
-            background: rgba(20, 30, 55, 0.6);
-            backdrop-filter: blur(8px);
-            border-radius: 32px;
-            padding: 25px 24px;
-            margin: 15px 0;
-            text-align: center;
-            border: 1px solid rgba(0,255,255,0.2);
-        }
-
-        .query-panel {
-            background: rgba(12, 18, 32, 0.8);
+            background: rgba(20, 30, 55, 0.5);
             backdrop-filter: blur(10px);
-            border-radius: 32px;
-            padding: 24px;
-            margin-top: 20px;
-            border: 1px solid rgba(0, 255, 255, 0.2);
+            border-radius: 40px;
+            padding: 28px 24px;
+            margin: 18px 0;
+            text-align: center;
+            border: 1px solid rgba(0,255,255,0.3);
+            transition: transform 0.2s, box-shadow 0.2s;
         }
-
+        .welcome-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 20px rgba(0,255,255,0.2);
+        }
+        .query-panel {
+            background: rgba(12, 18, 32, 0.7);
+            backdrop-filter: blur(12px);
+            border-radius: 36px;
+            padding: 28px;
+            margin-top: 20px;
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            transition: all 0.2s;
+        }
         .input-group {
             display: flex;
             flex-wrap: wrap;
-            gap: 12px;
-            margin: 18px 0;
+            gap: 15px;
+            margin: 20px 0;
         }
         .input-field {
             flex: 1;
-            min-width: 160px;
+            min-width: 170px;
         }
         .input-field label {
             display: block;
             font-size: 0.75rem;
             margin-bottom: 5px;
-            color: #7bc5ff;
+            color: #8cc9ff;
+            letter-spacing: 0.5px;
         }
         .input-field input {
             width: 100%;
-            padding: 10px 14px;
+            padding: 12px 18px;
             background: rgba(0,0,0,0.6);
-            border: 1px solid #2c4466;
-            border-radius: 28px;
+            border: 1px solid #2c446e;
+            border-radius: 40px;
             color: white;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
+            transition: 0.2s;
         }
         .input-field input:focus {
             border-color: cyan;
             outline: none;
+            box-shadow: 0 0 8px cyan;
         }
         button {
-            background: linear-gradient(95deg, #009faa, #004c99);
+            background: linear-gradient(95deg, #00a3b0, #0055aa);
             border: none;
-            padding: 10px 24px;
+            padding: 10px 28px;
             border-radius: 40px;
             font-weight: bold;
             color: white;
             cursor: pointer;
-            transition: 0.15s;
-            font-size: 0.85rem;
+            transition: 0.2s;
+            font-size: 0.9rem;
         }
         button:hover {
-            filter: brightness(1.05);
-            transform: scale(0.98);
+            filter: brightness(1.1);
+            transform: scale(0.97);
+            box-shadow: 0 0 12px cyan;
         }
+        /* sonuç alanı - büyük veri için optimize */
         .result-area {
-            background: #03060ce0;
-            border-radius: 24px;
-            padding: 16px;
-            margin-top: 18px;
-            font-family: 'Courier New', monospace;
-            font-size: 12px;
-            border-left: 4px solid cyan;
-            max-height: 400px;
+            background: #03060ce8;
+            border-radius: 28px;
+            padding: 20px;
+            margin-top: 20px;
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            font-size: 13px;
+            border-left: 5px solid cyan;
+            max-height: 550px;
             overflow: auto;
             white-space: pre-wrap;
             word-break: break-word;
+            transition: all 0.2s;
+            line-height: 1.5;
+        }
+        .result-area pre {
+            margin: 0;
+            font-family: inherit;
         }
         .download-btn {
             background: #2c3e66;
-            margin-top: 8px;
-            display: inline-block;
+            margin-left: 10px;
         }
+        /* auth */
         .auth-card {
-            max-width: 400px;
-            margin: 40px auto;
-            background: rgba(0,0,0,0.75);
-            backdrop-filter: blur(12px);
-            border-radius: 48px;
-            padding: 32px 24px;
+            max-width: 450px;
+            margin: 60px auto;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(20px);
+            border-radius: 56px;
+            padding: 40px 30px;
             text-align: center;
+            border: 1px solid cyan;
+            box-shadow: 0 0 30px rgba(0,255,255,0.2);
         }
         .switch-auth {
-            margin-top: 14px;
+            margin-top: 18px;
             color: cyan;
             cursor: pointer;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
         }
         footer {
             text-align: center;
-            font-size: 10px;
-            margin-top: 40px;
-            opacity: 0.5;
+            font-size: 11px;
+            margin-top: 50px;
+            opacity: 0.6;
         }
         @media (max-width: 650px) {
             .app-container { padding: 12px; }
             .input-group { flex-direction: column; }
+            .result-area { max-height: 450px; }
+        }
+        /* geçiş animasyonları */
+        .fade-in {
+            animation: fadeSlide 0.25s ease-out;
+        }
+        @keyframes fadeSlide {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body>
-
-<div class="animated-bg">
-    <div class="gif-circle"></div>
-</div>
+<div class="neon-bg"></div>
+<div class="gif-circle"></div>
 <div class="glass-overlay"></div>
+<div class="corner-glow corner1"></div>
+<div class="corner-glow corner2"></div>
 
 <div class="app-container" id="appRoot"></div>
 
 <script>
     (function() {
-        // ========== GÜVENLİK & PERFORMANS ==========
-        // Özel User-Agent (render dış dünya için)
-        const CUSTOM_UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36";
-        
-        // API BASE
+        // ========== GÜVENLİK + USER-AGENT ==========
+        const CUSTOM_UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36 Edg/123.0.0.0";
         const API_BASE = "https://apiservices.alwaysdata.net/apiservices";
         
-        // ========== FİLTRE: developer ve sürüm temizleme ==========
+        // ========== TEMİZLEYİCİ (developer, version sil) ==========
         function cleanApiResponse(data) {
             if (!data || typeof data !== 'object') return data;
-            // Kopya oluştur (mutasyon yapma)
             const cleaned = JSON.parse(JSON.stringify(data));
-            // Rekürsif silme
             const removeFields = (obj) => {
                 if (!obj || typeof obj !== 'object') return;
                 if (Array.isArray(obj)) {
                     obj.forEach(item => removeFields(item));
                     return;
                 }
-                // silinecek anahtarlar
                 if (obj.hasOwnProperty('developer')) delete obj.developer;
                 if (obj.hasOwnProperty('version')) delete obj.version;
-                // alt nesneler
                 for (let key in obj) {
-                    if (obj[key] && typeof obj[key] === 'object') {
-                        removeFields(obj[key]);
-                    }
+                    if (obj[key] && typeof obj[key] === 'object') removeFields(obj[key]);
                 }
             };
             removeFields(cleaned);
             return cleaned;
         }
         
-        // hızlı fetch (zaman aşımı 15sn)
+        // hızlı fetch
         async function fastFetch(url) {
+            const controller = new AbortController();
+            const tid = setTimeout(() => controller.abort(), 16000);
             try {
-                const controller = new AbortController();
-                const tid = setTimeout(() => controller.abort(), 15000);
                 const resp = await fetch(url, {
                     signal: controller.signal,
-                    headers: {
-                        "User-Agent": CUSTOM_UA,
-                        "Accept": "application/json"
-                    }
+                    headers: { "User-Agent": CUSTOM_UA, "Accept": "application/json" }
                 });
                 clearTimeout(tid);
                 if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
                 const json = await resp.json();
-                // temizle ve döndür
                 return cleanApiResponse(json);
             } catch (err) {
+                clearTimeout(tid);
                 console.warn(err);
-                return { success: false, error: "Bağlantı hatası veya zaman aşımı", message: err.message };
+                return { success: false, error: "Bağlantı hatası / zaman aşımı", details: err.message };
             }
         }
         
-        // ========== KULLANICI YÖNETİMİ ==========
+        // ========== KULLANICI SİSTEMİ ==========
         let currentUser = null;
-        
-        function getUsers() {
-            let u = localStorage.getItem("ccm_users");
-            return u ? JSON.parse(u) : {};
-        }
-        function saveUsers(users) { localStorage.setItem("ccm_users", JSON.stringify(users)); }
-        
+        function getUsers() { let u = localStorage.getItem("neon_users"); return u ? JSON.parse(u) : {}; }
+        function saveUsers(users) { localStorage.setItem("neon_users", JSON.stringify(users)); }
         function saveSession(username) {
             currentUser = { username, loggedAt: Date.now() };
-            localStorage.setItem("ccm_session", JSON.stringify(currentUser));
+            localStorage.setItem("neon_session", JSON.stringify(currentUser));
         }
         function loadSession() {
-            let sess = localStorage.getItem("ccm_session");
-            if (sess) {
-                try { currentUser = JSON.parse(sess); return currentUser; } catch(e) {}
-            }
+            let sess = localStorage.getItem("neon_session");
+            if (sess) { try { currentUser = JSON.parse(sess); return currentUser; } catch(e){} }
             return null;
         }
-        function logout() {
-            currentUser = null;
-            localStorage.removeItem("ccm_session");
-            renderAuth();
-        }
-        
+        function logout() { currentUser = null; localStorage.removeItem("neon_session"); renderAuth(); }
         function registerUser(username, password) {
             let users = getUsers();
             if (users[username]) return false;
@@ -388,56 +418,52 @@
         function loginUser(username, password) {
             let users = getUsers();
             if (!users[username]) return false;
-            if (atob(users[username].pwd) === password) {
-                saveSession(username);
-                return true;
-            }
+            if (atob(users[username].pwd) === password) { saveSession(username); return true; }
             return false;
         }
         
-        // ========== SORGU TANIMLARI (hızlı) ==========
+        // ========== SORGU TANIMLARI (11 API) ==========
         const QUERIES = {
-            tc: { name: "TC Kimlik Sorgula", params: ["tc"], build: (p) => `${API_BASE}/tc.php?tc=${p.tc}` },
-            tcpro: { name: "TC PRO (Detaylı)", params: ["tc"], build: (p) => `${API_BASE}/tcpro.php?tc=${p.tc}` },
-            adsoyad: { name: "Ad Soyad Sorgu", params: ["ad","soyad"], build: (p) => `${API_BASE}/adsoyad.php?ad=${p.ad}&soyad=${p.soyad}` },
-            adsoyadpro: { name: "Ad Soyad PRO (İl)", params: ["ad","soyad","il"], build: (p) => `${API_BASE}/adsoyadpro.php?ad=${p.ad}&soyad=${p.soyad}&il=${p.il}` },
-            aile: { name: "Aile Sorgula", params: ["tc"], build: (p) => `${API_BASE}/aile.php?tc=${p.tc}` },
-            ailepro: { name: "Aile PRO", params: ["tc"], build: (p) => `${API_BASE}/ailepro.php?tc=${p.tc}` },
-            kardes: { name: "Kardeş Sorgula", params: ["tc"], build: (p) => `${API_BASE}/kardes.php?tc=${p.tc}` },
-            adres: { name: "Adres Sorgula", params: ["tc"], build: (p) => `${API_BASE}/adres.php?tc=${p.tc}` },
-            iban: { name: "IBAN Sorgula", params: ["iban"], build: (p) => `${API_BASE}/iban.php?iban=${p.iban}` },
-            operator: { name: "GSM Operatör", params: ["gsm"], build: (p) => `${API_BASE}/gncloperator.php?numara=${p.gsm}` },
-            tcgsm: { name: "TC'den GSM", params: ["tc"], build: (p) => `${API_BASE}/tcgsm.php?tc=${p.tc}` }
+            tc: { name: "🔍 TC Kimlik", params: ["tc"], build: (p) => `${API_BASE}/tc.php?tc=${p.tc}` },
+            tcpro: { name: "⭐ TC PRO (Detaylı)", params: ["tc"], build: (p) => `${API_BASE}/tcpro.php?tc=${p.tc}` },
+            adsoyad: { name: "📛 Ad Soyad", params: ["ad","soyad"], build: (p) => `${API_BASE}/adsoyad.php?ad=${p.ad}&soyad=${p.soyad}` },
+            adsoyadpro: { name: "📇 Ad Soyad PRO + İl", params: ["ad","soyad","il"], build: (p) => `${API_BASE}/adsoyadpro.php?ad=${p.ad}&soyad=${p.soyad}&il=${p.il}` },
+            aile: { name: "👪 Aile Sorgula", params: ["tc"], build: (p) => `${API_BASE}/aile.php?tc=${p.tc}` },
+            ailepro: { name: "🏡 Aile PRO", params: ["tc"], build: (p) => `${API_BASE}/ailepro.php?tc=${p.tc}` },
+            kardes: { name: "👥 Kardeş Sorgula", params: ["tc"], build: (p) => `${API_BASE}/kardes.php?tc=${p.tc}` },
+            adres: { name: "🏠 Adres Sorgula", params: ["tc"], build: (p) => `${API_BASE}/adres.php?tc=${p.tc}` },
+            iban: { name: "💳 IBAN Sorgula", params: ["iban"], build: (p) => `${API_BASE}/iban.php?iban=${p.iban}` },
+            operator: { name: "📱 GSM Operatör", params: ["gsm"], build: (p) => `${API_BASE}/gncloperator.php?numara=${p.gsm}` },
+            tcgsm: { name: "📞 TC'den GSM", params: ["tc"], build: (p) => `${API_BASE}/tcgsm.php?tc=${p.tc}` }
         };
         
         let activeQuery = "tc";
         let lastRawResult = "";
         
-        // sorgu çalıştır (asenkron ama donma yok)
+        // güzel formatlama (veriyi olduğu gibi, eksiksiz)
         async function executeQuery(queryKey, paramValues) {
             const def = QUERIES[queryKey];
             if (!def) return;
             const params = {};
             for (let p of def.params) {
                 let val = paramValues[p];
-                if (!val && val !== 0) {
-                    alert(`Lütfen "${p}" alanını doldurun!`);
-                    return;
-                }
+                if (!val && val !== 0) { alert(`Lütfen "${p}" alanını doldurun!`); return; }
                 params[p] = encodeURIComponent(val);
             }
             const url = def.build(params);
-            // sonuç div'ine yükleniyor yaz
             const resultDiv = document.getElementById("resultView");
-            if (resultDiv) resultDiv.innerHTML = "<span style='color:cyan'>⏳ Sorgulanıyor, bekleyin...</span>";
+            if (resultDiv) resultDiv.innerHTML = "<span style='color:cyan'>⏳ Sorgulanıyor, lütfen bekleyin...</span>";
             const data = await fastFetch(url);
-            let pretty = JSON.stringify(data, null, 2);
-            lastRawResult = pretty;
+            // veriyi eksiksiz formatla (pretty json)
+            let prettyJson = JSON.stringify(data, null, 2);
+            lastRawResult = prettyJson;
             if (resultDiv) {
-                resultDiv.innerHTML = `<pre style="white-space:pre-wrap;font-family:monospace;">${escapeHtml(pretty)}</pre>`;
+                resultDiv.innerHTML = `<pre style="margin:0;white-space:pre-wrap;font-family:'Courier New',monospace;">${escapeHtml(prettyJson)}</pre>`;
+                resultDiv.classList.add('fade-in');
+                setTimeout(() => resultDiv.classList.remove('fade-in'), 300);
             }
             const downBtn = document.getElementById("downloadBtn");
-            if (downBtn) downBtn.style.display = "inline-block";
+            if (downBtn) downBtn.style.display = "inline-flex";
         }
         
         function escapeHtml(str) {
@@ -454,31 +480,30 @@
             const blob = new Blob([lastRawResult], {type: "text/plain"});
             const a = document.createElement("a");
             const url = URL.createObjectURL(blob);
-            a.href = url;
             a.download = `sorgu_${activeQuery}_${Date.now()}.txt`;
+            a.href = url;
             a.click();
             URL.revokeObjectURL(url);
         }
         
-        // ========== PANEL RENDER (hızlı dom) ==========
-        let sideMenuOpenFlag = false;
-        
+        // ========== PANEL RENDER ==========
+        let sideOpen = false;
         function buildSideMenu() {
-            let old = document.getElementById("globalSideMenu");
+            let old = document.getElementById("neonSideMenu");
             if (old) old.remove();
             const menuDiv = document.createElement("div");
-            menuDiv.id = "globalSideMenu";
+            menuDiv.id = "neonSideMenu";
             menuDiv.className = "side-menu";
-            let itemsHtml = `<button class="menu-close" id="closeSideMenuBtn">✖</button>
-                             <h3 style="margin:0 0 12px 12px;">📂 Sorgular</h3>`;
+            let itemsHtml = `<button class="menu-close" id="closeNeonMenu">✖</button>
+                             <h3 style="margin:0 0 16px 12px;">🌀 Sorgu Menüsü</h3>`;
             for (let [key, val] of Object.entries(QUERIES)) {
-                itemsHtml += `<div class="menu-item" data-query="${key}">🔹 ${val.name}</div>`;
+                itemsHtml += `<div class="menu-item" data-query="${key}">${val.name}</div>`;
             }
-            itemsHtml += `<div class="menu-item logout-menu" id="logoutMenuItem">🚪 Çıkış Yap</div>`;
+            itemsHtml += `<div class="menu-item logout-menu" id="logoutNeonBtn">🚪 Çıkış Yap</div>`;
             menuDiv.innerHTML = itemsHtml;
             document.body.appendChild(menuDiv);
             
-            document.getElementById("closeSideMenuBtn").addEventListener("click", () => toggleSideMenu(false));
+            document.getElementById("closeNeonMenu").addEventListener("click", () => toggleSideMenu(false));
             document.querySelectorAll(".menu-item[data-query]").forEach(el => {
                 el.addEventListener("click", (e) => {
                     const q = el.getAttribute("data-query");
@@ -487,63 +512,62 @@
                     renderMainPanel();
                 });
             });
-            document.getElementById("logoutMenuItem").addEventListener("click", () => {
+            document.getElementById("logoutNeonBtn").addEventListener("click", () => {
                 toggleSideMenu(false);
                 logout();
             });
         }
         
         function toggleSideMenu(open) {
-            const menu = document.getElementById("globalSideMenu");
+            const menu = document.getElementById("neonSideMenu");
             if (!menu) return;
             if (open) {
                 menu.classList.add("open");
-                sideMenuOpenFlag = true;
+                sideOpen = true;
             } else {
                 menu.classList.remove("open");
-                sideMenuOpenFlag = false;
+                sideOpen = false;
             }
         }
         
         function renderMainPanel() {
             const def = QUERIES[activeQuery];
-            const paramsHtml = def.params.map(p => `
+            const inputsHtml = def.params.map(p => `
                 <div class="input-field">
                     <label>${p.toUpperCase()}</label>
-                    <input type="text" id="param_${p}" placeholder="${p} değeri girin" autocomplete="off">
+                    <input type="text" id="param_${p}" placeholder="${p} değeri giriniz" autocomplete="off">
                 </div>
             `).join('');
-            
             const html = `
                 <div class="top-bar">
                     <div class="logo-area">
-                        <h1>⚡ CCMUMYA SORGU 2026</h1>
-                        <p>gelişmiş veri sorgulama</p>
+                        <h1>⚡ CCMUMYA NEON SORGU 2026</h1>
+                        <p>ileri sorgu motoru | tüm veri eksiksiz</p>
                     </div>
-                    <div class="hamburger" id="hamburgerBtn">
+                    <div class="hamburger" id="hamburgerBtnNeon">
                         <span></span><span></span><span></span>
                     </div>
                 </div>
-                <div class="welcome-card">
-                    <div style="font-size:1.2rem;">✨ Hoş geldin, <strong>${escapeHtml(currentUser.username)}</strong> ✨</div>
-                    <p style="margin-top:6px;">Ana menüdeki 3 çizgiye tıklayarak tüm sorgu araçlarına eriş.</p>
+                <div class="welcome-card fade-in">
+                    <div style="font-size:1.3rem;">✨ Merhaba, <strong>${escapeHtml(currentUser.username)}</strong> ✨</div>
+                    <p style="margin-top:8px;">☰ Menüden sorgu tipini seç, verileri al, txt indir.</p>
                 </div>
-                <div class="query-panel">
+                <div class="query-panel fade-in">
                     <h3>${def.name}</h3>
-                    <div class="input-group" id="queryInputsArea">
-                        ${paramsHtml}
+                    <div class="input-group">
+                        ${inputsHtml}
                     </div>
-                    <div style="display:flex; gap:12px; flex-wrap:wrap; align-items:center;">
-                        <button id="executeQueryBtn">🚀 Sorgula</button>
-                        <button id="downloadBtn" class="download-btn" style="display:none;">📥 TXT İndir</button>
+                    <div style="display: flex; gap: 12px; flex-wrap: wrap; align-items: center;">
+                        <button id="execQueryBtn">🚀 Sorgula</button>
+                        <button id="downloadBtn" class="download-btn" style="display: none;">📥 TXT İndir</button>
                     </div>
-                    <div id="resultView" class="result-area">Sorgu sonucu burada görünecek...</div>
+                    <div id="resultView" class="result-area">Sorgu sonucu burada görünecek (tüm veri satır satır).</div>
                 </div>
-                <footer>🔒 Gelişmiş koruma | @SiberciAlemde v4.0 | Hızlı Sorgu Motoru</footer>
+                <footer>🔒 Gelişmiş Neon Koruma | @SiberciAlemde v4.0 | Tüm veri olduğu gibi</footer>
             `;
             document.getElementById("appRoot").innerHTML = html;
             
-            document.getElementById("executeQueryBtn").addEventListener("click", () => {
+            document.getElementById("execQueryBtn").addEventListener("click", () => {
                 const paramVals = {};
                 for (let p of def.params) {
                     let inp = document.getElementById(`param_${p}`);
@@ -551,85 +575,79 @@
                 }
                 executeQuery(activeQuery, paramVals);
             });
-            const downBtn = document.getElementById("downloadBtn");
-            if (downBtn) downBtn.addEventListener("click", downloadTxt);
+            const down = document.getElementById("downloadBtn");
+            if (down) down.addEventListener("click", downloadTxt);
             
-            const hamburger = document.getElementById("hamburgerBtn");
-            if (hamburger) hamburger.addEventListener("click", (e) => {
-                e.stopPropagation();
-                buildSideMenu();
-                toggleSideMenu(true);
-            });
-            // side menu varsa kapatmak için dışarı tıklama
-            document.addEventListener("click", function outsideHandler(e) {
-                const menuPanel = document.getElementById("globalSideMenu");
-                if (sideMenuOpenFlag && menuPanel && !menuPanel.contains(e.target) && !e.target.closest(".hamburger")) {
+            const hamburger = document.getElementById("hamburgerBtnNeon");
+            if (hamburger) {
+                hamburger.addEventListener("click", (e) => {
+                    e.stopPropagation();
+                    buildSideMenu();
+                    toggleSideMenu(true);
+                });
+            }
+            // dışarı tıklama ile kapat
+            document.addEventListener("click", function outsideClose(e) {
+                const menuPanel = document.getElementById("neonSideMenu");
+                if (sideOpen && menuPanel && !menuPanel.contains(e.target) && !e.target.closest(".hamburger")) {
                     toggleSideMenu(false);
                 }
             });
         }
         
-        // ========== AUTH EKRANI ==========
+        // ========== AUTH ==========
         let authMode = "login";
         function renderAuth() {
             const isLogin = authMode === "login";
             const html = `
-                <div class="auth-card">
-                    <h2 style="margin-bottom:24px;">${isLogin ? "🔐 Giriş Yap" : "📝 Kayıt Ol"}</h2>
+                <div class="auth-card fade-in">
+                    <h2 style="margin-bottom:20px;">${isLogin ? "🔐 Giriş Yap" : "📝 Kayıt Ol"}</h2>
                     <div class="input-field">
                         <label>Kullanıcı Adı</label>
-                        <input type="text" id="authUser" placeholder="kullanıcı adı">
+                        <input type="text" id="authUsername" placeholder="kullanıcı adı">
                     </div>
                     <div class="input-field">
                         <label>Şifre</label>
-                        <input type="password" id="authPass" placeholder="••••••">
+                        <input type="password" id="authPassword" placeholder="••••••">
                     </div>
-                    <button id="authButton">${isLogin ? "Giriş Yap" : "Kaydol"}</button>
-                    <div class="switch-auth" id="switchModeBtn">${isLogin ? "Hesabın yok mu? Kayıt ol" : "Zaten hesabın var mı? Giriş yap"}</div>
-                    <div id="authMsg" style="margin-top:14px; color:#ffaa77;"></div>
+                    <button id="authActionBtn">${isLogin ? "Giriş Yap" : "Kaydol"}</button>
+                    <div class="switch-auth" id="switchAuthModeBtn">${isLogin ? "Hesabın yok mu? Kayıt ol" : "Zaten hesabın var mı? Giriş yap"}</div>
+                    <div id="authMessage" style="margin-top:14px; color:#ffbb77;"></div>
                 </div>
-                <footer>🔐 CCMUMYA Sorgu Sistemi | Güvenli Sorgulama</footer>
+                <footer>Neon Sorgu Sistemi | Güvenli & Hızlı</footer>
             `;
             document.getElementById("appRoot").innerHTML = html;
             
-            document.getElementById("authButton").addEventListener("click", () => {
-                const user = document.getElementById("authUser").value.trim();
-                const pass = document.getElementById("authPass").value.trim();
-                const msgDiv = document.getElementById("authMsg");
+            document.getElementById("authActionBtn").addEventListener("click", () => {
+                const user = document.getElementById("authUsername").value.trim();
+                const pass = document.getElementById("authPassword").value.trim();
+                const msgDiv = document.getElementById("authMessage");
                 if (!user || !pass) { msgDiv.innerText = "Kullanıcı adı ve şifre boş olamaz!"; return; }
                 if (isLogin) {
-                    if (loginUser(user, pass)) {
-                        renderMainPanel();
-                    } else {
-                        msgDiv.innerText = "Hatalı kullanıcı adı veya şifre!";
-                    }
+                    if (loginUser(user, pass)) renderMainPanel();
+                    else msgDiv.innerText = "Hatalı giriş bilgileri!";
                 } else {
                     if (registerUser(user, pass)) {
                         msgDiv.innerText = "Kayıt başarılı! Şimdi giriş yapabilirsin.";
                         authMode = "login";
                         renderAuth();
                     } else {
-                        msgDiv.innerText = "Bu kullanıcı adı zaten alınmış!";
+                        msgDiv.innerText = "Bu kullanıcı adı zaten var!";
                     }
                 }
             });
-            document.getElementById("switchModeBtn").addEventListener("click", () => {
+            document.getElementById("switchAuthModeBtn").addEventListener("click", () => {
                 authMode = isLogin ? "register" : "login";
                 renderAuth();
             });
         }
         
-        // BAŞLAT: session kontrolü
-        const sess = loadSession();
-        if (sess) {
-            currentUser = sess;
-            renderMainPanel();
-        } else {
-            renderAuth();
-        }
+        // BAŞLAT
+        const sessionExists = loadSession();
+        if (sessionExists) renderMainPanel();
+        else renderAuth();
         
-        // Önlem: konsolda gizli bilgi gösterme
-        console.log("%c🔒 Sorgu Paneli Aktif | Hızlı & Güvenli", "color:#0ff; font-size:12px");
+        console.log("%c🚀 NEON Sorgu Paneli Aktif | Tüm veriler eksiksiz gösterilir", "color:#0ff; font-size:13px");
     })();
 </script>
 </body>
