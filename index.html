@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>NOVA-1 | Çok Boyutlu Sorgu Paneli</title>
+    <title>ECLIPSE AI | Dünyada Olmayan Sorgu Paneli</title>
     <style>
         * {
             margin: 0;
@@ -12,181 +12,232 @@
         }
 
         body {
-            font-family: 'Poppins', 'Segoe UI', system-ui, sans-serif;
-            background: #000;
+            font-family: 'Segoe UI', 'Poppins', system-ui, sans-serif;
+            background: radial-gradient(circle at 20% 30%, #0a0a2a, #010105);
             min-height: 100vh;
             color: #fff;
             overflow-x: hidden;
             position: relative;
         }
 
-        /* 3D Arka Plan - Dönen Küp */
-        .universe-bg {
+        /* Arka Plan Animasyonu */
+        .cosmic-bg {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -3;
+            z-index: -2;
             overflow: hidden;
         }
 
-        .rotating-cube {
+        .star {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 600px;
-            height: 600px;
-            margin: -300px 0 0 -300px;
-            transform-style: preserve-3d;
-            animation: spinCube 25s infinite linear;
-            opacity: 0.15;
-        }
-
-        .cube-face {
-            position: absolute;
-            width: 600px;
-            height: 600px;
-            background: linear-gradient(135deg, cyan, magenta);
-            border: 2px solid rgba(255,255,255,0.3);
-            box-shadow: 0 0 50px rgba(0,255,255,0.3);
-        }
-
-        .front { transform: translateZ(300px); background: radial-gradient(circle at 30% 40%, cyan, transparent); }
-        .back { transform: rotateY(180deg) translateZ(300px); background: radial-gradient(circle at 70% 60%, magenta, transparent); }
-        .right { transform: rotateY(90deg) translateZ(300px); background: radial-gradient(circle at 30% 40%, #0ff, #f0f); }
-        .left { transform: rotateY(-90deg) translateZ(300px); background: radial-gradient(circle at 70% 60%, #f0f, #0ff); }
-        .top { transform: rotateX(90deg) translateZ(300px); background: radial-gradient(circle, cyan, blue); }
-        .bottom { transform: rotateX(-90deg) translateZ(300px); background: radial-gradient(circle, magenta, purple); }
-
-        @keyframes spinCube {
-            0% { transform: rotateX(0) rotateY(0) rotateZ(0); }
-            100% { transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg); }
-        }
-
-        /* Partikül Efekti */
-        .particle-field {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -2;
-        }
-
-        .particle {
-            position: absolute;
-            width: 3px;
-            height: 3px;
-            background: cyan;
+            background: white;
             border-radius: 50%;
-            box-shadow: 0 0 10px cyan;
-            animation: floatParticle 8s infinite;
+            animation: twinkle 3s infinite;
         }
 
-        @keyframes floatParticle {
-            0% { transform: translateY(100vh) translateX(0) scale(1); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateY(-100vh) translateX(100px) scale(0); opacity: 0; }
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        .nebula {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            filter: blur(60px);
+            animation: float 20s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            25% { transform: translate(50px, 50px); }
+            50% { transform: translate(100px, -50px); }
+            75% { transform: translate(-50px, 100px); }
         }
 
         /* Ana Container */
         .app-container {
-            max-width: 1600px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 20px;
             position: relative;
             z-index: 2;
         }
 
-        /* Header */
-        .top-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(0,0,0,0.6);
+        /* Header - Sadece Hoşgeldin Mesajı ve Hamburger */
+        .hero-header {
+            background: rgba(10, 20, 40, 0.6);
             backdrop-filter: blur(20px);
-            border-radius: 30px;
-            padding: 15px 30px;
+            border-radius: 50px;
+            padding: 40px 30px;
+            text-align: center;
             margin-bottom: 30px;
-            border: 1px solid rgba(0,255,255,0.3);
-            box-shadow: 0 0 30px rgba(0,255,255,0.2);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            box-shadow: 0 0 40px rgba(0, 255, 255, 0.1);
+            position: relative;
         }
 
-        .logo h1 {
-            font-size: 1.8rem;
-            background: linear-gradient(135deg, cyan, magenta, #ff0);
+        .hamburger-menu {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            background: rgba(0, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+            transition: 0.3s;
+            border: 1px solid cyan;
+            z-index: 10;
+        }
+
+        .hamburger-menu:hover {
+            background: rgba(0, 255, 255, 0.4);
+            transform: scale(1.05);
+            box-shadow: 0 0 20px cyan;
+        }
+
+        .hamburger-menu span {
+            width: 28px;
+            height: 2px;
+            background: white;
+            border-radius: 2px;
+            transition: 0.3s;
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            background: linear-gradient(135deg, #fff, cyan, magenta);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            animation: logoPulse 2s infinite;
+            animation: titleGlow 3s infinite;
         }
 
-        @keyframes logoPulse {
+        @keyframes titleGlow {
             0%, 100% { filter: drop-shadow(0 0 5px cyan); }
             50% { filter: drop-shadow(0 0 20px magenta); }
         }
 
-        .theme-toggle {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: rgba(0,255,255,0.2);
-            cursor: pointer;
+        .hero-subtitle {
+            margin-top: 15px;
+            font-size: 1.1rem;
+            opacity: 0.8;
+        }
+
+        /* Side Menu (Hamburger) */
+        .side-menu {
+            position: fixed;
+            top: 0;
+            left: -380px;
+            width: 350px;
+            height: 100vh;
+            background: rgba(5, 10, 25, 0.98);
+            backdrop-filter: blur(25px);
+            z-index: 2000;
+            transition: left 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            box-shadow: 5px 0 50px rgba(0, 255, 255, 0.3);
+            border-right: 2px solid cyan;
+            padding: 30px 20px;
+            overflow-y: auto;
+        }
+
+        .side-menu.open {
+            left: 0;
+        }
+
+        .menu-header {
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            justify-content: center;
-            font-size: 24px;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid cyan;
+        }
+
+        .close-menu {
+            font-size: 30px;
+            cursor: pointer;
+            color: cyan;
             transition: 0.3s;
         }
 
-        /* Ana Grid */
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: 320px 1fr;
-            gap: 25px;
+        .close-menu:hover {
+            transform: rotate(90deg);
         }
 
-        /* Sol Menü - Sürüklenebilir Kartlar */
-        .query-sidebar {
-            background: rgba(0,0,0,0.6);
-            backdrop-filter: blur(15px);
-            border-radius: 30px;
-            padding: 20px;
-            border: 1px solid rgba(0,255,255,0.3);
+        .menu-category {
+            margin: 20px 0 10px 0;
+            color: cyan;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
         }
 
-        .query-card {
-            background: linear-gradient(135deg, rgba(0,255,255,0.1), rgba(255,0,255,0.05));
-            border-radius: 20px;
-            padding: 15px;
-            margin-bottom: 12px;
-            cursor: grab;
+        .menu-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 12px 18px;
+            margin: 8px 0;
+            cursor: pointer;
             transition: all 0.3s;
             border-left: 3px solid cyan;
-            user-select: none;
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
 
-        .query-card:active { cursor: grabbing; }
-        .query-card.dragging { opacity: 0.5; cursor: grabbing; }
-        .query-card:hover { transform: translateX(8px); background: rgba(0,255,255,0.2); }
+        .menu-item:hover {
+            background: rgba(0, 255, 255, 0.2);
+            transform: translateX(8px);
+        }
 
-        /* Ana Sorgu Alanı */
-        .query-main {
-            background: rgba(0,0,0,0.6);
-            backdrop-filter: blur(15px);
+        .logout-item {
+            margin-top: 40px;
+            border-left-color: magenta;
+        }
+
+        /* Sorgu Paneli */
+        .query-panel {
+            background: rgba(10, 20, 40, 0.7);
+            backdrop-filter: blur(20px);
             border-radius: 30px;
             padding: 30px;
-            border: 1px solid rgba(0,255,255,0.3);
+            margin-top: 20px;
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            animation: fadeInUp 0.5s;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .query-title {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: cyan;
         }
 
         .input-group {
             display: flex;
             flex-wrap: wrap;
             gap: 15px;
-            margin: 20px 0;
+            margin: 25px 0;
         }
 
         .input-field {
@@ -198,14 +249,14 @@
             display: block;
             font-size: 0.8rem;
             margin-bottom: 8px;
-            color: cyan;
+            color: #8cc9ff;
         }
 
-        .input-field input, .input-field select {
+        .input-field input {
             width: 100%;
             padding: 12px 20px;
-            background: rgba(0,0,0,0.8);
-            border: 1px solid rgba(0,255,255,0.3);
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(0, 255, 255, 0.3);
             border-radius: 25px;
             color: white;
             font-size: 0.9rem;
@@ -214,8 +265,8 @@
 
         .input-field input:focus {
             border-color: cyan;
-            box-shadow: 0 0 15px cyan;
             outline: none;
+            box-shadow: 0 0 15px cyan;
         }
 
         button {
@@ -228,6 +279,7 @@
             cursor: pointer;
             transition: 0.3s;
             font-size: 1rem;
+            margin: 5px;
         }
 
         button:hover {
@@ -235,9 +287,8 @@
             box-shadow: 0 0 20px cyan;
         }
 
-        /* Sonuç Alanı */
         .result-area {
-            background: rgba(0,0,0,0.9);
+            background: rgba(0, 0, 0, 0.8);
             border-radius: 20px;
             padding: 20px;
             margin-top: 20px;
@@ -246,251 +297,210 @@
             font-family: 'Courier New', monospace;
             font-size: 12px;
             border-left: 4px solid cyan;
+            white-space: pre-wrap;
+            word-break: break-word;
         }
 
-        /* AI Asistan Sohbet */
-        .ai-chat {
+        /* AI Asistan - Gelişmiş */
+        .ai-assistant {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 350px;
-            background: rgba(0,0,0,0.95);
+            bottom: 30px;
+            right: 30px;
+            width: 400px;
+            background: rgba(5, 10, 25, 0.95);
             backdrop-filter: blur(20px);
-            border-radius: 20px;
+            border-radius: 25px;
             border: 1px solid cyan;
-            box-shadow: 0 0 30px rgba(0,255,255,0.3);
+            box-shadow: 0 0 40px rgba(0, 255, 255, 0.3);
             z-index: 100;
             transition: 0.3s;
         }
 
-        .ai-chat.minimized {
-            height: 50px;
-            overflow: hidden;
+        .ai-assistant.minimized {
+            width: auto;
+            height: auto;
+        }
+
+        .ai-assistant.minimized .ai-messages,
+        .ai-assistant.minimized .ai-input-area {
+            display: none;
         }
 
         .ai-header {
             background: linear-gradient(135deg, cyan, magenta);
-            padding: 15px;
-            border-radius: 20px 20px 0 0;
+            padding: 15px 20px;
+            border-radius: 25px 25px 0 0;
             cursor: pointer;
             display: flex;
             justify-content: space-between;
+            align-items: center;
+        }
+
+        .ai-header h3 {
+            font-size: 1.1rem;
         }
 
         .ai-messages {
-            height: 300px;
+            height: 400px;
             overflow-y: auto;
             padding: 15px;
         }
 
-        .message {
-            margin-bottom: 10px;
-            padding: 8px;
-            border-radius: 10px;
+        .ai-message {
+            margin-bottom: 12px;
+            padding: 10px;
+            border-radius: 15px;
+            animation: messageSlide 0.3s;
         }
 
-        .message.ai {
-            background: rgba(0,255,255,0.1);
-            border-left: 2px solid cyan;
+        @keyframes messageSlide {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
         }
 
-        .message.user {
-            background: rgba(255,0,255,0.1);
-            border-right: 2px solid magenta;
+        .ai-message.bot {
+            background: rgba(0, 255, 255, 0.1);
+            border-left: 3px solid cyan;
+        }
+
+        .ai-message.user {
+            background: rgba(255, 0, 255, 0.1);
+            border-right: 3px solid magenta;
             text-align: right;
         }
 
-        .ai-input {
+        .ai-input-area {
             display: flex;
-            padding: 10px;
+            padding: 15px;
             gap: 10px;
+            border-top: 1px solid rgba(0, 255, 255, 0.3);
         }
 
-        .ai-input input {
+        .ai-input-area input {
             flex: 1;
-            padding: 10px;
-            background: rgba(0,0,0,0.8);
+            padding: 10px 15px;
+            background: rgba(0, 0, 0, 0.8);
             border: 1px solid cyan;
             border-radius: 20px;
             color: white;
         }
 
-        /* QR Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.9);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
+        .quick-buttons {
+            display: flex;
+            gap: 8px;
+            padding: 10px 15px;
+            flex-wrap: wrap;
         }
 
-        .modal-content {
-            background: rgba(0,0,0,0.95);
-            padding: 30px;
-            border-radius: 30px;
-            text-align: center;
-            border: 2px solid cyan;
+        .quick-btn {
+            background: rgba(0, 255, 255, 0.2);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            cursor: pointer;
+            transition: 0.2s;
         }
 
-        /* Bildirim */
-        .toast {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: rgba(0,0,0,0.9);
-            border-left: 4px solid cyan;
-            padding: 15px 25px;
-            border-radius: 10px;
-            z-index: 1001;
-            animation: slideIn 0.3s;
+        .quick-btn:hover {
+            background: cyan;
+            color: black;
         }
 
-        @keyframes slideIn {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-
-        @media (max-width: 900px) {
-            .dashboard-grid { grid-template-columns: 1fr; }
-            .ai-chat { width: 300px; }
+        @media (max-width: 768px) {
+            .hero-title { font-size: 1.8rem; }
+            .side-menu { width: 280px; }
+            .ai-assistant { width: 320px; right: 10px; bottom: 10px; }
+            .ai-messages { height: 300px; }
         }
     </style>
 </head>
 <body>
 
-<div class="universe-bg">
-    <div class="rotating-cube">
-        <div class="cube-face front"></div>
-        <div class="cube-face back"></div>
-        <div class="cube-face right"></div>
-        <div class="cube-face left"></div>
-        <div class="cube-face top"></div>
-        <div class="cube-face bottom"></div>
-    </div>
-</div>
-
-<div class="particle-field" id="particleField"></div>
+<div class="cosmic-bg" id="cosmicBg"></div>
 
 <div class="app-container">
-    <div class="top-bar">
-        <div class="logo">
-            <h1>🌌 NOVA-1 | Çok Boyutlu Sorgu</h1>
-            <p style="font-size: 12px;">Dünyada Olmayan Teknoloji | AI + 3D + Ses</p>
+    <div class="hero-header">
+        <div class="hamburger-menu" id="hamburgerBtn">
+            <span></span>
+            <span></span>
+            <span></span>
         </div>
-        <div class="theme-toggle" id="themeToggle">🌙</div>
+        <div>
+            <h1 class="hero-title">✨ ECLIPSE AI ✨</h1>
+            <p class="hero-subtitle">Dünyada Olmayan Sorgu Teknolojisi | Gelişmiş Yapay Zeka Asistanı</p>
+            <p style="margin-top: 10px; font-size: 0.9rem;">☰ Sol üstteki menüden sorgu tipini seçin</p>
+        </div>
     </div>
 
-    <div class="dashboard-grid">
-        <div class="query-sidebar">
-            <h3 style="margin-bottom: 20px;">🎯 Sorgu Kartları (Sürükle-Sırala)</h3>
-            <div id="queryList">
-                <!-- Kartlar dinamik doldurulacak -->
-            </div>
-        </div>
-
-        <div class="query-main">
-            <div id="activeQueryTitle">
-                <h2>🔮 Aktif Sorgu</h2>
-            </div>
-            <div id="queryInputs"></div>
-            <div style="display: flex; gap: 15px; flex-wrap: wrap;">
-                <button id="executeBtn">🚀 Sorgula</button>
-                <button id="voiceBtn" style="background: linear-gradient(135deg, magenta, cyan);">🎤 Sesli Komut</button>
-                <button id="qrShareBtn">📱 QR ile Paylaş</button>
-                <button id="downloadTxtBtn">📥 TXT İndir</button>
-            </div>
-            <div id="resultArea" class="result-area">Sorgu sonucu burada görünecek...</div>
-            <div id="statsArea" style="margin-top: 15px; font-size: 12px; color: cyan;"></div>
-        </div>
+    <div id="queryPanel" class="query-panel">
+        <!-- Dinamik sorgu paneli -->
     </div>
 </div>
 
-<!-- AI Asistan -->
-<div class="ai-chat" id="aiChat">
+<!-- Gelişmiş AI Asistan -->
+<div class="ai-assistant" id="aiAssistant">
     <div class="ai-header" id="aiHeader">
-        <span>🤖 NOVA AI Asistan</span>
-        <span>▼</span>
+        <h3>🧠 NOVA AI - Yapay Zeka Asistanın</h3>
+        <span id="aiToggle">▼</span>
     </div>
     <div class="ai-messages" id="aiMessages">
-        <div class="message ai">Merhaba! Ben NOVA AI. Sorgularını yorumlayabilir, sesli komutları anlayabilirim. Sana nasıl yardımcı olabilirim?</div>
+        <div class="ai-message bot">
+            ✨ Merhaba! Ben NOVA AI, gelişmiş yapay zeka asistanın. Sana nasıl yardımcı olabilirim?<br>
+            💡 Yapabileceklerim:<br>
+            • Sorgu sonuçlarını analiz etme<br>
+            • Veri formatlama ve düzenleme<br>
+            • Sorgu önerileri ve ipuçları<br>
+            • Hata tespiti ve çözüm önerileri<br>
+            • Raporlama ve özet çıkarma
+        </div>
     </div>
-    <div class="ai-input">
-        <input type="text" id="aiInput" placeholder="AI'ya sor...">
-        <button id="aiSendBtn">Gönder</button>
+    <div class="quick-buttons" id="quickButtons">
+        <div class="quick-btn" data-query="tc">🔍 TC Sorgula</div>
+        <div class="quick-btn" data-query="adsoyad">📛 Ad Soyad</div>
+        <div class="quick-btn" data-query="aile">👪 Aile</div>
+        <div class="quick-btn" data-action="analyze">📊 Analiz Et</div>
+        <div class="quick-btn" data-action="format">🎨 Formatla</div>
+        <div class="quick-btn" data-action="help">❓ Yardım</div>
+    </div>
+    <div class="ai-input-area">
+        <input type="text" id="aiInput" placeholder="AI'ya bir şey sor... (örn: sonucu analiz et, yardım et)">
+        <button id="aiSendBtn">➤</button>
     </div>
 </div>
 
-<!-- QR Modal -->
-<div class="modal" id="qrModal">
-    <div class="modal-content">
-        <h3>Sorgu Sonucu QR Kod</h3>
-        <div id="qrCode"></div>
-        <button onclick="closeModal()" style="margin-top: 20px;">Kapat</button>
-    </div>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
 <script>
-    // ========== DÜNYADA OLMAYAN ÖZELLİKLER ==========
-    
-    // API Yapılandırması
+    // ========== KONFİGÜRASYON ==========
     const API_BASE = "https://apiservices.alwaysdata.net/apiservices";
     const CUSTOM_UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36";
     
-    // Sorgu Tipleri
+    // Sorgu Tipleri (Hepsi)
     const QUERIES = {
-        tc: { name: "🔍 TC Kimlik", params: ["tc"], build: (p) => `${API_BASE}/tc.php?tc=${p.tc}` },
-        tcpro: { name: "⭐ TC PRO", params: ["tc"], build: (p) => `${API_BASE}/tcpro.php?tc=${p.tc}` },
-        adsoyad: { name: "📛 Ad Soyad", params: ["ad","soyad"], build: (p) => `${API_BASE}/adsoyad.php?ad=${p.ad}&soyad=${p.soyad}` },
-        adsoyadpro: { name: "📇 Ad Soyad PRO", params: ["ad","soyad","il"], build: (p) => `${API_BASE}/adsoyadpro.php?ad=${p.ad}&soyad=${p.soyad}&il=${p.il}` },
-        aile: { name: "👪 Aile", params: ["tc"], build: (p) => `${API_BASE}/aile.php?tc=${p.tc}` },
-        ailepro: { name: "🏡 Aile PRO", params: ["tc"], build: (p) => `${API_BASE}/ailepro.php?tc=${p.tc}` },
-        kardes: { name: "👥 Kardeş", params: ["tc"], build: (p) => `${API_BASE}/kardes.php?tc=${p.tc}` },
-        adres: { name: "🏠 Adres", params: ["tc"], build: (p) => `${API_BASE}/adres.php?tc=${p.tc}` },
-        iban: { name: "💳 IBAN", params: ["iban"], build: (p) => `${API_BASE}/iban.php?iban=${p.iban}` },
-        operator: { name: "📱 GSM Operatör", params: ["gsm"], build: (p) => `${API_BASE}/gncloperator.php?numara=${p.gsm}` },
-        tcgsm: { name: "📞 TC'den GSM", params: ["tc"], build: (p) => `${API_BASE}/tcgsm.php?tc=${p.tc}` }
+        tc: { name: "🔍 TC Kimlik Sorgula", params: ["tc"], placeholder: ["11 haneli TC kimlik no"], build: (p) => `${API_BASE}/tc.php?tc=${p.tc}` },
+        tcpro: { name: "⭐ TC PRO (Detaylı)", params: ["tc"], placeholder: ["11 haneli TC kimlik no"], build: (p) => `${API_BASE}/tcpro.php?tc=${p.tc}` },
+        adsoyad: { name: "📛 Ad Soyad Sorgula", params: ["ad", "soyad"], placeholder: ["Ad", "Soyad"], build: (p) => `${API_BASE}/adsoyad.php?ad=${p.ad}&soyad=${p.soyad}` },
+        adsoyadpro: { name: "📇 Ad Soyad PRO (İl ile)", params: ["ad", "soyad", "il"], placeholder: ["Ad", "Soyad", "İl"], build: (p) => `${API_BASE}/adsoyadpro.php?ad=${p.ad}&soyad=${p.soyad}&il=${p.il}` },
+        aile: { name: "👪 Aile Sorgula", params: ["tc"], placeholder: ["11 haneli TC kimlik no"], build: (p) => `${API_BASE}/aile.php?tc=${p.tc}` },
+        ailepro: { name: "🏡 Aile PRO", params: ["tc"], placeholder: ["11 haneli TC kimlik no"], build: (p) => `${API_BASE}/ailepro.php?tc=${p.tc}` },
+        kardes: { name: "👥 Kardeş Sorgula", params: ["tc"], placeholder: ["11 haneli TC kimlik no"], build: (p) => `${API_BASE}/kardes.php?tc=${p.tc}` },
+        adres: { name: "🏠 Adres Sorgula", params: ["tc"], placeholder: ["11 haneli TC kimlik no"], build: (p) => `${API_BASE}/adres.php?tc=${p.tc}` },
+        iban: { name: "💳 IBAN Sorgula", params: ["iban"], placeholder: ["IBAN numarası"], build: (p) => `${API_BASE}/iban.php?iban=${p.iban}` },
+        operator: { name: "📱 GSM Operatör", params: ["gsm"], placeholder: ["GSM numarası (10 haneli)"], build: (p) => `${API_BASE}/gncloperator.php?numara=${p.gsm}` },
+        tcgsm: { name: "📞 TC'den GSM Sorgula", params: ["tc"], placeholder: ["11 haneli TC kimlik no"], build: (p) => `${API_BASE}/tcgsm.php?tc=${p.tc}` }
     };
     
     let activeQuery = "tc";
-    let lastResult = "";
-    let queryOrder = Object.keys(QUERIES);
-    let darkMode = true;
-    let recognition = null;
+    let lastResult = null;
+    let lastRawResult = "";
+    let currentUser = "ECLIPSE_KULLANICI";
+    let sideMenuOpen = false;
     
-    // Sesli Komut
-    if ('webkitSpeechRecognition' in window) {
-        recognition = new webkitSpeechRecognition();
-        recognition.lang = 'tr-TR';
-        recognition.continuous = false;
-        recognition.onresult = (event) => {
-            const command = event.results[0][0].transcript.toLowerCase();
-            showToast(`🎤 Komut: ${command}`);
-            
-            if (command.includes('tc') || command.includes('t c')) {
-                activeQuery = 'tc';
-                renderQueryPanel();
-                showToast("TC sorgu moduna geçildi");
-            } else if (command.includes('ad soyad') || command.includes('isim')) {
-                activeQuery = 'adsoyad';
-                renderQueryPanel();
-                showToast("Ad soyad sorgu moduna geçildi");
-            } else if (command.includes('aile')) {
-                activeQuery = 'aile';
-                renderQueryPanel();
-                showToast("Aile sorgu moduna geçildi");
-            } else if (command.includes('sorgula') && lastResult) {
-                executeQuery();
-            }
-        };
-    }
-    
-    // Temizleme Fonksiyonu
+    // ========== YARDIMCI FONKSİYONLAR ==========
     function cleanResponse(data) {
         if (!data) return data;
         const cleaned = JSON.parse(JSON.stringify(data));
@@ -507,7 +517,6 @@
         return cleaned;
     }
     
-    // Fetch
     async function fastFetch(url) {
         try {
             const resp = await fetch(url, {
@@ -517,234 +526,329 @@
             const json = await resp.json();
             return cleanResponse(json);
         } catch(err) {
-            return { success: false, error: "Bağlantı hatası" };
+            return { success: false, error: "Bağlantı hatası veya zaman aşımı" };
         }
     }
     
-    // Sorgu Çalıştır
+    // ========== SORGU ÇALIŞTIR ==========
     async function executeQuery() {
         const def = QUERIES[activeQuery];
         const params = {};
-        for (let p of def.params) {
+        let isValid = true;
+        
+        for (let i = 0; i < def.params.length; i++) {
+            const p = def.params[i];
             const input = document.getElementById(`param_${p}`);
             if (!input || !input.value.trim()) {
-                showToast(`Lütfen ${p} alanını doldurun!`, 'error');
+                addAIMessage(`❌ Lütfen "${p}" alanını doldurun!`, false);
+                isValid = false;
                 return;
             }
             params[p] = encodeURIComponent(input.value.trim());
         }
         
+        if (!isValid) return;
+        
         const url = def.build(params);
         const resultDiv = document.getElementById("resultArea");
-        resultDiv.innerHTML = "⏳ Sorgulanıyor... (3D küp dönüyor)";
+        resultDiv.innerHTML = "⏳ Sorgulanıyor... Lütfen bekleyin";
+        
+        addAIMessage(`🔍 "${def.name}" sorgusu başlatıldı...`, false);
         
         const data = await fastFetch(url);
-        lastResult = JSON.stringify(data, null, 2);
-        resultDiv.innerHTML = `<pre style="margin:0; white-space:pre-wrap;">${escapeHtml(lastResult)}</pre>`;
+        lastResult = data;
+        lastRawResult = JSON.stringify(data, null, 2);
         
-        // İstatistik
-        const dataSize = lastResult.length;
-        const dataLines = lastResult.split('\n').length;
-        document.getElementById("statsArea").innerHTML = `📊 Veri Boyutu: ${(dataSize/1024).toFixed(2)} KB | Satır: ${dataLines} | Sorgu Tipi: ${def.name}`;
+        resultDiv.innerHTML = `<pre style="margin:0; white-space:pre-wrap; font-family:monospace;">${escapeHtml(lastRawResult)}</pre>`;
         
-        // AI Yorum
-        addAIMessage(`Sorgu tamamlandı! ${dataLines} satır veri elde edildi. Detayları inceleyebilirsiniz.`);
+        // Analiz
+        const dataSize = lastRawResult.length;
+        const dataLines = lastRawResult.split('\n').length;
+        const hasData = data.success !== false;
         
-        // Sesli Bildirim
-        speak("Sorgu tamamlandı");
-        showToast("✅ Sorgu başarıyla tamamlandı!");
+        addAIMessage(`✅ Sorgu tamamlandı! ${dataLines} satır, ${(dataSize/1024).toFixed(2)} KB veri. ${hasData ? 'Veri başarıyla alındı.' : 'Veri bulunamadı veya hata oluştu.'}`, false);
         
-        // Partikül Patlaması
-        createParticleBurst();
-    }
-    
-    // Partikül Patlaması
-    function createParticleBurst() {
-        for(let i = 0; i < 50; i++) {
-            setTimeout(() => {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = Math.random() * window.innerWidth + 'px';
-                particle.style.top = Math.random() * window.innerHeight + 'px';
-                particle.style.background = `hsl(${Math.random() * 360}, 100%, 50%)`;
-                document.querySelector('.particle-field').appendChild(particle);
-                setTimeout(() => particle.remove(), 8000);
-            }, i * 50);
+        if (hasData && data.results) {
+            addAIMessage(`📊 Özet: ${data.results.length} kayıt bulundu. Detaylar için sonucu inceleyebilirsiniz.`, false);
         }
     }
     
-    // Sesli Geri Bildirim
-    function speak(text) {
-        if ('speechSynthesis' in window) {
-            const utterance = new SpeechSynthesisUtterance(text);
-            utterance.lang = 'tr-TR';
-            speechSynthesis.speak(utterance);
-        }
-    }
-    
-    // AI Mesaj
-    function addAIMessage(message, isUser = false) {
+    // ========== AI ASİSTAN GELİŞMİŞ ==========
+    function addAIMessage(message, isUser = true) {
         const messagesDiv = document.getElementById("aiMessages");
         const msgDiv = document.createElement("div");
-        msgDiv.className = `message ${isUser ? 'user' : 'ai'}`;
+        msgDiv.className = `ai-message ${isUser ? 'user' : 'bot'}`;
         msgDiv.innerHTML = isUser ? `👤 ${message}` : `🤖 ${message}`;
         messagesDiv.appendChild(msgDiv);
         messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        
+        // 50 mesajı geçerse temizle
+        if (messagesDiv.children.length > 50) {
+            messagesDiv.removeChild(messagesDiv.children[0]);
+        }
     }
     
-    // Bildirim
-    function showToast(message, type = 'success') {
-        const toast = document.createElement('div');
-        toast.className = 'toast';
-        toast.innerHTML = message;
-        toast.style.borderLeftColor = type === 'error' ? 'red' : 'cyan';
-        document.body.appendChild(toast);
-        setTimeout(() => toast.remove(), 3000);
-    }
-    
-    // QR Paylaş
-    function shareQR() {
+    function analyzeResult() {
         if (!lastResult) {
-            showToast("Önce bir sorgu yapın!", 'error');
+            addAIMessage("⚠️ Henüz bir sorgu yapılmamış. Önce bir sorgu yapın, sonra analiz edebilirim.", false);
             return;
         }
-        const modal = document.getElementById("qrModal");
-        const qrDiv = document.getElementById("qrCode");
-        qrDiv.innerHTML = "";
-        new QRCode(qrDiv, {
-            text: lastResult.substring(0, 2000),
-            width: 256,
-            height: 256
-        });
-        modal.style.display = "flex";
+        
+        addAIMessage("📈 Sorgu sonucu analiz ediliyor...", false);
+        
+        setTimeout(() => {
+            const resultStr = JSON.stringify(lastResult);
+            const hasData = lastResult.success !== false;
+            const resultCount = lastResult.results ? lastResult.results.length : (lastResult.aile_bilgileri ? lastResult.aile_bilgileri.kayitlar?.length : 0);
+            
+            let analysis = "🔍 Analiz Sonucu:\n";
+            analysis += `• Durum: ${hasData ? '✅ Başarılı' : '❌ Başarısız'}\n`;
+            analysis += `• Veri Boyutu: ${(resultStr.length/1024).toFixed(2)} KB\n`;
+            analysis += `• Kayıt Sayısı: ${resultCount || 'Belirsiz'}\n`;
+            
+            if (lastResult.results && lastResult.results[0]) {
+                const first = lastResult.results[0];
+                if (first.ADI) analysis += `• İsim: ${first.ADI} ${first.SOYADI}\n`;
+                if (first.DOĞUM_TARİHİ) analysis += `• Doğum: ${first.DOĞUM_TARİHİ}\n`;
+                if (first.İL) analysis += `• İl: ${first.İL}\n`;
+            }
+            
+            analysis += `\n💡 Öneri: Veriyi TXT olarak indirebilir veya detaylı inceleyebilirsiniz.`;
+            addAIMessage(analysis, false);
+        }, 500);
     }
     
-    function closeModal() {
-        document.getElementById("qrModal").style.display = "none";
+    function formatResult() {
+        if (!lastRawResult) {
+            addAIMessage("⚠️ Önce bir sorgu yapın!", false);
+            return;
+        }
+        
+        try {
+            const parsed = JSON.parse(lastRawResult);
+            const formatted = JSON.stringify(parsed, null, 4);
+            document.getElementById("resultArea").innerHTML = `<pre style="margin:0; white-space:pre-wrap;">${escapeHtml(formatted)}</pre>`;
+            addAIMessage("✅ Veri formatlandı! Daha okunabilir hale getirildi.", false);
+        } catch(e) {
+            addAIMessage("❌ Formatlama sırasında hata oluştu.", false);
+        }
     }
     
-    // TXT İndir
+    function aiHelp() {
+        addAIMessage("📚 Yardım Menüsü:\n" +
+            "• 'sorgula' - Aktif sorguyu çalıştır\n" +
+            "• 'analiz et' - Sonucu analiz et\n" +
+            "• 'formatla' - Veriyi düzenle\n" +
+            "• 'indir' - TXT olarak kaydet\n" +
+            "• 'temizle' - Sonuçları temizle\n" +
+            "• Menüden sorgu tipini değiştirebilirsiniz", false);
+    }
+    
     function downloadTxt() {
-        if (!lastResult) {
-            showToast("Önce bir sorgu yapın!", 'error');
+        if (!lastRawResult) {
+            addAIMessage("⚠️ Önce bir sorgu yapın!", false);
             return;
         }
-        const blob = new Blob([lastResult], {type: "text/plain"});
+        const blob = new Blob([lastRawResult], {type: "text/plain"});
         const a = document.createElement("a");
         const url = URL.createObjectURL(blob);
+        a.download = `eclipse_sorgu_${Date.now()}.txt`;
         a.href = url;
-        a.download = `nova_sorgu_${Date.now()}.txt`;
         a.click();
         URL.revokeObjectURL(url);
-        showToast("Dosya indiriliyor...");
+        addAIMessage("📥 Dosya indiriliyor...", false);
     }
     
-    // Sürükle-Sırala
-    function initDragAndDrop() {
-        const cards = document.querySelectorAll('.query-card');
-        cards.forEach(card => {
-            card.addEventListener('dragstart', handleDragStart);
-            card.addEventListener('dragover', handleDragOver);
-            card.addEventListener('drop', handleDrop);
-        });
+    function clearResult() {
+        document.getElementById("resultArea").innerHTML = "Sorgu sonucu burada görünecek...";
+        lastResult = null;
+        lastRawResult = "";
+        addAIMessage("🧹 Sonuç alanı temizlendi.", false);
     }
     
-    let draggedItem = null;
-    function handleDragStart(e) {
-        draggedItem = this;
-        e.dataTransfer.setData('text/plain', '');
-        this.classList.add('dragging');
-    }
-    function handleDragOver(e) { e.preventDefault(); }
-    function handleDrop(e) {
-        e.preventDefault();
-        if (draggedItem !== this) {
-            const parent = this.parentNode;
-            const children = [...parent.children];
-            const draggedIndex = children.indexOf(draggedItem);
-            const targetIndex = children.indexOf(this);
-            if (draggedIndex < targetIndex) {
-                this.after(draggedItem);
-            } else {
-                this.before(draggedItem);
-            }
-        }
-        draggedItem.classList.remove('dragging');
-        draggedItem = null;
-        showToast("Sorgu sıralaması güncellendi!");
-    }
-    
-    // Panel Render
+    // ========== PANEL RENDER ==========
     function renderQueryPanel() {
         const def = QUERIES[activeQuery];
-        const inputsHtml = def.params.map(p => `
+        const inputsHtml = def.params.map((p, idx) => `
             <div class="input-field">
                 <label>${p.toUpperCase()}</label>
-                <input type="text" id="param_${p}" placeholder="${p} değeri giriniz" autocomplete="off">
+                <input type="text" id="param_${p}" placeholder="${def.placeholder[idx] || p}" autocomplete="off">
             </div>
         `).join('');
         
-        document.getElementById("activeQueryTitle").innerHTML = `<h2>🔮 ${def.name}</h2>`;
-        document.getElementById("queryInputs").innerHTML = `
+        const panelHtml = `
+            <h2 class="query-title">${def.name}</h2>
             <div class="input-group">
                 ${inputsHtml}
             </div>
-        `;
-    }
-    
-    function renderSidebar() {
-        const container = document.getElementById("queryList");
-        container.innerHTML = queryOrder.map(key => `
-            <div class="query-card" draggable="true" data-query="${key}">
-                ${QUERIES[key].name}
+            <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                <button id="executeQueryBtn">🚀 Sorgula</button>
+                <button id="downloadBtn">📥 TXT İndir</button>
+                <button id="clearBtn">🗑️ Temizle</button>
             </div>
-        `).join('');
+            <div id="resultArea" class="result-area">Sorgu sonucu burada görünecek...</div>
+        `;
         
-        document.querySelectorAll('.query-card').forEach(card => {
-            card.addEventListener('click', () => {
-                activeQuery = card.dataset.query;
+        document.getElementById("queryPanel").innerHTML = panelHtml;
+        
+        document.getElementById("executeQueryBtn").addEventListener("click", executeQuery);
+        document.getElementById("downloadBtn").addEventListener("click", downloadTxt);
+        document.getElementById("clearBtn").addEventListener("click", clearResult);
+    }
+    
+    // ========== SIDE MENU (Hamburger) ==========
+    function buildSideMenu() {
+        let existing = document.getElementById("sideMenu");
+        if (existing) existing.remove();
+        
+        const menuDiv = document.createElement("div");
+        menuDiv.id = "sideMenu";
+        menuDiv.className = "side-menu";
+        
+        let menuHtml = `
+            <div class="menu-header">
+                <h3 style="color:cyan;">🌀 ECLIPSE MENÜ</h3>
+                <div class="close-menu" id="closeMenuBtn">✖</div>
+            </div>
+            <div class="menu-category">📌 SORGULAR</div>
+        `;
+        
+        for (let [key, val] of Object.entries(QUERIES)) {
+            menuHtml += `<div class="menu-item" data-query="${key}">${val.name}</div>`;
+        }
+        
+        menuHtml += `<div class="menu-category" style="margin-top:30px;">⚙️ Aİ AKSİYONLAR</div>`;
+        menuHtml += `<div class="menu-item" data-action="analyze">📊 Sonucu Analiz Et</div>`;
+        menuHtml += `<div class="menu-item" data-action="format">🎨 Veriyi Formatla</div>`;
+        menuHtml += `<div class="menu-item" data-action="help">❓ Yardım</div>`;
+        menuHtml += `<div class="menu-item logout-item" data-action="logout">🚪 Çıkış</div>`;
+        
+        menuDiv.innerHTML = menuHtml;
+        document.body.appendChild(menuDiv);
+        
+        // Menu item events
+        document.querySelectorAll(".menu-item[data-query]").forEach(el => {
+            el.addEventListener("click", () => {
+                activeQuery = el.dataset.query;
                 renderQueryPanel();
-                showToast(`${QUERIES[activeQuery].name} aktif edildi`);
-                addAIMessage(`${QUERIES[activeQuery].name} moduna geçildi. Parametreleri doldurup sorgulayabilirsiniz.`);
+                toggleSideMenu(false);
+                addAIMessage(`🔄 "${QUERIES[activeQuery].name}" moduna geçildi. Parametreleri doldurup sorgulayabilirsiniz.`, false);
             });
-            card.addEventListener('dragstart', handleDragStart);
-            card.addEventListener('dragover', handleDragOver);
-            card.addEventListener('drop', handleDrop);
-        });
-    }
-    
-    // Tema Değiştir
-    function toggleTheme() {
-        darkMode = !darkMode;
-        document.body.style.background = darkMode ? '#000' : '#fff';
-        document.body.style.color = darkMode ? '#fff' : '#000';
-        document.getElementById("themeToggle").innerHTML = darkMode ? "🌙" : "☀️";
-        showToast(darkMode ? "Karanlık tema aktif" : "Aydınlık tema aktif");
-    }
-    
-    // AI Sohbet
-    function initAIChat() {
-        document.getElementById("aiSendBtn").addEventListener("click", () => {
-            const input = document.getElementById("aiInput");
-            const question = input.value.trim();
-            if (!question) return;
-            addAIMessage(question, true);
-            setTimeout(() => {
-                let answer = "Sorgu sonuçlarını analiz ediyorum... ";
-                if (lastResult) {
-                    const dataSize = lastResult.length;
-                    answer += `Son sorgunuzda ${dataSize} karakterlik veri var. Detaylı inceleme için sorgu panelini kullanabilirsiniz.`;
-                } else {
-                    answer += "Henüz bir sorgu yapılmamış. Önce sorgu yapın, sonra size detaylı yorum yapabilirim.";
-                }
-                addAIMessage(answer);
-            }, 500);
-            input.value = "";
         });
         
-        document.getElementById("aiHeader").addEventListener("click", () => {
-            document.getElementById("aiChat").classList.toggle("minimized");
+        document.querySelectorAll(".menu-item[data-action]").forEach(el => {
+            el.addEventListener("click", () => {
+                const action = el.dataset.action;
+                if (action === "analyze") analyzeResult();
+                else if (action === "format") formatResult();
+                else if (action === "help") aiHelp();
+                else if (action === "logout") {
+                    addAIMessage("👋 Çıkış yapılıyor...", false);
+                    setTimeout(() => location.reload(), 1000);
+                }
+                toggleSideMenu(false);
+            });
         });
+        
+        document.getElementById("closeMenuBtn").addEventListener("click", () => toggleSideMenu(false));
+    }
+    
+    function toggleSideMenu(open) {
+        const menu = document.getElementById("sideMenu");
+        if (!menu) return;
+        if (open) {
+            menu.classList.add("open");
+            sideMenuOpen = true;
+        } else {
+            menu.classList.remove("open");
+            sideMenuOpen = false;
+        }
+    }
+    
+    // ========== AI CHAT ==========
+    function initAIChat() {
+        const aiInput = document.getElementById("aiInput");
+        const aiSend = document.getElementById("aiSendBtn");
+        const aiHeader = document.getElementById("aiHeader");
+        const aiToggle = document.getElementById("aiToggle");
+        
+        aiSend.addEventListener("click", () => {
+            const message = aiInput.value.trim();
+            if (!message) return;
+            addAIMessage(message, true);
+            aiInput.value = "";
+            
+            setTimeout(() => {
+                const msg = message.toLowerCase();
+                if (msg.includes("sorgula") || msg.includes("çalıştır")) {
+                    executeQuery();
+                } else if (msg.includes("analiz") || msg.includes("incele")) {
+                    analyzeResult();
+                } else if (msg.includes("format") || msg.includes("düzenle")) {
+                    formatResult();
+                } else if (msg.includes("indir") || msg.includes("kaydet")) {
+                    downloadTxt();
+                } else if (msg.includes("temizle") || msg.includes("sil")) {
+                    clearResult();
+                } else if (msg.includes("yardım") || msg.includes("help")) {
+                    aiHelp();
+                } else {
+                    addAIMessage("Anladım! Yardım için 'yardım' yazabilir veya sorgu yapabilirsiniz. Aktif sorgu tipi: " + QUERIES[activeQuery].name, false);
+                }
+            }, 300);
+        });
+        
+        aiInput.addEventListener("keypress", (e) => {
+            if (e.key === "Enter") aiSend.click();
+        });
+        
+        let minimized = false;
+        aiHeader.addEventListener("click", () => {
+            minimized = !minimized;
+            document.getElementById("aiAssistant").classList.toggle("minimized", minimized);
+            aiToggle.innerHTML = minimized ? "▲" : "▼";
+        });
+        
+        // Quick buttons
+        document.querySelectorAll(".quick-btn").forEach(btn => {
+            btn.addEventListener("click", () => {
+                if (btn.dataset.query) {
+                    activeQuery = btn.dataset.query;
+                    renderQueryPanel();
+                    addAIMessage(`🔄 "${QUERIES[activeQuery].name}" moduna geçildi.`, false);
+                } else if (btn.dataset.action) {
+                    const action = btn.dataset.action;
+                    if (action === "analyze") analyzeResult();
+                    else if (action === "format") formatResult();
+                    else if (action === "help") aiHelp();
+                }
+            });
+        });
+    }
+    
+    // ========== ARKA PLAN YILDIZLARI ==========
+    function createStars() {
+        const bg = document.getElementById("cosmicBg");
+        for (let i = 0; i < 200; i++) {
+            const star = document.createElement("div");
+            star.className = "star";
+            star.style.width = Math.random() * 3 + "px";
+            star.style.height = star.style.width;
+            star.style.left = Math.random() * 100 + "%";
+            star.style.top = Math.random() * 100 + "%";
+            star.style.animationDelay = Math.random() * 5 + "s";
+            bg.appendChild(star);
+        }
+        
+        for (let i = 0; i < 5; i++) {
+            const nebula = document.createElement("div");
+            nebula.className = "nebula";
+            nebula.style.background = `radial-gradient(circle, ${i % 2 === 0 ? 'cyan' : 'magenta'}, transparent)`;
+            nebula.style.left = Math.random() * 80 + "%";
+            nebula.style.top = Math.random() * 80 + "%";
+            nebula.style.animationDelay = i * 2 + "s";
+            bg.appendChild(nebula);
+        }
     }
     
     function escapeHtml(str) {
@@ -756,39 +860,27 @@
         });
     }
     
-    // Event Listeners
-    document.getElementById("executeBtn").addEventListener("click", executeQuery);
-    document.getElementById("voiceBtn").addEventListener("click", () => {
-        if (recognition) {
-            recognition.start();
-            showToast("Dinleniyor... bir komut söyleyin");
-        } else {
-            showToast("Tarayıcınız sesli komut desteklemiyor", 'error');
-        }
-    });
-    document.getElementById("qrShareBtn").addEventListener("click", shareQR);
-    document.getElementById("downloadTxtBtn").addEventListener("click", downloadTxt);
-    document.getElementById("themeToggle").addEventListener("click", toggleTheme);
-    
-    // Partikül Oluştur
-    for(let i = 0; i < 100; i++) {
-        setTimeout(() => {
-            const particle = document.createElement('div');
-            particle.className = 'particle';
-            particle.style.left = Math.random() * window.innerWidth + 'px';
-            particle.style.animationDuration = (5 + Math.random() * 10) + 's';
-            particle.style.animationDelay = Math.random() * 10 + 's';
-            document.querySelector('.particle-field').appendChild(particle);
-        }, i * 100);
-    }
-    
-    // Başlat
-    renderSidebar();
+    // ========== BAŞLAT ==========
+    createStars();
     renderQueryPanel();
+    buildSideMenu();
     initAIChat();
     
-    console.log("%c🌌 NOVA-1 | Dünyada Olmayan Sorgu Paneli Aktif!", "color: cyan; font-size: 18px; font-weight: bold;");
-    showToast("NOVA-1 Başlatıldı! Sesli komut, AI asistan ve 3D küp ile sorgulama yapabilirsiniz.");
+    document.getElementById("hamburgerBtn").addEventListener("click", () => {
+        buildSideMenu();
+        toggleSideMenu(true);
+    });
+    
+    document.addEventListener("click", function(e) {
+        const menu = document.getElementById("sideMenu");
+        if (sideMenuOpen && menu && !menu.contains(e.target) && !e.target.closest(".hamburger-menu")) {
+            toggleSideMenu(false);
+        }
+    });
+    
+    addAIMessage("✨ ECLIPSE AI aktif! Sana nasıl yardımcı olabilirim? Sorgu yapabilir, sonuçları analiz edebilirim.", false);
+    
+    console.log("%c🌌 ECLIPSE AI | Dünyada Olmayan Sorgu Paneli Başlatıldı!", "color: cyan; font-size: 16px; font-weight: bold;");
 </script>
 </body>
 </html>
