@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>ECLIPSE AI | Dünyada Olmayan Sorgu Paneli</title>
+    <title>NOVA AI | Dünyada Olmayan Sorgu Paneli</title>
     <style>
         * {
             margin: 0;
@@ -20,7 +20,7 @@
             position: relative;
         }
 
-        /* Arka Plan Animasyonu */
+        /* Arka Plan Animasyonları */
         .cosmic-bg {
             position: fixed;
             top: 0;
@@ -45,18 +45,32 @@
 
         .nebula {
             position: absolute;
-            width: 300px;
-            height: 300px;
+            width: 400px;
+            height: 400px;
             border-radius: 50%;
-            filter: blur(60px);
-            animation: float 20s infinite;
+            filter: blur(80px);
+            animation: float 25s infinite;
         }
 
         @keyframes float {
             0%, 100% { transform: translate(0, 0); }
-            25% { transform: translate(50px, 50px); }
-            50% { transform: translate(100px, -50px); }
-            75% { transform: translate(-50px, 100px); }
+            25% { transform: translate(100px, 50px); }
+            50% { transform: translate(50px, -100px); }
+            75% { transform: translate(-100px, 50px); }
+        }
+
+        .shooting-star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: cyan;
+            box-shadow: 0 0 10px cyan;
+            animation: shoot 4s linear infinite;
+        }
+
+        @keyframes shoot {
+            0% { transform: translateX(-100px) translateY(-100px) rotate(45deg); opacity: 1; }
+            100% { transform: translateX(2000px) translateY(2000px) rotate(45deg); opacity: 0; }
         }
 
         /* Ana Container */
@@ -68,25 +82,42 @@
             z-index: 2;
         }
 
-        /* Header - Sadece Hoşgeldin Mesajı ve Hamburger */
+        /* Hero Header - Sadece Hoşgeldin Mesajı ve Hamburger */
         .hero-header {
-            background: rgba(10, 20, 40, 0.6);
+            background: rgba(10, 20, 40, 0.5);
             backdrop-filter: blur(20px);
-            border-radius: 50px;
-            padding: 40px 30px;
+            border-radius: 60px;
+            padding: 60px 30px;
             text-align: center;
             margin-bottom: 30px;
             border: 1px solid rgba(0, 255, 255, 0.3);
-            box-shadow: 0 0 40px rgba(0, 255, 255, 0.1);
+            box-shadow: 0 0 50px rgba(0, 255, 255, 0.1);
             position: relative;
+            overflow: hidden;
+        }
+
+        .hero-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0,255,255,0.1), transparent);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         .hamburger-menu {
             position: absolute;
             top: 30px;
             left: 30px;
-            width: 50px;
-            height: 50px;
+            width: 55px;
+            height: 55px;
             cursor: pointer;
             background: rgba(0, 255, 255, 0.2);
             border-radius: 50%;
@@ -98,56 +129,69 @@
             transition: 0.3s;
             border: 1px solid cyan;
             z-index: 10;
+            backdrop-filter: blur(10px);
         }
 
         .hamburger-menu:hover {
             background: rgba(0, 255, 255, 0.4);
             transform: scale(1.05);
-            box-shadow: 0 0 20px cyan;
+            box-shadow: 0 0 25px cyan;
         }
 
         .hamburger-menu span {
             width: 28px;
-            height: 2px;
+            height: 2.5px;
             background: white;
             border-radius: 2px;
             transition: 0.3s;
         }
 
         .hero-title {
-            font-size: 3rem;
-            background: linear-gradient(135deg, #fff, cyan, magenta);
+            font-size: 3.5rem;
+            background: linear-gradient(135deg, #fff, cyan, magenta, #ff0);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            animation: titleGlow 3s infinite;
+            animation: titlePulse 3s infinite;
+            position: relative;
+            z-index: 1;
         }
 
-        @keyframes titleGlow {
+        @keyframes titlePulse {
             0%, 100% { filter: drop-shadow(0 0 5px cyan); }
-            50% { filter: drop-shadow(0 0 20px magenta); }
+            50% { filter: drop-shadow(0 0 25px magenta); }
         }
 
         .hero-subtitle {
-            margin-top: 15px;
-            font-size: 1.1rem;
-            opacity: 0.8;
+            margin-top: 20px;
+            font-size: 1.2rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
         }
 
-        /* Side Menu (Hamburger) */
+        .menu-hint {
+            margin-top: 15px;
+            font-size: 0.9rem;
+            color: cyan;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Side Menu (Hamburger) - Tüm Sorgular Burada */
         .side-menu {
             position: fixed;
             top: 0;
-            left: -380px;
-            width: 350px;
+            left: -400px;
+            width: 380px;
             height: 100vh;
             background: rgba(5, 10, 25, 0.98);
             backdrop-filter: blur(25px);
             z-index: 2000;
             transition: left 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-            box-shadow: 5px 0 50px rgba(0, 255, 255, 0.3);
+            box-shadow: 5px 0 60px rgba(0, 255, 255, 0.3);
             border-right: 2px solid cyan;
-            padding: 30px 20px;
+            padding: 25px 20px;
             overflow-y: auto;
         }
 
@@ -159,13 +203,18 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             padding-bottom: 15px;
-            border-bottom: 1px solid cyan;
+            border-bottom: 2px solid cyan;
+        }
+
+        .menu-header h2 {
+            color: cyan;
+            font-size: 1.5rem;
         }
 
         .close-menu {
-            font-size: 30px;
+            font-size: 32px;
             cursor: pointer;
             color: cyan;
             transition: 0.3s;
@@ -173,13 +222,15 @@
 
         .close-menu:hover {
             transform: rotate(90deg);
+            color: magenta;
         }
 
         .menu-category {
             margin: 20px 0 10px 0;
             color: cyan;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             letter-spacing: 2px;
+            font-weight: bold;
         }
 
         .menu-item {
@@ -200,17 +251,12 @@
             transform: translateX(8px);
         }
 
-        .logout-item {
-            margin-top: 40px;
-            border-left-color: magenta;
-        }
-
         /* Sorgu Paneli */
         .query-panel {
-            background: rgba(10, 20, 40, 0.7);
+            background: rgba(10, 20, 40, 0.6);
             backdrop-filter: blur(20px);
             border-radius: 30px;
-            padding: 30px;
+            padding: 35px;
             margin-top: 20px;
             border: 1px solid rgba(0, 255, 255, 0.3);
             animation: fadeInUp 0.5s;
@@ -301,35 +347,36 @@
             word-break: break-word;
         }
 
-        /* AI Asistan - Gelişmiş */
+        /* AI Asistan - Açılır Kapanır Pencere */
         .ai-assistant {
             position: fixed;
             bottom: 30px;
             right: 30px;
-            width: 400px;
-            background: rgba(5, 10, 25, 0.95);
-            backdrop-filter: blur(20px);
+            width: 450px;
+            background: rgba(5, 10, 25, 0.98);
+            backdrop-filter: blur(25px);
             border-radius: 25px;
-            border: 1px solid cyan;
-            box-shadow: 0 0 40px rgba(0, 255, 255, 0.3);
+            border: 2px solid cyan;
+            box-shadow: 0 0 50px rgba(0, 255, 255, 0.4);
             z-index: 100;
-            transition: 0.3s;
+            transition: all 0.3s ease;
         }
 
-        .ai-assistant.minimized {
+        .ai-assistant.closed {
             width: auto;
             height: auto;
         }
 
-        .ai-assistant.minimized .ai-messages,
-        .ai-assistant.minimized .ai-input-area {
+        .ai-assistant.closed .ai-messages,
+        .ai-assistant.closed .ai-input-area,
+        .ai-assistant.closed .quick-buttons {
             display: none;
         }
 
         .ai-header {
             background: linear-gradient(135deg, cyan, magenta);
             padding: 15px 20px;
-            border-radius: 25px 25px 0 0;
+            border-radius: 23px 23px 0 0;
             cursor: pointer;
             display: flex;
             justify-content: space-between;
@@ -340,8 +387,17 @@
             font-size: 1.1rem;
         }
 
+        .ai-toggle-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            padding: 5px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
         .ai-messages {
-            height: 400px;
+            height: 450px;
             overflow-y: auto;
             padding: 15px;
         }
@@ -396,11 +452,12 @@
             gap: 8px;
             padding: 10px 15px;
             flex-wrap: wrap;
+            border-top: 1px solid rgba(0, 255, 255, 0.2);
         }
 
         .quick-btn {
             background: rgba(0, 255, 255, 0.2);
-            padding: 5px 12px;
+            padding: 6px 12px;
             border-radius: 20px;
             font-size: 11px;
             cursor: pointer;
@@ -410,13 +467,14 @@
         .quick-btn:hover {
             background: cyan;
             color: black;
+            transform: scale(1.05);
         }
 
         @media (max-width: 768px) {
-            .hero-title { font-size: 1.8rem; }
-            .side-menu { width: 280px; }
-            .ai-assistant { width: 320px; right: 10px; bottom: 10px; }
-            .ai-messages { height: 300px; }
+            .hero-title { font-size: 2rem; }
+            .side-menu { width: 300px; }
+            .ai-assistant { width: 340px; right: 10px; bottom: 10px; }
+            .ai-messages { height: 350px; }
         }
     </style>
 </head>
@@ -432,44 +490,48 @@
             <span></span>
         </div>
         <div>
-            <h1 class="hero-title">✨ ECLIPSE AI ✨</h1>
-            <p class="hero-subtitle">Dünyada Olmayan Sorgu Teknolojisi | Gelişmiş Yapay Zeka Asistanı</p>
-            <p style="margin-top: 10px; font-size: 0.9rem;">☰ Sol üstteki menüden sorgu tipini seçin</p>
+            <h1 class="hero-title">🌌 NOVA AI SYSTEM 🌌</h1>
+            <p class="hero-subtitle">Dünyada Olmayan Sorgu Teknolojisi | Gelişmiş Yapay Zeka</p>
+            <p class="menu-hint">☰ Sol üstteki menüden tüm sorgu araçlarına erişin</p>
         </div>
     </div>
 
     <div id="queryPanel" class="query-panel">
-        <!-- Dinamik sorgu paneli -->
+        <!-- Dinamik sorgu paneli - sadece aktif sorgu gösterilir -->
     </div>
 </div>
 
-<!-- Gelişmiş AI Asistan -->
+<!-- Gelişmiş AI Asistan (Açılır Kapanır) -->
 <div class="ai-assistant" id="aiAssistant">
     <div class="ai-header" id="aiHeader">
-        <h3>🧠 NOVA AI - Yapay Zeka Asistanın</h3>
-        <span id="aiToggle">▼</span>
+        <h3>🧠 NOVA AI - Yapay Zeka Asistanı</h3>
+        <button class="ai-toggle-btn" id="aiToggleBtn">▼</button>
     </div>
     <div class="ai-messages" id="aiMessages">
         <div class="ai-message bot">
-            ✨ Merhaba! Ben NOVA AI, gelişmiş yapay zeka asistanın. Sana nasıl yardımcı olabilirim?<br>
-            💡 Yapabileceklerim:<br>
+            ✨ Merhaba! Ben NOVA AI, gelişmiş yapay zeka asistanın.<br><br>
+            🎯 <strong>Yapabileceklerim:</strong><br>
             • Sorgu sonuçlarını analiz etme<br>
             • Veri formatlama ve düzenleme<br>
-            • Sorgu önerileri ve ipuçları<br>
+            • Akıllı sorgu önerileri<br>
             • Hata tespiti ve çözüm önerileri<br>
-            • Raporlama ve özet çıkarma
+            • Raporlama ve özet çıkarma<br>
+            • Veri karşılaştırma<br>
+            • Excel/CSV formatına dönüştürme<br>
+            • Anlamlı veri çıkarımı<br><br>
+            💡 <strong>Komutlar:</strong> sorgula | analiz et | formatla | indir | temizle | yardım | raporla
         </div>
     </div>
     <div class="quick-buttons" id="quickButtons">
-        <div class="quick-btn" data-query="tc">🔍 TC Sorgula</div>
-        <div class="quick-btn" data-query="adsoyad">📛 Ad Soyad</div>
-        <div class="quick-btn" data-query="aile">👪 Aile</div>
         <div class="quick-btn" data-action="analyze">📊 Analiz Et</div>
         <div class="quick-btn" data-action="format">🎨 Formatla</div>
+        <div class="quick-btn" data-action="report">📋 Rapor Al</div>
+        <div class="quick-btn" data-action="compare">🔄 Karşılaştır</div>
+        <div class="quick-btn" data-action="export">📎 CSV Aktar</div>
         <div class="quick-btn" data-action="help">❓ Yardım</div>
     </div>
     <div class="ai-input-area">
-        <input type="text" id="aiInput" placeholder="AI'ya bir şey sor... (örn: sonucu analiz et, yardım et)">
+        <input type="text" id="aiInput" placeholder="AI'ya bir şey sor... (örn: sonucu analiz et, rapor al)">
         <button id="aiSendBtn">➤</button>
     </div>
 </div>
@@ -479,7 +541,7 @@
     const API_BASE = "https://apiservices.alwaysdata.net/apiservices";
     const CUSTOM_UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36";
     
-    // Sorgu Tipleri (Hepsi)
+    // Tüm Sorgu Tipleri
     const QUERIES = {
         tc: { name: "🔍 TC Kimlik Sorgula", params: ["tc"], placeholder: ["11 haneli TC kimlik no"], build: (p) => `${API_BASE}/tc.php?tc=${p.tc}` },
         tcpro: { name: "⭐ TC PRO (Detaylı)", params: ["tc"], placeholder: ["11 haneli TC kimlik no"], build: (p) => `${API_BASE}/tcpro.php?tc=${p.tc}` },
@@ -497,7 +559,6 @@
     let activeQuery = "tc";
     let lastResult = null;
     let lastRawResult = "";
-    let currentUser = "ECLIPSE_KULLANICI";
     let sideMenuOpen = false;
     
     // ========== YARDIMCI FONKSİYONLAR ==========
@@ -534,20 +595,16 @@
     async function executeQuery() {
         const def = QUERIES[activeQuery];
         const params = {};
-        let isValid = true;
         
         for (let i = 0; i < def.params.length; i++) {
             const p = def.params[i];
             const input = document.getElementById(`param_${p}`);
             if (!input || !input.value.trim()) {
                 addAIMessage(`❌ Lütfen "${p}" alanını doldurun!`, false);
-                isValid = false;
                 return;
             }
             params[p] = encodeURIComponent(input.value.trim());
         }
-        
-        if (!isValid) return;
         
         const url = def.build(params);
         const resultDiv = document.getElementById("resultArea");
@@ -561,19 +618,18 @@
         
         resultDiv.innerHTML = `<pre style="margin:0; white-space:pre-wrap; font-family:monospace;">${escapeHtml(lastRawResult)}</pre>`;
         
-        // Analiz
         const dataSize = lastRawResult.length;
         const dataLines = lastRawResult.split('\n').length;
         const hasData = data.success !== false;
         
-        addAIMessage(`✅ Sorgu tamamlandı! ${dataLines} satır, ${(dataSize/1024).toFixed(2)} KB veri. ${hasData ? 'Veri başarıyla alındı.' : 'Veri bulunamadı veya hata oluştu.'}`, false);
+        addAIMessage(`✅ Sorgu tamamlandı! ${dataLines} satır, ${(dataSize/1024).toFixed(2)} KB veri. ${hasData ? 'Veri başarıyla alındı.' : 'Veri bulunamadı.'}`, false);
         
         if (hasData && data.results) {
-            addAIMessage(`📊 Özet: ${data.results.length} kayıt bulundu. Detaylar için sonucu inceleyebilirsiniz.`, false);
+            addAIMessage(`📊 Özet: ${data.results.length} kayıt bulundu.`, false);
         }
     }
     
-    // ========== AI ASİSTAN GELİŞMİŞ ==========
+    // ========== GELİŞMİŞ AI FONKSİYONLARI ==========
     function addAIMessage(message, isUser = true) {
         const messagesDiv = document.getElementById("aiMessages");
         const msgDiv = document.createElement("div");
@@ -582,15 +638,14 @@
         messagesDiv.appendChild(msgDiv);
         messagesDiv.scrollTop = messagesDiv.scrollHeight;
         
-        // 50 mesajı geçerse temizle
-        if (messagesDiv.children.length > 50) {
+        if (messagesDiv.children.length > 60) {
             messagesDiv.removeChild(messagesDiv.children[0]);
         }
     }
     
     function analyzeResult() {
         if (!lastResult) {
-            addAIMessage("⚠️ Henüz bir sorgu yapılmamış. Önce bir sorgu yapın, sonra analiz edebilirim.", false);
+            addAIMessage("⚠️ Henüz bir sorgu yapılmamış. Önce bir sorgu yapın.", false);
             return;
         }
         
@@ -601,7 +656,7 @@
             const hasData = lastResult.success !== false;
             const resultCount = lastResult.results ? lastResult.results.length : (lastResult.aile_bilgileri ? lastResult.aile_bilgileri.kayitlar?.length : 0);
             
-            let analysis = "🔍 Analiz Sonucu:\n";
+            let analysis = "🔍 **Analiz Sonucu:**\n\n";
             analysis += `• Durum: ${hasData ? '✅ Başarılı' : '❌ Başarısız'}\n`;
             analysis += `• Veri Boyutu: ${(resultStr.length/1024).toFixed(2)} KB\n`;
             analysis += `• Kayıt Sayısı: ${resultCount || 'Belirsiz'}\n`;
@@ -611,9 +666,10 @@
                 if (first.ADI) analysis += `• İsim: ${first.ADI} ${first.SOYADI}\n`;
                 if (first.DOĞUM_TARİHİ) analysis += `• Doğum: ${first.DOĞUM_TARİHİ}\n`;
                 if (first.İL) analysis += `• İl: ${first.İL}\n`;
+                if (first.GSM) analysis += `• GSM: ${first.GSM}\n`;
             }
             
-            analysis += `\n💡 Öneri: Veriyi TXT olarak indirebilir veya detaylı inceleyebilirsiniz.`;
+            analysis += `\n💡 Öneri: Veriyi TXT olarak indirebilir veya CSV formatında dışa aktarabilirsiniz.`;
             addAIMessage(analysis, false);
         }, 500);
     }
@@ -634,14 +690,102 @@
         }
     }
     
+    function generateReport() {
+        if (!lastResult) {
+            addAIMessage("⚠️ Rapor oluşturmak için önce bir sorgu yapın!", false);
+            return;
+        }
+        
+        addAIMessage("📋 Rapor oluşturuluyor...", false);
+        
+        setTimeout(() => {
+            const timestamp = new Date().toLocaleString();
+            let report = `📊 **NOVA AI RAPORU**\n`;
+            report += `═══════════════════════════════\n`;
+            report += `📅 Tarih: ${timestamp}\n`;
+            report += `🔍 Sorgu Tipi: ${QUERIES[activeQuery].name}\n`;
+            report += `📦 Veri Boyutu: ${(lastRawResult.length/1024).toFixed(2)} KB\n`;
+            report += `📄 Toplam Satır: ${lastRawResult.split('\n').length}\n`;
+            
+            if (lastResult.results) {
+                report += `👥 Kayıt Sayısı: ${lastResult.results.length}\n`;
+                if (lastResult.results[0]) {
+                    const sample = lastResult.results[0];
+                    report += `\n📌 Örnek Kayıt:\n`;
+                    Object.entries(sample).slice(0, 5).forEach(([k,v]) => {
+                        report += `   ${k}: ${v}\n`;
+                    });
+                }
+            }
+            
+            report += `\n✅ Rapor başarıyla oluşturuldu.`;
+            addAIMessage(report, false);
+        }, 500);
+    }
+    
+    function compareData() {
+        if (!lastResult) {
+            addAIMessage("⚠️ Karşılaştırma için önce bir sorgu yapın!", false);
+            return;
+        }
+        
+        addAIMessage("🔄 Veri karşılaştırma modu aktif. Lütfen karşılaştırmak istediğiniz TC veya ismi yazın.", false);
+    }
+    
+    function exportToCSV() {
+        if (!lastResult || !lastResult.results) {
+            addAIMessage("⚠️ CSV dışa aktarma için geçerli bir sorgu sonucu gerekli!", false);
+            return;
+        }
+        
+        try {
+            const data = lastResult.results;
+            if (data.length === 0) {
+                addAIMessage("⚠️ Dışa aktarılacak veri yok!", false);
+                return;
+            }
+            
+            const headers = Object.keys(data[0]);
+            let csv = headers.join(',') + '\n';
+            
+            data.forEach(row => {
+                const values = headers.map(header => {
+                    let value = row[header] || '';
+                    if (typeof value === 'string' && (value.includes(',') || value.includes('"'))) {
+                        value = `"${value.replace(/"/g, '""')}"`;
+                    }
+                    return value;
+                });
+                csv += values.join(',') + '\n';
+            });
+            
+            const blob = new Blob([csv], {type: "text/csv"});
+            const a = document.createElement("a");
+            const url = URL.createObjectURL(blob);
+            a.download = `nova_export_${Date.now()}.csv`;
+            a.href = url;
+            a.click();
+            URL.revokeObjectURL(url);
+            
+            addAIMessage(`✅ Veri CSV formatında dışa aktarıldı! ${data.length} kayıt kaydedildi.`, false);
+        } catch(e) {
+            addAIMessage("❌ CSV dışa aktarma hatası!", false);
+        }
+    }
+    
     function aiHelp() {
-        addAIMessage("📚 Yardım Menüsü:\n" +
-            "• 'sorgula' - Aktif sorguyu çalıştır\n" +
-            "• 'analiz et' - Sonucu analiz et\n" +
-            "• 'formatla' - Veriyi düzenle\n" +
-            "• 'indir' - TXT olarak kaydet\n" +
-            "• 'temizle' - Sonuçları temizle\n" +
-            "• Menüden sorgu tipini değiştirebilirsiniz", false);
+        const help = `📚 **NOVA AI Yardım Menüsü**\n\n` +
+            `🎯 **Komutlar:**\n` +
+            `• "sorgula" - Aktif sorguyu çalıştır\n` +
+            `• "analiz et" - Sonucu detaylı analiz et\n` +
+            `• "formatla" - Veriyi düzenle\n` +
+            `• "rapor al" - Detaylı rapor oluştur\n` +
+            `• "karşılaştır" - Veri karşılaştırma yap\n` +
+            `• "csv aktar" - CSV formatında dışa aktar\n` +
+            `• "indir" - TXT olarak kaydet\n` +
+            `• "temizle" - Sonuçları temizle\n\n` +
+            `💡 **İpucu:** Menüden sorgu tipini değiştirebilir, birden fazla sorgu yapabilirsiniz.`;
+        addAIMessage(help, false);
     }
     
     function downloadTxt() {
@@ -652,7 +796,7 @@
         const blob = new Blob([lastRawResult], {type: "text/plain"});
         const a = document.createElement("a");
         const url = URL.createObjectURL(blob);
-        a.download = `eclipse_sorgu_${Date.now()}.txt`;
+        a.download = `nova_sorgu_${Date.now()}.txt`;
         a.href = url;
         a.click();
         URL.revokeObjectURL(url);
@@ -696,7 +840,7 @@
         document.getElementById("clearBtn").addEventListener("click", clearResult);
     }
     
-    // ========== SIDE MENU (Hamburger) ==========
+    // ========== SIDE MENU (Tüm Sorgular Burada) ==========
     function buildSideMenu() {
         let existing = document.getElementById("sideMenu");
         if (existing) existing.remove();
@@ -707,32 +851,33 @@
         
         let menuHtml = `
             <div class="menu-header">
-                <h3 style="color:cyan;">🌀 ECLIPSE MENÜ</h3>
+                <h2>🌀 NOVA MENÜ</h2>
                 <div class="close-menu" id="closeMenuBtn">✖</div>
             </div>
-            <div class="menu-category">📌 SORGULAR</div>
+            <div class="menu-category">📌 SORGULAR (11 ADET)</div>
         `;
         
         for (let [key, val] of Object.entries(QUERIES)) {
             menuHtml += `<div class="menu-item" data-query="${key}">${val.name}</div>`;
         }
         
-        menuHtml += `<div class="menu-category" style="margin-top:30px;">⚙️ Aİ AKSİYONLAR</div>`;
+        menuHtml += `<div class="menu-category" style="margin-top:30px;">⚙️ AI AKSİYONLAR</div>`;
         menuHtml += `<div class="menu-item" data-action="analyze">📊 Sonucu Analiz Et</div>`;
         menuHtml += `<div class="menu-item" data-action="format">🎨 Veriyi Formatla</div>`;
+        menuHtml += `<div class="menu-item" data-action="report">📋 Rapor Al</div>`;
+        menuHtml += `<div class="menu-item" data-action="export">📎 CSV Aktar</div>`;
         menuHtml += `<div class="menu-item" data-action="help">❓ Yardım</div>`;
-        menuHtml += `<div class="menu-item logout-item" data-action="logout">🚪 Çıkış</div>`;
+        menuHtml += `<div class="menu-item" data-action="clear">🗑️ Temizle</div>`;
         
         menuDiv.innerHTML = menuHtml;
         document.body.appendChild(menuDiv);
         
-        // Menu item events
         document.querySelectorAll(".menu-item[data-query]").forEach(el => {
             el.addEventListener("click", () => {
                 activeQuery = el.dataset.query;
                 renderQueryPanel();
                 toggleSideMenu(false);
-                addAIMessage(`🔄 "${QUERIES[activeQuery].name}" moduna geçildi. Parametreleri doldurup sorgulayabilirsiniz.`, false);
+                addAIMessage(`🔄 "${QUERIES[activeQuery].name}" moduna geçildi.`, false);
             });
         });
         
@@ -741,11 +886,10 @@
                 const action = el.dataset.action;
                 if (action === "analyze") analyzeResult();
                 else if (action === "format") formatResult();
+                else if (action === "report") generateReport();
+                else if (action === "export") exportToCSV();
                 else if (action === "help") aiHelp();
-                else if (action === "logout") {
-                    addAIMessage("👋 Çıkış yapılıyor...", false);
-                    setTimeout(() => location.reload(), 1000);
-                }
+                else if (action === "clear") clearResult();
                 toggleSideMenu(false);
             });
         });
@@ -765,12 +909,25 @@
         }
     }
     
-    // ========== AI CHAT ==========
+    // ========== AI ASİSTAN (Açılır Kapanır) ==========
     function initAIChat() {
         const aiInput = document.getElementById("aiInput");
         const aiSend = document.getElementById("aiSendBtn");
-        const aiHeader = document.getElementById("aiHeader");
-        const aiToggle = document.getElementById("aiToggle");
+        const aiToggle = document.getElementById("aiToggleBtn");
+        const aiAssistant = document.getElementById("aiAssistant");
+        
+        let isClosed = false;
+        
+        aiToggle.addEventListener("click", () => {
+            isClosed = !isClosed;
+            if (isClosed) {
+                aiAssistant.classList.add("closed");
+                aiToggle.innerHTML = "▲";
+            } else {
+                aiAssistant.classList.remove("closed");
+                aiToggle.innerHTML = "▼";
+            }
+        });
         
         aiSend.addEventListener("click", () => {
             const message = aiInput.value.trim();
@@ -786,6 +943,12 @@
                     analyzeResult();
                 } else if (msg.includes("format") || msg.includes("düzenle")) {
                     formatResult();
+                } else if (msg.includes("rapor")) {
+                    generateReport();
+                } else if (msg.includes("karşılaştır")) {
+                    compareData();
+                } else if (msg.includes("csv") || msg.includes("aktar")) {
+                    exportToCSV();
                 } else if (msg.includes("indir") || msg.includes("kaydet")) {
                     downloadTxt();
                 } else if (msg.includes("temizle") || msg.includes("sil")) {
@@ -793,7 +956,7 @@
                 } else if (msg.includes("yardım") || msg.includes("help")) {
                     aiHelp();
                 } else {
-                    addAIMessage("Anladım! Yardım için 'yardım' yazabilir veya sorgu yapabilirsiniz. Aktif sorgu tipi: " + QUERIES[activeQuery].name, false);
+                    addAIMessage("Anladım! Yardım için 'yardım' yazabilirsiniz. Aktif sorgu: " + QUERIES[activeQuery].name, false);
                 }
             }, 300);
         });
@@ -802,34 +965,24 @@
             if (e.key === "Enter") aiSend.click();
         });
         
-        let minimized = false;
-        aiHeader.addEventListener("click", () => {
-            minimized = !minimized;
-            document.getElementById("aiAssistant").classList.toggle("minimized", minimized);
-            aiToggle.innerHTML = minimized ? "▲" : "▼";
-        });
-        
-        // Quick buttons
         document.querySelectorAll(".quick-btn").forEach(btn => {
             btn.addEventListener("click", () => {
-                if (btn.dataset.query) {
-                    activeQuery = btn.dataset.query;
-                    renderQueryPanel();
-                    addAIMessage(`🔄 "${QUERIES[activeQuery].name}" moduna geçildi.`, false);
-                } else if (btn.dataset.action) {
-                    const action = btn.dataset.action;
-                    if (action === "analyze") analyzeResult();
-                    else if (action === "format") formatResult();
-                    else if (action === "help") aiHelp();
-                }
+                const action = btn.dataset.action;
+                if (action === "analyze") analyzeResult();
+                else if (action === "format") formatResult();
+                else if (action === "report") generateReport();
+                else if (action === "compare") compareData();
+                else if (action === "export") exportToCSV();
+                else if (action === "help") aiHelp();
             });
         });
     }
     
-    // ========== ARKA PLAN YILDIZLARI ==========
-    function createStars() {
+    // ========== ARKA PLAN ==========
+    function createBackground() {
         const bg = document.getElementById("cosmicBg");
-        for (let i = 0; i < 200; i++) {
+        
+        for (let i = 0; i < 300; i++) {
             const star = document.createElement("div");
             star.className = "star";
             star.style.width = Math.random() * 3 + "px";
@@ -837,18 +990,29 @@
             star.style.left = Math.random() * 100 + "%";
             star.style.top = Math.random() * 100 + "%";
             star.style.animationDelay = Math.random() * 5 + "s";
+            star.style.animationDuration = 2 + Math.random() * 3 + "s";
             bg.appendChild(star);
         }
         
-        for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < 8; i++) {
             const nebula = document.createElement("div");
             nebula.className = "nebula";
-            nebula.style.background = `radial-gradient(circle, ${i % 2 === 0 ? 'cyan' : 'magenta'}, transparent)`;
+            const colors = ['cyan', 'magenta', 'blue', 'purple'];
+            nebula.style.background = `radial-gradient(circle, ${colors[i % colors.length]}, transparent)`;
             nebula.style.left = Math.random() * 80 + "%";
             nebula.style.top = Math.random() * 80 + "%";
             nebula.style.animationDelay = i * 2 + "s";
             bg.appendChild(nebula);
         }
+        
+        setInterval(() => {
+            const shooting = document.createElement("div");
+            shooting.className = "shooting-star";
+            shooting.style.top = Math.random() * 50 + "%";
+            shooting.style.left = Math.random() * 50 + "%";
+            bg.appendChild(shooting);
+            setTimeout(() => shooting.remove(), 4000);
+        }, 3000);
     }
     
     function escapeHtml(str) {
@@ -861,7 +1025,7 @@
     }
     
     // ========== BAŞLAT ==========
-    createStars();
+    createBackground();
     renderQueryPanel();
     buildSideMenu();
     initAIChat();
@@ -878,9 +1042,9 @@
         }
     });
     
-    addAIMessage("✨ ECLIPSE AI aktif! Sana nasıl yardımcı olabilirim? Sorgu yapabilir, sonuçları analiz edebilirim.", false);
+    addAIMessage("✨ NOVA AI sistemi aktif! Sana nasıl yardımcı olabilirim? Sorgu yapabilir, analiz edebilirim.", false);
     
-    console.log("%c🌌 ECLIPSE AI | Dünyada Olmayan Sorgu Paneli Başlatıldı!", "color: cyan; font-size: 16px; font-weight: bold;");
+    console.log("%c🌌 NOVA AI | Dünyada Olmayan Sorgu Paneli Başlatıldı!", "color: cyan; font-size: 16px; font-weight: bold;");
 </script>
 </body>
 </html>
