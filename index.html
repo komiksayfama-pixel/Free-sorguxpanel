@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
-    <title>NOVA AI | Gelişmiş Sorgu Paneli</title>
+    <title>NOVA AI | Hızlı Sorgu Paneli</title>
     <style>
         * {
             margin: 0;
@@ -466,6 +466,22 @@
             padding: 8px 16px;
             margin: 0;
         }
+        
+        /* Loading spinner */
+        .loading-spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: cyan;
+            animation: spin 0.8s linear infinite;
+            margin-right: 8px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body>
@@ -507,21 +523,79 @@
 </div>
 
 <script>
-    // ========== GİZLİLİK AYARLARI ==========
-    // Konsola gizli mesaj
-    console.log("%c🔒 Güvenli Mod Aktif | NOVA AI Sorgu Paneli", "color: cyan; font-size: 12px;");
+    // ========== GİZLİLİK VE GÜVENLİK ==========
+    console.clear();
+    console.log("%c🔒 NOVA AI | Güvenli Mod Aktif | Hızlı Sorgu Paneli", "color: cyan; font-size: 14px; font-weight: bold;");
     
-    // Geliştirici araçlarını kontrol et (basit gizlilik)
+    // Geliştirici araçlarını kontrol et
     setInterval(() => {
         if (window.devtools && window.devtools.open) {
             console.clear();
-            console.log("%c🔒 Güvenlik Uyarısı: Geliştirici araçları tespit edildi!", "color: red; font-size: 14px;");
         }
     }, 1000);
     
+    // ========== GÜÇLENDİRİLMİŞ FETCH ==========
+    // Çoklu User-Agent listesi (engellenme ihtimaline karşı)
+    const USER_AGENTS = [
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        "Mozilla/5.0 (iPhone; CPU iPhone OS 16_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.0 Mobile/15E148 Safari/604.1",
+        "Mozilla/5.0 (Linux; Android 13; SM-G998B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36"
+    ];
+    
+    let currentUAIndex = 0;
+    
+    function getRandomUserAgent() {
+        currentUAIndex = (currentUAIndex + 1) % USER_AGENTS.length;
+        return USER_AGENTS[currentUAIndex];
+    }
+    
+    // Güçlendirilmiş fetch (zaman aşımı + retry)
+    async function enhancedFetch(url, retries = 2) {
+        for (let attempt = 0; attempt <= retries; attempt++) {
+            try {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 saniye zaman aşımı
+                
+                const response = await fetch(url, {
+                    signal: controller.signal,
+                    headers: {
+                        "User-Agent": getRandomUserAgent(),
+                        "Accept": "text/plain, application/json, */*",
+                        "Accept-Language": "tr-TR,tr;q=0.9,en;q=0.8",
+                        "Accept-Encoding": "gzip, deflate, br",
+                        "Connection": "keep-alive",
+                        "Cache-Control": "no-cache",
+                        "Pragma": "no-cache"
+                    }
+                });
+                
+                clearTimeout(timeoutId);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+                
+                const contentType = response.headers.get("content-type");
+                if (contentType && contentType.includes("text/plain")) {
+                    return await response.text();
+                }
+                return await response.json();
+                
+            } catch (error) {
+                console.warn(`Deneme ${attempt + 1} başarısız:`, error.message);
+                if (attempt === retries) {
+                    return { success: false, error: "Bağlantı hatası: " + error.message };
+                }
+                // Yeniden denemeden önce bekle
+                await new Promise(resolve => setTimeout(resolve, 1000 * (attempt + 1)));
+            }
+        }
+    }
+    
     // ========== KONFİGÜRASYON ==========
     const API_BASE = "https://apilerimya.onrender.com";
-    const CUSTOM_UA = "Mozilla/5.0 (iPhone; CPU iPhone OS 16_0 like Mac OS X) AppleWebKit/605.1.15";
     
     // Tüm Sorgu Tipleri (14 API)
     const QUERIES = {
@@ -545,15 +619,16 @@
     let lastRawResult = "";
     let currentUser = null;
     let sideMenuOpen = false;
+    let isQueryRunning = false;
     
     // ========== KULLANICI SİSTEMİ ==========
     function getUsers() {
-        let u = localStorage.getItem("nova_users_v3");
+        let u = localStorage.getItem("nova_users_v4");
         return u ? JSON.parse(u) : {};
     }
     
     function saveUsers(users) {
-        localStorage.setItem("nova_users_v3", JSON.stringify(users));
+        localStorage.setItem("nova_users_v4", JSON.stringify(users));
     }
     
     function registerUser(username, password) {
@@ -569,7 +644,7 @@
         if (!users[username]) return false;
         if (atob(users[username].pwd) === password) {
             currentUser = { username, loggedAt: Date.now() };
-            localStorage.setItem("nova_session_v3", JSON.stringify(currentUser));
+            localStorage.setItem("nova_session_v4", JSON.stringify(currentUser));
             return true;
         }
         return false;
@@ -577,12 +652,12 @@
     
     function logout() {
         currentUser = null;
-        localStorage.removeItem("nova_session_v3");
+        localStorage.removeItem("nova_session_v4");
         renderAuth();
     }
     
     function checkSession() {
-        let sess = localStorage.getItem("nova_session_v3");
+        let sess = localStorage.getItem("nova_session_v4");
         if (sess) {
             try {
                 currentUser = JSON.parse(sess);
@@ -596,7 +671,6 @@
     function cleanResponse(data) {
         if (!data) return data;
         if (typeof data === 'string') {
-            // Text formatındaki veriyi olduğu gibi göster
             return data;
         }
         const cleaned = JSON.parse(JSON.stringify(data));
@@ -613,25 +687,12 @@
         return cleaned;
     }
     
-    async function fastFetch(url) {
-        try {
-            const resp = await fetch(url, {
-                headers: { "User-Agent": CUSTOM_UA, "Accept": "text/plain, application/json" }
-            });
-            if (!resp.ok) throw new Error();
-            const contentType = resp.headers.get("content-type");
-            if (contentType && contentType.includes("text/plain")) {
-                const text = await resp.text();
-                return text;
-            }
-            const json = await resp.json();
-            return cleanResponse(json);
-        } catch(err) {
-            return { success: false, error: "Bağlantı hatası" };
-        }
-    }
-    
     async function executeQuery() {
+        if (isQueryRunning) {
+            addAIMessage("⏳ Zaten bir sorgu devam ediyor, lütfen bekleyin!", false);
+            return;
+        }
+        
         const def = QUERIES[activeQuery];
         const params = {};
         
@@ -646,22 +707,33 @@
         
         const url = def.build(params);
         const resultDiv = document.getElementById("resultArea");
-        resultDiv.innerHTML = "⏳ Sorgulanıyor, lütfen bekleyin...";
+        resultDiv.innerHTML = '<div style="text-align:center"><span class="loading-spinner"></span> Sorgulanıyor, lütfen bekleyin...</div>';
         
-        addAIMessage(`🔍 "${def.name}" sorgusu başlatıldı...`, false);
+        addAIMessage(`🔍 "${def.name}" sorgusu başlatılıyor...`, false);
+        isQueryRunning = true;
         
-        const data = await fastFetch(url);
-        lastResult = data;
-        
-        if (typeof data === 'string') {
-            lastRawResult = data;
-            resultDiv.innerHTML = `<pre style="margin:0; white-space:pre-wrap;">${escapeHtml(data)}</pre>`;
-        } else {
-            lastRawResult = JSON.stringify(data, null, 2);
-            resultDiv.innerHTML = `<pre style="margin:0; white-space:pre-wrap;">${escapeHtml(lastRawResult)}</pre>`;
+        try {
+            const startTime = Date.now();
+            const data = await enhancedFetch(url);
+            const elapsedTime = Date.now() - startTime;
+            
+            lastResult = data;
+            
+            if (typeof data === 'string') {
+                lastRawResult = data;
+                resultDiv.innerHTML = `<pre style="margin:0; white-space:pre-wrap;">${escapeHtml(data)}</pre>`;
+            } else {
+                lastRawResult = JSON.stringify(data, null, 2);
+                resultDiv.innerHTML = `<pre style="margin:0; white-space:pre-wrap;">${escapeHtml(lastRawResult)}</pre>`;
+            }
+            
+            addAIMessage(`✅ Sorgu tamamlandı! (${elapsedTime}ms)`, false);
+        } catch (error) {
+            resultDiv.innerHTML = `<div style="color:#ff6666">❌ Hata: ${error.message}</div>`;
+            addAIMessage(`❌ Sorgu hatası: ${error.message}`, false);
+        } finally {
+            isQueryRunning = false;
         }
-        
-        addAIMessage(`✅ Sorgu tamamlandı!`, false);
     }
     
     // ========== AI FONKSİYONLARI ==========
@@ -695,7 +767,6 @@
         }
         try {
             if (typeof lastResult === 'string') {
-                // Text format zaten okunabilir
                 addAIMessage("✅ Bu veri zaten metin formatında!", false);
             } else {
                 const formatted = JSON.stringify(lastResult, null, 4);
@@ -717,7 +788,7 @@
     }
     
     function aiHelp() {
-        addAIMessage("📚 Komutlar:\n• sorgula - Sorguyu çalıştır\n• analiz et - Sonucu analiz et\n• formatla - Veriyi düzenle\n• rapor al - Rapor oluştur\n• indir - TXT indir\n• temizle - Temizle\n\n🔍 Toplam 13 farklı sorgu tipi mevcut!", false);
+        addAIMessage("📚 Komutlar:\n• sorgula - Sorguyu çalıştır\n• analiz et - Sonucu analiz et\n• formatla - Veriyi düzenle\n• rapor al - Rapor oluştur\n• indir - TXT indir\n• temizle - Temizle\n\n🔍 Toplam 13 farklı sorgu tipi mevcut!\n⚡ Hızlandırılmış bağlantı | Otomatik yeniden deneme", false);
     }
     
     function downloadTxt() {
@@ -759,7 +830,7 @@
                 </div>
                 <div>
                     <div class="logo">✨ NOVA AI ✨</div>
-                    <div class="subtitle">Gelişmiş Sorgu Paneli</div>
+                    <div class="subtitle">Hızlı Sorgu Paneli</div>
                     <div class="menu-hint">☰ Menüden sorgu tipini seçin</div>
                 </div>
             </div>
@@ -774,7 +845,7 @@
                 <div id="resultArea" class="result-area">Sorgu sonucu burada görünecek...</div>
                 <button id="logoutBtn" class="logout-btn">🚪 Çıkış Yap</button>
             </div>
-            <footer>🔒 NOVA AI | Gelişmiş Sorgu Paneli | 13+ API</footer>
+            <footer>🔒 NOVA AI | Hızlı Sorgu | 13+ API | Otomatik Yeniden Deneme</footer>
         `;
         
         document.getElementById("appRoot").innerHTML = panelHtml;
@@ -860,7 +931,7 @@
             <div class="header" style="margin-bottom:20px;">
                 <div>
                     <div class="logo">✨ NOVA AI ✨</div>
-                    <div class="subtitle">Gelişmiş Sorgu Paneli</div>
+                    <div class="subtitle">Hızlı Sorgu Paneli</div>
                 </div>
             </div>
             <div class="auth-card">
@@ -872,7 +943,7 @@
                 <div id="authMsg" style="margin-top: 10px; font-size: 0.7rem; color: #ffaa66;"></div>
                 <div class="auth-gif"></div>
             </div>
-            <footer>🔒 NOVA AI | Gelişmiş Sorgu Paneli | 13+ API</footer>
+            <footer>🔒 NOVA AI | Hızlı Sorgu | Otomatik Yeniden Deneme</footer>
         `;
         
         document.getElementById("appRoot").innerHTML = html;
@@ -988,10 +1059,6 @@
             toggleSideMenu(false);
         }
     });
-    
-    // Gizlilik için ekstra
-    console.clear();
-    console.log("%c🔒 NOVA AI | Gelişmiş Sorgu Paneli | Güvenli Mod Aktif", "color: cyan; font-size: 14px; font-weight: bold;");
 </script>
 </body>
 </html>
