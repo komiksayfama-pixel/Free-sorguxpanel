@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
-    <title>NOVA AI | Profesyonel Sorgu Paneli</title>
+    <title>NOVA AI | Gelişmiş Sorgu Paneli</title>
     <style>
         * {
             margin: 0;
@@ -21,7 +21,7 @@
             position: relative;
         }
 
-        /* Arka Plan GIF - Sade ve Temiz */
+        /* Arka Plan GIF */
         .gif-bg {
             position: fixed;
             top: 0;
@@ -33,26 +33,27 @@
             opacity: 0.08;
         }
 
-        /* Hareketli Daire GIF - Sadece Geçiş Efekti */
-        .circle-gif {
+        /* Yuvarlak Daire GIF - Geçiş Efekti */
+        .transition-gif {
             position: fixed;
-            width: 250px;
-            height: 250px;
+            width: 300px;
+            height: 300px;
             border-radius: 50%;
             background: url('https://media0.giphy.com/media/v1.Y2lkPTZjMDliOTUydGsxbnc5OGdvZDl1ZmRuaHVpYnB2endxMngwZHAxYWN4NzdycHFvcCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/smGpsxCQzXwDS/giphy.gif') center/cover no-repeat;
-            opacity: 0.15;
+            opacity: 0.2;
             z-index: -1;
             pointer-events: none;
-            animation: slowMove 20s infinite ease-in-out;
+            animation: rotateGlow 15s infinite ease-in-out;
+            box-shadow: 0 0 50px rgba(0, 255, 255, 0.3);
         }
 
-        @keyframes slowMove {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            33% { transform: translate(30px, -30px) scale(1.02); }
-            66% { transform: translate(-20px, 20px) scale(0.98); }
+        @keyframes rotateGlow {
+            0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); opacity: 0.15; }
+            33% { transform: translate(40px, -40px) scale(1.05) rotate(120deg); opacity: 0.25; }
+            66% { transform: translate(-30px, 30px) scale(0.95) rotate(240deg); opacity: 0.2; }
         }
 
-        /* Ana Container */
+        /* Ana Container - Mobil */
         .app-container {
             width: 100%;
             max-width: 450px;
@@ -78,8 +79,8 @@
             position: absolute;
             top: 16px;
             left: 16px;
-            width: 40px;
-            height: 40px;
+            width: 42px;
+            height: 42px;
             cursor: pointer;
             background: rgba(0, 255, 255, 0.15);
             border-radius: 12px;
@@ -100,7 +101,7 @@
         }
 
         .logo {
-            font-size: 1.6rem;
+            font-size: 1.5rem;
             font-weight: bold;
             background: linear-gradient(135deg, #fff, cyan, magenta);
             -webkit-background-clip: text;
@@ -159,7 +160,6 @@
             font-size: 26px;
             cursor: pointer;
             color: cyan;
-            transition: 0.2s;
         }
 
         .menu-category {
@@ -196,7 +196,7 @@
         }
 
         .auth-card h2 {
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             margin-bottom: 20px;
             color: cyan;
         }
@@ -209,7 +209,7 @@
             border: 1px solid rgba(0, 255, 255, 0.3);
             border-radius: 30px;
             color: white;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
 
         .auth-btn {
@@ -226,10 +226,9 @@
             margin-top: 15px;
             color: cyan;
             cursor: pointer;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
         }
 
-        /* Auth GIF - Düzenli */
         .auth-gif {
             width: 100px;
             height: 100px;
@@ -245,7 +244,7 @@
             50% { transform: scale(1.03); box-shadow: 0 0 25px magenta; }
         }
 
-        /* Query Panel - Düzenli */
+        /* Query Panel */
         .query-panel {
             background: rgba(10, 20, 40, 0.7);
             backdrop-filter: blur(20px);
@@ -255,7 +254,7 @@
         }
 
         .query-title {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             margin-bottom: 20px;
             color: cyan;
             text-align: center;
@@ -275,7 +274,7 @@
             border: 1px solid rgba(0, 255, 255, 0.3);
             border-radius: 30px;
             color: white;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             text-align: center;
         }
 
@@ -290,17 +289,18 @@
             gap: 12px;
             justify-content: center;
             margin-bottom: 20px;
+            flex-wrap: wrap;
         }
 
         button {
             background: linear-gradient(135deg, cyan, magenta);
             border: none;
-            padding: 10px 24px;
+            padding: 10px 20px;
             border-radius: 30px;
             font-weight: bold;
             color: white;
             cursor: pointer;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             transition: 0.2s;
         }
 
@@ -312,10 +312,10 @@
             background: rgba(0, 0, 0, 0.85);
             border-radius: 20px;
             padding: 16px;
-            max-height: 350px;
+            max-height: 400px;
             overflow: auto;
             font-family: 'Courier New', monospace;
-            font-size: 11px;
+            font-size: 10px;
             border-left: 3px solid cyan;
             white-space: pre-wrap;
             word-break: break-word;
@@ -331,7 +331,7 @@
 
         footer {
             text-align: center;
-            font-size: 0.6rem;
+            font-size: 0.55rem;
             margin-top: 20px;
             opacity: 0.5;
         }
@@ -392,7 +392,7 @@
         }
 
         .ai-header h4 {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
 
         .ai-close {
@@ -415,7 +415,7 @@
             margin-bottom: 10px;
             padding: 8px 12px;
             border-radius: 12px;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
         }
 
         .ai-message.bot {
@@ -441,14 +441,8 @@
             background: rgba(0, 255, 255, 0.2);
             padding: 5px 12px;
             border-radius: 20px;
-            font-size: 0.65rem;
+            font-size: 0.6rem;
             cursor: pointer;
-            transition: 0.1s;
-        }
-
-        .quick-btn:active {
-            background: cyan;
-            color: black;
         }
 
         .ai-input-area {
@@ -465,7 +459,7 @@
             border: 1px solid cyan;
             border-radius: 25px;
             color: white;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
         }
 
         .ai-input-area button {
@@ -479,9 +473,10 @@
 <!-- Arka Plan GIF -->
 <div class="gif-bg"></div>
 
-<!-- Hareketli Daire GIF -->
-<div class="circle-gif" style="top: -80px; left: -80px;"></div>
-<div class="circle-gif" style="bottom: -80px; right: -80px; width: 200px; height: 200px; animation-delay: 5s;"></div>
+<!-- Yuvarlak Daire GIF - Geçiş Efekti -->
+<div class="transition-gif" style="top: -100px; left: -100px;"></div>
+<div class="transition-gif" style="bottom: -100px; right: -100px; width: 200px; height: 200px; animation-delay: 5s;"></div>
+<div class="transition-gif" style="top: 30%; left: 60%; width: 150px; height: 150px; animation-delay: 2s; animation-duration: 12s;"></div>
 
 <div class="app-container" id="appRoot"></div>
 
@@ -512,22 +507,37 @@
 </div>
 
 <script>
+    // ========== GİZLİLİK AYARLARI ==========
+    // Konsola gizli mesaj
+    console.log("%c🔒 Güvenli Mod Aktif | NOVA AI Sorgu Paneli", "color: cyan; font-size: 12px;");
+    
+    // Geliştirici araçlarını kontrol et (basit gizlilik)
+    setInterval(() => {
+        if (window.devtools && window.devtools.open) {
+            console.clear();
+            console.log("%c🔒 Güvenlik Uyarısı: Geliştirici araçları tespit edildi!", "color: red; font-size: 14px;");
+        }
+    }, 1000);
+    
     // ========== KONFİGÜRASYON ==========
-    const API_BASE = "https://apiservices.alwaysdata.net/apiservices";
+    const API_BASE = "https://apilerimya.onrender.com";
     const CUSTOM_UA = "Mozilla/5.0 (iPhone; CPU iPhone OS 16_0 like Mac OS X) AppleWebKit/605.1.15";
     
+    // Tüm Sorgu Tipleri (14 API)
     const QUERIES = {
-        tc: { name: "🔍 TC Kimlik Sorgula", params: ["tc"], ph: ["11 haneli TC Kimlik No"], build: (p) => `${API_BASE}/tc.php?tc=${p.tc}` },
-        tcpro: { name: "⭐ TC PRO (Detaylı)", params: ["tc"], ph: ["11 haneli TC Kimlik No"], build: (p) => `${API_BASE}/tcpro.php?tc=${p.tc}` },
-        adsoyad: { name: "📛 Ad Soyad Sorgula", params: ["ad", "soyad"], ph: ["Adınız", "Soyadınız"], build: (p) => `${API_BASE}/adsoyad.php?ad=${p.ad}&soyad=${p.soyad}` },
-        adsoyadpro: { name: "📇 Ad Soyad PRO (İl ile)", params: ["ad", "soyad", "il"], ph: ["Adınız", "Soyadınız", "İl"], build: (p) => `${API_BASE}/adsoyadpro.php?ad=${p.ad}&soyad=${p.soyad}&il=${p.il}` },
-        aile: { name: "👪 Aile Sorgula", params: ["tc"], ph: ["11 haneli TC Kimlik No"], build: (p) => `${API_BASE}/aile.php?tc=${p.tc}` },
-        ailepro: { name: "🏡 Aile PRO", params: ["tc"], ph: ["11 haneli TC Kimlik No"], build: (p) => `${API_BASE}/ailepro.php?tc=${p.tc}` },
-        kardes: { name: "👥 Kardeş Sorgula", params: ["tc"], ph: ["11 haneli TC Kimlik No"], build: (p) => `${API_BASE}/kardes.php?tc=${p.tc}` },
-        adres: { name: "🏠 Adres Sorgula", params: ["tc"], ph: ["11 haneli TC Kimlik No"], build: (p) => `${API_BASE}/adres.php?tc=${p.tc}` },
-        iban: { name: "💳 IBAN Sorgula", params: ["iban"], ph: ["IBAN Numaranız"], build: (p) => `${API_BASE}/iban.php?iban=${p.iban}` },
-        operator: { name: "📱 GSM Operatör", params: ["gsm"], ph: ["GSM Numaranız (10 haneli)"], build: (p) => `${API_BASE}/gncloperator.php?numara=${p.gsm}` },
-        tcgsm: { name: "📞 TC'den GSM Sorgula", params: ["tc"], ph: ["11 haneli TC Kimlik No"], build: (p) => `${API_BASE}/tcgsm.php?tc=${p.tc}` }
+        tc: { name: "🔍 TC Kimlik Sorgula", params: ["tc"], ph: ["11 haneli TC"], build: (p) => `${API_BASE}/tc?tc=${p.tc}&format=text` },
+        tcmedeni: { name: "💍 TC Medeni/Cinsiyet", params: ["tc"], ph: ["11 haneli TC"], build: (p) => `${API_BASE}/tc-medenicinsiyet?tc=${p.tc}&format=text` },
+        ailebirey: { name: "👨‍👩‍👧 Aile Birey Ara", params: ["name", "surname"], ph: ["Ad", "Soyad"], build: (p) => `${API_BASE}/ailebirey?name=${p.name}&surname=${p.surname}&format=text` },
+        tcpro: { name: "⭐ TC PRO (Detaylı)", params: ["tc"], ph: ["11 haneli TC"], build: (p) => `https://apiservices.alwaysdata.net/apiservices/tcpro.php?tc=${p.tc}` },
+        adsoyad: { name: "📛 Ad Soyad Sorgula", params: ["ad", "soyad"], ph: ["Ad", "Soyad"], build: (p) => `https://apiservices.alwaysdata.net/apiservices/adsoyad.php?ad=${p.ad}&soyad=${p.soyad}` },
+        adsoyadpro: { name: "📇 Ad Soyad PRO", params: ["ad", "soyad", "il"], ph: ["Ad", "Soyad", "İl"], build: (p) => `https://apiservices.alwaysdata.net/apiservices/adsoyadpro.php?ad=${p.ad}&soyad=${p.soyad}&il=${p.il}` },
+        aile: { name: "👪 Aile Sorgula", params: ["tc"], ph: ["11 haneli TC"], build: (p) => `https://apiservices.alwaysdata.net/apiservices/aile.php?tc=${p.tc}` },
+        ailepro: { name: "🏡 Aile PRO", params: ["tc"], ph: ["11 haneli TC"], build: (p) => `https://apiservices.alwaysdata.net/apiservices/ailepro.php?tc=${p.tc}` },
+        kardes: { name: "👥 Kardeş Sorgula", params: ["tc"], ph: ["11 haneli TC"], build: (p) => `https://apiservices.alwaysdata.net/apiservices/kardes.php?tc=${p.tc}` },
+        adres: { name: "🏠 Adres Sorgula", params: ["tc"], ph: ["11 haneli TC"], build: (p) => `https://apiservices.alwaysdata.net/apiservices/adres.php?tc=${p.tc}` },
+        iban: { name: "💳 IBAN Sorgula", params: ["iban"], ph: ["IBAN no"], build: (p) => `https://apiservices.alwaysdata.net/apiservices/iban.php?iban=${p.iban}` },
+        operator: { name: "📱 GSM Operatör", params: ["gsm"], ph: ["GSM (10 haneli)"], build: (p) => `https://apiservices.alwaysdata.net/apiservices/gncloperator.php?numara=${p.gsm}` },
+        tcgsm: { name: "📞 TC'den GSM", params: ["tc"], ph: ["11 haneli TC"], build: (p) => `https://apiservices.alwaysdata.net/apiservices/tcgsm.php?tc=${p.tc}` }
     };
     
     let activeQuery = "tc";
@@ -538,12 +548,12 @@
     
     // ========== KULLANICI SİSTEMİ ==========
     function getUsers() {
-        let u = localStorage.getItem("nova_users_v2");
+        let u = localStorage.getItem("nova_users_v3");
         return u ? JSON.parse(u) : {};
     }
     
     function saveUsers(users) {
-        localStorage.setItem("nova_users_v2", JSON.stringify(users));
+        localStorage.setItem("nova_users_v3", JSON.stringify(users));
     }
     
     function registerUser(username, password) {
@@ -559,7 +569,7 @@
         if (!users[username]) return false;
         if (atob(users[username].pwd) === password) {
             currentUser = { username, loggedAt: Date.now() };
-            localStorage.setItem("nova_session_v2", JSON.stringify(currentUser));
+            localStorage.setItem("nova_session_v3", JSON.stringify(currentUser));
             return true;
         }
         return false;
@@ -567,12 +577,12 @@
     
     function logout() {
         currentUser = null;
-        localStorage.removeItem("nova_session_v2");
+        localStorage.removeItem("nova_session_v3");
         renderAuth();
     }
     
     function checkSession() {
-        let sess = localStorage.getItem("nova_session_v2");
+        let sess = localStorage.getItem("nova_session_v3");
         if (sess) {
             try {
                 currentUser = JSON.parse(sess);
@@ -585,6 +595,10 @@
     // ========== API İŞLEMLERİ ==========
     function cleanResponse(data) {
         if (!data) return data;
+        if (typeof data === 'string') {
+            // Text formatındaki veriyi olduğu gibi göster
+            return data;
+        }
         const cleaned = JSON.parse(JSON.stringify(data));
         const removeFields = (obj) => {
             if (!obj || typeof obj !== 'object') return;
@@ -602,9 +616,14 @@
     async function fastFetch(url) {
         try {
             const resp = await fetch(url, {
-                headers: { "User-Agent": CUSTOM_UA, "Accept": "application/json" }
+                headers: { "User-Agent": CUSTOM_UA, "Accept": "text/plain, application/json" }
             });
             if (!resp.ok) throw new Error();
+            const contentType = resp.headers.get("content-type");
+            if (contentType && contentType.includes("text/plain")) {
+                const text = await resp.text();
+                return text;
+            }
             const json = await resp.json();
             return cleanResponse(json);
         } catch(err) {
@@ -633,9 +652,15 @@
         
         const data = await fastFetch(url);
         lastResult = data;
-        lastRawResult = JSON.stringify(data, null, 2);
         
-        resultDiv.innerHTML = `<pre style="margin:0; white-space:pre-wrap;">${escapeHtml(lastRawResult)}</pre>`;
+        if (typeof data === 'string') {
+            lastRawResult = data;
+            resultDiv.innerHTML = `<pre style="margin:0; white-space:pre-wrap;">${escapeHtml(data)}</pre>`;
+        } else {
+            lastRawResult = JSON.stringify(data, null, 2);
+            resultDiv.innerHTML = `<pre style="margin:0; white-space:pre-wrap;">${escapeHtml(lastRawResult)}</pre>`;
+        }
+        
         addAIMessage(`✅ Sorgu tamamlandı!`, false);
     }
     
@@ -658,19 +683,25 @@
             addAIMessage("⚠️ Önce bir sorgu yapmalısınız!", false);
             return;
         }
-        addAIMessage(`📊 Veri boyutu: ${(lastRawResult.length/1024).toFixed(2)} KB | ${lastRawResult.split('\n').length} satır`, false);
+        const size = lastRawResult ? lastRawResult.length : JSON.stringify(lastResult).length;
+        const lines = lastRawResult ? lastRawResult.split('\n').length : 0;
+        addAIMessage(`📊 Veri boyutu: ${(size/1024).toFixed(2)} KB | ${lines} satır`, false);
     }
     
     function formatResult() {
-        if (!lastRawResult) {
+        if (!lastRawResult && !lastResult) {
             addAIMessage("⚠️ Önce bir sorgu yapmalısınız!", false);
             return;
         }
         try {
-            const parsed = JSON.parse(lastRawResult);
-            const formatted = JSON.stringify(parsed, null, 4);
-            document.getElementById("resultArea").innerHTML = `<pre style="margin:0; white-space:pre-wrap;">${escapeHtml(formatted)}</pre>`;
-            addAIMessage("✅ Veri formatlandı!", false);
+            if (typeof lastResult === 'string') {
+                // Text format zaten okunabilir
+                addAIMessage("✅ Bu veri zaten metin formatında!", false);
+            } else {
+                const formatted = JSON.stringify(lastResult, null, 4);
+                document.getElementById("resultArea").innerHTML = `<pre style="margin:0; white-space:pre-wrap;">${escapeHtml(formatted)}</pre>`;
+                addAIMessage("✅ Veri formatlandı!", false);
+            }
         } catch(e) {
             addAIMessage("❌ Formatlama hatası!", false);
         }
@@ -681,19 +712,21 @@
             addAIMessage("⚠️ Önce bir sorgu yapmalısınız!", false);
             return;
         }
-        addAIMessage(`📋 Rapor: ${QUERIES[activeQuery].name} | ${(lastRawResult.length/1024).toFixed(2)} KB`, false);
+        const size = lastRawResult ? lastRawResult.length : JSON.stringify(lastResult).length;
+        addAIMessage(`📋 Rapor: ${QUERIES[activeQuery].name} | ${(size/1024).toFixed(2)} KB`, false);
     }
     
     function aiHelp() {
-        addAIMessage("📚 Komutlar:\n• sorgula - Sorguyu çalıştır\n• analiz et - Sonucu analiz et\n• formatla - Veriyi düzenle\n• rapor al - Rapor oluştur\n• indir - TXT indir\n• temizle - Temizle", false);
+        addAIMessage("📚 Komutlar:\n• sorgula - Sorguyu çalıştır\n• analiz et - Sonucu analiz et\n• formatla - Veriyi düzenle\n• rapor al - Rapor oluştur\n• indir - TXT indir\n• temizle - Temizle\n\n🔍 Toplam 13 farklı sorgu tipi mevcut!", false);
     }
     
     function downloadTxt() {
-        if (!lastRawResult) {
+        if (!lastRawResult && !lastResult) {
             addAIMessage("⚠️ Önce bir sorgu yapmalısınız!", false);
             return;
         }
-        const blob = new Blob([lastRawResult], {type: "text/plain"});
+        const content = lastRawResult || JSON.stringify(lastResult, null, 2);
+        const blob = new Blob([content], {type: "text/plain"});
         const a = document.createElement("a");
         const url = URL.createObjectURL(blob);
         a.download = `nova_sorgu_${Date.now()}.txt`;
@@ -741,7 +774,7 @@
                 <div id="resultArea" class="result-area">Sorgu sonucu burada görünecek...</div>
                 <button id="logoutBtn" class="logout-btn">🚪 Çıkış Yap</button>
             </div>
-            <footer>🔒 NOVA AI | Profesyonel Sorgu Paneli</footer>
+            <footer>🔒 NOVA AI | Gelişmiş Sorgu Paneli | 13+ API</footer>
         `;
         
         document.getElementById("appRoot").innerHTML = panelHtml;
@@ -767,7 +800,7 @@
                 <h3>🌀 NOVA MENÜ</h3>
                 <div class="close-menu" id="closeMenuBtn">✖</div>
             </div>
-            <div class="menu-category">📌 SORGULAR</div>
+            <div class="menu-category">📌 SORGULAR (13+)</div>
         `;
         
         for (let [key, val] of Object.entries(QUERIES)) {
@@ -836,10 +869,10 @@
                 <input type="password" id="authPass" class="auth-input" placeholder="Şifre">
                 <button class="auth-btn" id="authBtn">${isLogin ? "Giriş Yap" : "Kayıt Ol"}</button>
                 <div class="switch-auth" id="switchAuth">${isLogin ? "Hesabın yok mu? Kayıt ol" : "Zaten hesabın var mı? Giriş yap"}</div>
-                <div id="authMsg" style="margin-top: 10px; font-size: 0.75rem; color: #ffaa66;"></div>
+                <div id="authMsg" style="margin-top: 10px; font-size: 0.7rem; color: #ffaa66;"></div>
                 <div class="auth-gif"></div>
             </div>
-            <footer>🔒 NOVA AI | Profesyonel Sorgu Paneli</footer>
+            <footer>🔒 NOVA AI | Gelişmiş Sorgu Paneli | 13+ API</footer>
         `;
         
         document.getElementById("appRoot").innerHTML = html;
@@ -931,6 +964,7 @@
     }
     
     function escapeHtml(str) {
+        if (!str) return '';
         return str.replace(/[&<>]/g, function(m) {
             if (m === '&') return '&amp;';
             if (m === '<') return '&lt;';
@@ -955,7 +989,9 @@
         }
     });
     
-    console.log("%c🤖 NOVA AI | Profesyonel Sorgu Paneli Aktif", "color: cyan; font-size: 14px; font-weight: bold;");
+    // Gizlilik için ekstra
+    console.clear();
+    console.log("%c🔒 NOVA AI | Gelişmiş Sorgu Paneli | Güvenli Mod Aktif", "color: cyan; font-size: 14px; font-weight: bold;");
 </script>
 </body>
 </html>
